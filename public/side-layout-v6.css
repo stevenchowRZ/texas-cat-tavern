@@ -1,0 +1,61 @@
+/* v6：桌面左右双列座位，中上和中下保持完全空白 */
+@media (orientation:landscape){
+  .casino .felt{width:min(82vw,1140px)!important;height:min(69vh,520px)!important}
+  .casino .pot{top:27%!important;z-index:20!important;min-width:86px;text-align:center}
+  .casino .board{top:49%!important}
+  .table-logo{top:69%!important}
+
+  .player{width:112px!important}
+  .player .avatar{width:clamp(76px,7.4vw,94px)!important;height:clamp(76px,7.4vw,94px)!important;padding:3px!important}
+  .player-name{left:50%!important;top:calc(50% + 65px)!important;transform:translate(-50%,-50%)!important;min-width:104px!important;max-width:118px!important;padding:4px 7px!important}
+  .player-name b{max-width:104px!important;font-size:12px!important}
+  .player-name .chip-count{font-size:11px!important}
+  .player-name em{font-size:9px!important}
+
+  .player .hole-cards{left:calc(50% + var(--in-x))!important;top:calc(50% + var(--in-y))!important;transform:translate(-50%,-50%)!important;gap:3px!important}
+  .player .hole-cards .card,.player:first-child .hole-cards .card{width:clamp(38px,3.8vw,48px)!important;height:clamp(55px,5.5vw,68px)!important}
+  .player .hole-cards .card.simple b,.player .hole-cards .card.simple i{font-size:clamp(15px,1.65vw,20px)!important}
+  .player.side-left:first-child .hole-cards .card{width:clamp(42px,4.2vw,53px)!important;height:clamp(61px,6vw,75px)!important}
+
+  .wager{left:calc(50% + var(--bet-x))!important;top:calc(50% + var(--bet-y))!important;min-width:52px;justify-content:center;font-size:11px!important}
+  .wager.text-only{border-color:#c89242!important;background:#2a1913f2!important;color:#fff0b5!important}
+  .player.folded .wager{opacity:1!important;color:#ffb098!important;border-color:#a74b3e!important}
+
+  .player.turn .avatar{border-color:#f3c758!important;box-shadow:4px 4px 0 #090503!important;animation:none!important;filter:none!important}
+  .player.your-turn .avatar{border-color:#fff06a!important;box-shadow:0 0 0 4px #d48427,4px 4px 0 #090503!important;animation:viewerTurn 1s steps(2,end) infinite alternate!important}
+  @keyframes viewerTurn{to{filter:brightness(1.38)}}
+
+  #players.count-7 .player,#players.count-8 .player,#players.count-9 .player,#players.count-10 .player{width:94px!important}
+  #players.count-7 .player .avatar,#players.count-8 .player .avatar,#players.count-9 .player .avatar,#players.count-10 .player .avatar{width:clamp(64px,6.2vw,76px)!important;height:clamp(64px,6.2vw,76px)!important}
+  #players.count-7 .player-name,#players.count-8 .player-name,#players.count-9 .player-name,#players.count-10 .player-name{top:calc(50% + 53px)!important;min-width:86px!important;max-width:98px!important}
+  #players.count-7 .player-name b,#players.count-8 .player-name b,#players.count-9 .player-name b,#players.count-10 .player-name b{font-size:10px!important}
+  #players.count-7 .player .hole-cards .card,#players.count-8 .player .hole-cards .card,#players.count-9 .player .hole-cards .card,#players.count-10 .player .hole-cards .card{width:clamp(31px,3.2vw,40px)!important;height:clamp(45px,4.7vw,57px)!important}
+
+  .waiting.settlement{width:min(560px,48vw)!important}.waiting.settlement button{display:inline-block!important;margin-top:7px!important}
+}
+
+/* 最近五局：公共牌 + 所有未弃牌玩家手牌 */
+#historyModal section{width:min(880px,92vw)!important}
+#historyModal li{grid-template-columns:auto 1fr auto!important}
+#historyModal li>small,.history-board,.history-hands{grid-column:1/-1}
+.history-board{display:flex;align-items:center;gap:10px;margin-top:4px;padding-top:6px;border-top:2px solid #6e4525}
+.history-board label{color:#d5bd88;font-size:10px;white-space:nowrap}
+.history-board em,.history-hands>em{color:#8f816a;font-size:9px;font-style:normal}
+.history-hands{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px}
+.history-hand{display:flex;align-items:center;gap:5px;padding:4px 6px;border:2px solid #5e3a22;background:#160d0a}
+.history-hand>span{max-width:72px;overflow:hidden;text-overflow:ellipsis;color:#ffe1a0!important;font-size:9px;white-space:nowrap}
+#historyModal .cards{gap:2px}
+#historyModal .card{position:relative;width:25px!important;height:36px!important;border-width:2px!important;box-shadow:2px 2px 0 #080403!important}
+#historyModal .card.simple b,#historyModal .card.simple i{font-size:11px!important}
+
+@media (orientation:landscape) and (max-height:430px){
+  .casino .felt{width:min(83vw,940px)!important;height:min(70vh,300px)!important}
+  .player{width:78px!important}
+  .player .avatar{width:60px!important;height:60px!important}
+  .player-name{top:calc(50% + 43px)!important;min-width:72px!important;max-width:82px!important;padding:2px 4px!important}
+  .player-name b,.player-name .chip-count{font-size:8px!important}
+  .player .hole-cards .card,.player:first-child .hole-cards .card,.player.side-left:first-child .hole-cards .card{width:29px!important;height:42px!important}
+  .wager{font-size:8px!important;padding:2px 4px!important;min-width:42px}
+  #players.count-7 .player .avatar,#players.count-8 .player .avatar,#players.count-9 .player .avatar,#players.count-10 .player .avatar{width:50px!important;height:50px!important}
+  #players.count-7 .player-name,#players.count-8 .player-name,#players.count-9 .player-name,#players.count-10 .player-name{top:calc(50% + 37px)!important}
+}

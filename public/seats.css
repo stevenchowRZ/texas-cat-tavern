@@ -1,0 +1,2 @@
+/* 六个座位避开中央荷官 */
+.player:nth-child(1){left:50%;top:97%}.player:nth-child(2){left:1%;top:69%}.player:nth-child(3){left:7%;top:25%}.player:nth-child(4){left:31%;top:7%}.player:nth-child(5){left:93%;top:25%}.player:nth-child(6){left:99%;top:69%}.player:nth-child(4) .hole-cards{left:70%;top:64px}.player:nth-child(4) .wager{left:85%;top:75px}@media(max-width:430px){.player{width:84px}.player:nth-child(4){left:27%;top:8%}.player-name b{max-width:74px}.board{gap:2px}.board .card{width:42px;height:61px}}

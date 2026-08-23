@@ -1,0 +1,19 @@
+/* 六人桌：荷官居中，玩家严格左三右三 */
+@media (orientation:landscape){
+  #players.count-6 .player:nth-child(1){left:18%;top:82%}
+  #players.count-6 .player:nth-child(2){left:3%;top:53%}
+  #players.count-6 .player:nth-child(3){left:20%;top:15%}
+  #players.count-6 .player:nth-child(4){left:80%;top:15%}
+  #players.count-6 .player:nth-child(5){left:97%;top:53%}
+  #players.count-6 .player:nth-child(6){left:82%;top:82%}
+  #players.count-6 .player:nth-child(-n+3) .hole-cards{left:96%;top:5px;transform:rotate(72deg)}
+  #players.count-6 .player:nth-child(n+4) .hole-cards{left:-55%;top:5px;transform:rotate(-72deg)}
+  #players.count-6 .player:nth-child(-n+3) .wager{left:125%;right:auto;top:28px}
+  #players.count-6 .player:nth-child(n+4) .wager{right:125%;left:auto;top:28px}
+  #players.count-6 .player:nth-child(1) .hole-cards{top:-32px;transform:rotate(42deg)}
+  #players.count-6 .player:nth-child(3) .hole-cards{top:48px;transform:rotate(18deg)}
+  #players.count-6 .player:nth-child(4) .hole-cards{top:48px;transform:rotate(-18deg)}
+  #players.count-6 .player:nth-child(6) .hole-cards{top:-32px;transform:rotate(-42deg)}
+  #players.count-6 .player:nth-child(1) .wager,#players.count-6 .player:nth-child(6) .wager{top:-35px}
+  #players.count-6 .player:nth-child(3) .wager,#players.count-6 .player:nth-child(4) .wager{top:68px}
+}

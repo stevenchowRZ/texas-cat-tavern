@@ -1,0 +1,16 @@
+@media (orientation:landscape){
+  #players.count-2 .player:nth-child(2){left:74%;top:10%}
+  #players.count-2 .player:nth-child(2) .hole-cards{left:-40%;top:60px;transform:rotate(-8deg)}#players.count-2 .player:nth-child(2) .wager{left:auto;right:105%;top:72px}
+  #players.count-3 .player:nth-child(2){left:26%;top:10%}#players.count-3 .player:nth-child(3){left:74%;top:10%}
+  #players.count-3 .player:nth-child(2) .hole-cards{left:72%;top:60px;transform:rotate(8deg)}#players.count-3 .player:nth-child(2) .wager{left:105%;top:72px}
+  #players.count-3 .player:nth-child(3) .hole-cards{left:-40%;top:60px;transform:rotate(-8deg)}#players.count-3 .player:nth-child(3) .wager{left:auto;right:105%;top:72px}
+  #players.count-4 .player:nth-child(2){left:3%;top:48%}#players.count-4 .player:nth-child(3){left:26%;top:10%}#players.count-4 .player:nth-child(4){left:74%;top:10%}
+  #players.count-4 .player:nth-child(2) .hole-cards{left:98%;top:8px;transform:rotate(90deg)}#players.count-4 .player:nth-child(2) .wager{left:130%;top:30px}
+  #players.count-4 .player:nth-child(3) .hole-cards{left:72%;top:60px;transform:rotate(8deg)}#players.count-4 .player:nth-child(3) .wager{left:105%;top:72px}
+  #players.count-4 .player:nth-child(4) .hole-cards{left:-40%;top:60px;transform:rotate(-8deg)}#players.count-4 .player:nth-child(4) .wager{left:auto;right:105%;top:72px}
+  #players.count-5 .player:nth-child(2){left:3%;top:53%}#players.count-5 .player:nth-child(3){left:26%;top:10%}#players.count-5 .player:nth-child(4){left:74%;top:10%}#players.count-5 .player:nth-child(5){left:97%;top:53%}
+  #players.count-5 .player:nth-child(2) .hole-cards{left:98%;top:8px;transform:rotate(90deg)}#players.count-5 .player:nth-child(2) .wager{left:130%;top:30px}
+  #players.count-5 .player:nth-child(3) .hole-cards{left:72%;top:60px;transform:rotate(8deg)}#players.count-5 .player:nth-child(3) .wager{left:105%;top:72px}
+  #players.count-5 .player:nth-child(4) .hole-cards{left:-40%;top:60px;transform:rotate(-8deg)}#players.count-5 .player:nth-child(4) .wager{left:auto;right:105%;top:72px}
+  #players.count-5 .player:nth-child(5) .hole-cards{left:-58%;top:8px;transform:rotate(-90deg)}#players.count-5 .player:nth-child(5) .wager{left:auto;right:130%;top:30px}
+}

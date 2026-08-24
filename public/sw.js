@@ -1,4 +1,4 @@
-const CACHE='texas-cat-tavern-v98';
+const CACHE='texas-cat-tavern-v99';
 const FILES=[
   '/',
   '/app.js',

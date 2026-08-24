@@ -4,7 +4,7 @@
 
 ## 在线游玩与安装
 
-在线地址：https://texas-cat-tavern.onrender.com
+在线地址：https://texas-cat-tavern.zhourunze945.workers.dev
 
 - Android：使用 Chrome 打开在线地址，选择“安装应用”或“添加到主屏幕”。
 - iPhone/iPad：使用 Safari 打开在线地址，点击“分享”，选择“添加到主屏幕”。

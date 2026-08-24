@@ -1,0 +1,82 @@
+/*
+ * 酒馆可逆尺寸试用层：文字 200%，角色 150%。
+ * 如需恢复原版，只需移除 index.html 中对本文件的引用。
+ */
+#tavern .tavern-head{height:78px!important;flex-basis:78px!important;padding:7px 14px!important}
+#tavern .tavern-head b{font-size:26px!important}
+#tavern .tavern-head span{font-size:18px!important}
+#tavern .tavern-head>button{font-size:20px!important}
+#tavern .coin-badge{font-size:20px!important;padding:8px 12px!important}
+#tavern .tavern-scene{height:calc(100cqh - 152px)!important;min-height:calc(100cqh - 152px)!important}
+#tavern .tavern-panel{height:74px!important;min-height:74px!important;max-height:74px!important}
+
+#tavern .tavern-title{min-width:270px!important;padding:12px 18px!important}
+#tavern .tavern-title strong{font-size:32px!important}
+#tavern .tavern-title small{font-size:18px!important}
+#tavern .bar-counter>span{font-size:16px!important}
+#tavern .server-cat>span{width:280px!important;font-size:16px!important}
+#tavern .guest-seat>small{font-size:12px!important}
+#tavern .no-guests{font-size:18px!important}
+
+#tavern .cloud-dialog,#tavern .guest-dialog,#tavern .server-cat .staff-dialog{min-width:260px!important;max-width:380px!important;padding:9px 12px!important;font-size:16px!important;line-height:1.35!important}
+#tavern .bartender-wrap .staff-dialog{left:104px!important}
+#tavern .server-cat .staff-dialog{left:78px!important}
+
+#tavern .prep-toolbar button{height:52px!important;font-size:22px!important}
+#tavern .drawer-head b{font-size:22px!important}
+#tavern .drawer-head small{font-size:16px!important}
+#tavern .menu-card b{font-size:16px!important}
+#tavern .menu-card small,#tavern .menu-card em{font-size:12px!important}
+#tavern .stock-group h3{font-size:16px!important}
+#tavern .stock-item b{font-size:14px!important}
+#tavern .stock-item small,#tavern .stock-item em{font-size:12px!important}
+#tavern .service-dashboard b{font-size:20px!important}
+#tavern .service-dashboard small{font-size:16px!important}
+#tavern .service-dashboard button{font-size:16px!important}
+
+#tavern .prep-modal>section{width:min(1120px,94cqw)!important;max-height:88cqh!important}
+#tavern .prep-modal header b{font-size:24px!important}
+#tavern .prep-modal header small{font-size:16px!important}
+#tavern .prep-modal header button{font-size:34px!important}
+#tavern .prep-modal .menu-card b{font-size:20px!important}
+#tavern .prep-modal .menu-card small,#tavern .prep-modal .menu-card em{font-size:16px!important}
+#tavern .prep-modal .stock-group h3{font-size:20px!important}
+#tavern .prep-modal .stock-item b{font-size:18px!important}
+#tavern .prep-modal .stock-item small,#tavern .prep-modal .stock-item em{font-size:14px!important}
+
+#tavern .settlement-grid small{font-size:16px!important}
+#tavern .settlement-grid b{font-size:22px!important}
+#tavern .settlement-modal footer{font-size:18px!important}
+#tavern .settlement-confirm{font-size:20px!important}
+
+#tavern .day-timeline{width:min(500px,48cqw)!important;padding:10px 12px!important}
+#tavern .day-timeline>b{font-size:18px!important}
+#tavern .day-timeline span{font-size:16px!important}
+#tavern .day-timeline small{font-size:12px!important}
+#tavern .day-timeline em{font-size:24px!important}
+#tavern .day-objective b{font-size:20px!important}
+#tavern .day-objective small{font-size:16px!important}
+#tavern .day-objective-actions button{font-size:16px!important}
+
+#tavern .poker-neon b,#tavern .friend-neon b{font-size:24px!important}
+#tavern .poker-neon small,#tavern .friend-neon small{font-size:12px!important}
+#tavern .research-card b{font-size:22px!important}
+#tavern .research-card small,#tavern .research-card p,#tavern .research-card em{font-size:16px!important}
+
+#tavern .recipe-celebration-card>span{font-size:22px!important}
+#tavern .recipe-celebration-card>strong{font-size:40px!important}
+#tavern .recipe-celebration-card>b{font-size:34px!important}
+#tavern .recipe-celebration-card>small{font-size:20px!important}
+#tavern .recipe-celebration-card>button{font-size:24px!important}
+#tavern .celebration-burst{font-size:44px!important}
+body:has(#tavern.active) #toast{font-size:20px!important}
+
+/* 酒保、服务员与客人使用同一角色尺寸。 */
+#tavern .pixel-cat.image-character{width:114px!important;height:183px!important}
+#tavern #bartenderCat{width:120px!important;height:183px!important}
+#tavern .bartender-wrap{width:120px!important}
+#tavern .server-cat{width:117px!important;height:189px!important}
+#tavern .bar-seat{height:280px!important}
+#tavern .guest-seat{width:120px!important;height:205px!important}
+#tavern .guest-seat .pixel-cat{scale:1!important}
+#tavern .pixel-cat.image-character.role-guest{width:114px!important;height:183px!important}

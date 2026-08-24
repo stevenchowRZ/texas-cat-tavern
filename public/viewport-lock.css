@@ -1,0 +1,8 @@
+/* 统一使用 1280 × 720 逻辑画布。浏览器缩放只改变整幅画面的等比尺寸。 */
+:root{--game-scale:1}
+html,body{width:100%;height:100%;overflow:hidden}
+body{position:fixed;inset:0;min-height:0;background:#070504}
+#app{position:fixed;z-index:1;left:50%;top:50%;width:1280px;height:720px;min-width:1280px;min-height:720px;overflow:hidden;container:game / size;transform:translate(-50%,-50%) scale(var(--game-scale));transform-origin:center center;box-shadow:0 0 80px #000}
+#app>.screen{width:100%;height:100%;min-height:0;max-width:none}
+#table{width:100%!important;height:100%!important;min-height:0!important;margin:0!important}
+#tavern{overflow:hidden}

@@ -1,41 +1,45 @@
 /* v6：桌面左右双列座位，中上和中下保持完全空白 */
+/* 旧主题也定义了 .player.turn 的动效；默认一律静止，只提示当前真人玩家。 */
+.player .avatar{animation:none!important;filter:none!important}
+.player.your-turn .avatar{animation:viewerTurn 1s steps(2,end) infinite alternate!important}
+@keyframes viewerTurn{to{filter:brightness(1.38)}}
+
 @media (orientation:landscape){
-  .casino .felt{width:min(82vw,1140px)!important;height:min(69vh,520px)!important}
+  .casino .felt{width:min(68cqw,940px)!important;height:min(62cqh,520px)!important;border:12px solid #1a110e!important;border-radius:38%/47%!important;background:radial-gradient(ellipse at 50% 38%,#1d7d50 0,#0e653f 46%,#075033 78%,#063d2a 100%)!important;box-shadow:0 0 0 3px #8f5b35,0 0 0 8px #0d0908,0 9px 0 #382317,0 18px 25px #000c,inset 0 3px 0 #c58a50,inset 0 -8px 0 #043722,inset 0 0 38px #00190f!important}
   .casino .pot{top:27%!important;z-index:20!important;min-width:86px;text-align:center}
-  .casino .board{top:49%!important}
+  .casino .board{top:46%!important}
   .table-logo{top:69%!important}
 
   .player{width:112px!important}
-  .player .avatar{width:clamp(76px,7.4vw,94px)!important;height:clamp(76px,7.4vw,94px)!important;padding:3px!important}
+  .player .avatar{width:clamp(76px,7.4cqw,94px)!important;height:clamp(76px,7.4cqw,94px)!important;padding:3px!important}
   .player-name{left:50%!important;top:calc(50% + 65px)!important;transform:translate(-50%,-50%)!important;min-width:104px!important;max-width:118px!important;padding:4px 7px!important}
   .player-name b{max-width:104px!important;font-size:12px!important}
   .player-name .chip-count{font-size:11px!important}
   .player-name em{font-size:9px!important}
 
   .player .hole-cards{left:calc(50% + var(--in-x))!important;top:calc(50% + var(--in-y))!important;transform:translate(-50%,-50%)!important;gap:3px!important}
-  .player .hole-cards .card,.player:first-child .hole-cards .card{width:clamp(38px,3.8vw,48px)!important;height:clamp(55px,5.5vw,68px)!important}
-  .player .hole-cards .card.simple b,.player .hole-cards .card.simple i{font-size:clamp(15px,1.65vw,20px)!important}
-  .player.side-left:first-child .hole-cards .card{width:clamp(42px,4.2vw,53px)!important;height:clamp(61px,6vw,75px)!important}
+  .player .hole-cards .card,.player:first-child .hole-cards .card{width:clamp(38px,3.8cqw,48px)!important;height:clamp(55px,5.5cqw,68px)!important}
+  .player .hole-cards .card.simple b,.player .hole-cards .card.simple i{font-size:clamp(15px,1.65cqw,20px)!important}
+  .player.side-left:first-child .hole-cards .card{width:clamp(43px,4.5cqw,59px)!important;height:clamp(62px,6.4cqw,82px)!important}
 
   .wager{left:calc(50% + var(--bet-x))!important;top:calc(50% + var(--bet-y))!important;min-width:52px;justify-content:center;font-size:11px!important}
   .wager.text-only{border-color:#c89242!important;background:#2a1913f2!important;color:#fff0b5!important}
   .player.folded .wager{opacity:1!important;color:#ffb098!important;border-color:#a74b3e!important}
 
   .player.turn .avatar{border-color:#f3c758!important;box-shadow:4px 4px 0 #090503!important;animation:none!important;filter:none!important}
-  .player.your-turn .avatar{border-color:#fff06a!important;box-shadow:0 0 0 4px #d48427,4px 4px 0 #090503!important;animation:viewerTurn 1s steps(2,end) infinite alternate!important}
-  @keyframes viewerTurn{to{filter:brightness(1.38)}}
+  .player.your-turn .avatar{border-color:#fff06a!important;box-shadow:0 0 0 4px #d48427,4px 4px 0 #090503!important}
 
   #players.count-7 .player,#players.count-8 .player,#players.count-9 .player,#players.count-10 .player{width:94px!important}
-  #players.count-7 .player .avatar,#players.count-8 .player .avatar,#players.count-9 .player .avatar,#players.count-10 .player .avatar{width:clamp(64px,6.2vw,76px)!important;height:clamp(64px,6.2vw,76px)!important}
+  #players.count-7 .player .avatar,#players.count-8 .player .avatar,#players.count-9 .player .avatar,#players.count-10 .player .avatar{width:clamp(64px,6.2cqw,76px)!important;height:clamp(64px,6.2cqw,76px)!important}
   #players.count-7 .player-name,#players.count-8 .player-name,#players.count-9 .player-name,#players.count-10 .player-name{top:calc(50% + 53px)!important;min-width:86px!important;max-width:98px!important}
   #players.count-7 .player-name b,#players.count-8 .player-name b,#players.count-9 .player-name b,#players.count-10 .player-name b{font-size:10px!important}
-  #players.count-7 .player .hole-cards .card,#players.count-8 .player .hole-cards .card,#players.count-9 .player .hole-cards .card,#players.count-10 .player .hole-cards .card{width:clamp(31px,3.2vw,40px)!important;height:clamp(45px,4.7vw,57px)!important}
+  #players.count-7 .player .hole-cards .card,#players.count-8 .player .hole-cards .card,#players.count-9 .player .hole-cards .card,#players.count-10 .player .hole-cards .card{width:clamp(31px,3.2cqw,40px)!important;height:clamp(45px,4.7cqw,57px)!important}
 
-  .waiting.settlement{width:min(560px,48vw)!important}.waiting.settlement button{display:inline-block!important;margin-top:7px!important}
+  .waiting.settlement{width:min(560px,48cqw)!important}.waiting.settlement button{display:inline-block!important;margin-top:7px!important}
 }
 
 /* 最近五局：公共牌 + 所有未弃牌玩家手牌 */
-#historyModal section{width:min(880px,92vw)!important}
+#historyModal section{width:min(880px,92cqw)!important}
 #historyModal li{grid-template-columns:auto 1fr auto!important}
 #historyModal li>small,.history-board,.history-hands{grid-column:1/-1}
 .history-board{display:flex;align-items:center;gap:10px;margin-top:4px;padding-top:6px;border-top:2px solid #6e4525}
@@ -48,8 +52,8 @@
 #historyModal .card{position:relative;width:25px!important;height:36px!important;border-width:2px!important;box-shadow:2px 2px 0 #080403!important}
 #historyModal .card.simple b,#historyModal .card.simple i{font-size:11px!important}
 
-@media (orientation:landscape) and (max-height:430px){
-  .casino .felt{width:min(83vw,940px)!important;height:min(70vh,300px)!important}
+@container game (orientation:landscape) and (max-height:430px){
+  .casino .felt{width:min(68cqw,780px)!important;height:min(63cqh,290px)!important;border-radius:38%/47%!important}
   .player{width:78px!important}
   .player .avatar{width:60px!important;height:60px!important}
   .player-name{top:calc(50% + 43px)!important;min-width:72px!important;max-width:82px!important;padding:2px 4px!important}
@@ -59,3 +63,104 @@
   #players.count-7 .player .avatar,#players.count-8 .player .avatar,#players.count-9 .player .avatar,#players.count-10 .player .avatar{width:50px!important;height:50px!important}
   #players.count-7 .player-name,#players.count-8 .player-name,#players.count-9 .player-name,#players.count-10 .player-name{top:calc(50% + 37px)!important}
 }
+
+/* 右上角房间信息：不再占据牌桌上方的中央空间。 */
+#table .casino .felt:after{border-radius:inherit!important}
+#table{position:relative!important}
+#table header{position:absolute!important;z-index:50!important;inset:0!important;height:0!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important;pointer-events:none!important}
+#table header button,#table header .room-info{pointer-events:auto!important}
+#table header #leave{position:absolute!important;left:12px!important;top:10px!important}
+#table #handGuide{position:absolute!important;left:66px!important;top:10px!important}
+#table header .room-info{position:absolute!important;right:14px!important;top:9px!important;display:flex!important;flex-direction:column!important;align-items:flex-end!important;gap:2px!important;max-width:min(36cqw,430px)!important;padding:5px 8px!important;border:2px solid #704521!important;background:#170d0be8!important;box-shadow:3px 3px 0 #080403!important;line-height:1.05!important}
+#table header .room-info b{font-size:14px!important;color:#ffe09a!important;white-space:nowrap!important}
+#table header .room-info span{margin:0!important;color:#d5bb84!important;font-size:9px!important;white-space:nowrap!important}
+#table header #copy{position:absolute!important;right:14px!important;top:57px!important;padding:6px 12px!important;border:2px solid #704521!important;background:#542e19!important;box-shadow:3px 3px 0 #080403!important}
+
+/* 非本人玩家的暗牌交叉叠放，结算亮牌和自己的手牌才并排展示。 */
+.player .hole-cards.self-hand,.player .hole-cards.showdown-hand{display:flex!important;gap:3px!important}
+.player .hole-cards.hidden-hand,.player .hole-cards.folding-hand{display:block!important;width:48px!important;height:68px!important}
+.player .hidden-hand .card,.player .folding-hand .card{position:absolute!important;left:0!important;top:0!important;transform:translate(var(--fold-x),var(--fold-y)) rotate(var(--fold-r));transform-origin:center!important}
+.player .hidden-hand .card:nth-child(1),.player .folding-hand .card:nth-child(1){--fold-x:-7px;--fold-y:1px;--fold-r:-12deg}
+.player .hidden-hand .card:nth-child(2),.player .folding-hand .card:nth-child(2){--fold-x:7px;--fold-y:-1px;--fold-r:12deg}
+.player .hidden-hand .card.dealing{animation:hiddenBackDeal .34s cubic-bezier(.2,.75,.25,1) var(--deal-delay) forwards!important}
+@keyframes hiddenBackDeal{0%{opacity:0;transform:translate(30cqw,-23cqh) rotate(130deg) scale(.45)}100%{opacity:1;transform:translate(var(--fold-x),var(--fold-y)) rotate(var(--fold-r))}}
+
+/* 弃牌时，两张牌飞向桌心并淡出，不保留显眼的桌心牌堆图案。 */
+.player .folding-hand .card{animation:throwToMuck .56s cubic-bezier(.2,.8,.35,1) forwards!important}
+.player .folding-hand .card:nth-child(2){animation-delay:.05s!important}
+@keyframes throwToMuck{0%{opacity:1;transform:translate(var(--fold-x),var(--fold-y)) rotate(var(--fold-r)) scale(1)}72%{opacity:1}100%{opacity:0;transform:translate(calc(var(--muck-x) + var(--fold-x)),calc(var(--muck-y) + var(--fold-y))) rotate(170deg) scale(.34)}}
+
+/* 结算：赢家牌型文字在公共牌上方，筹码随后从底池和下注处飞向赢家。 */
+#result.showdown-result{display:block!important;z-index:22!important;top:36%!important;left:50%!important;max-width:62%!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:#ffe6a0!important;font-size:13px!important;font-weight:800!important;line-height:1.25!important;text-align:center!important;text-shadow:2px 2px 0 #211208,0 0 6px #6b3a17!important;white-space:normal!important}
+#waiting.settlement:not(.tournament-end){z-index:30!important;left:auto!important;right:14px!important;top:auto!important;bottom:9px!important;width:auto!important;min-width:0!important;padding:0!important;transform:none!important;border:0!important;background:transparent!important;box-shadow:none!important}
+#waiting.settlement:not(.tournament-end) h2,#waiting.settlement:not(.tournament-end) p,#waiting.settlement:not(.tournament-end) strong{display:none!important}
+#waiting.settlement:not(.tournament-end) button{display:block!important;margin:0!important;padding:6px 11px!important;border:2px solid #7a4a25!important;background:#3b2417!important;color:#ffe2a0!important;box-shadow:3px 3px 0 #080403!important;font-size:10px!important}
+#chipFlight{position:absolute!important;z-index:120!important;inset:0!important;pointer-events:none!important;overflow:visible!important}
+.payout-chip{position:absolute!important;display:block!important;width:14px!important;height:14px!important;margin:-7px!important;border:2px solid #fff2b0!important;border-radius:50%!important;background:radial-gradient(circle,#fff2b0 0 20%,#9651d3 22% 44%,#f8e699 46% 57%,#5b277f 59%)!important;box-shadow:0 2px 0 #221008!important;animation:payoutChip 1.35s cubic-bezier(.15,.72,.25,1) var(--chip-delay) forwards!important}
+@keyframes payoutChip{0%{opacity:1;transform:translate(0,0) scale(.8)}72%{opacity:1}100%{opacity:0;transform:translate(var(--fly-x),var(--fly-y)) scale(.45)}}
+
+/* 手牌尺寸分离：真人手牌与公共牌一致；其他玩家仅暗牌状态缩小。 */
+.player .hole-cards.self-hand .card{width:clamp(43px,4.5cqw,59px)!important;height:clamp(62px,6.4cqw,82px)!important}
+.player .hole-cards.hidden-hand{width:28px!important;height:38px!important}
+.player .hole-cards.hidden-hand .card{width:clamp(19px,1.9cqw,24px)!important;height:clamp(28px,2.75cqw,34px)!important}
+.player .hidden-hand .card:nth-child(1){--fold-x:-4px;--fold-y:1px;--fold-r:-12deg}
+.player .hidden-hand .card:nth-child(2){--fold-x:4px;--fold-y:-1px;--fold-r:12deg}
+.player .hidden-hand .card.back:after{inset:3px!important;font-size:8px!important}
+
+/* 使用提供的实体牌桌素材。图片外围已透明化，完整保留桌沿和四周扶手。 */
+#table .table-logo{display:none!important}
+#table .casino .felt{top:50%!important;width:min(95.2cqw,1316px,154.4cqh)!important;height:auto!important;aspect-ratio:1672/940!important;background:transparent!important;border:0!important;box-shadow:none!important;isolation:isolate!important}
+#table .casino .felt:before{content:""!important;position:absolute!important;z-index:0!important;inset:0!important;display:block!important;background:url('/assets/poker-table-real.png') center/100% 100% no-repeat!important;clip-path:none!important;pointer-events:none!important}
+#table .casino .felt:after{display:none!important}
+
+/* 酒馆和木地板稍提亮，仍保留夜晚的暖色氛围。 */
+#table{background:#21120b!important}
+#table .casino{background-image:linear-gradient(180deg,#5b351518 0%,#3d21122d 57%,#160b075f 100%),url('/assets/pixel-cat-tavern-bg.png')!important}
+
+/* 大桌面：头像留在桌沿外侧；所有非真人的暗牌沿桌面法线移入绿毡内。 */
+.player .hole-cards.hidden-hand,.player .hole-cards.folding-hand{overflow:visible!important}
+
+/* 每个下注紧贴本玩家手牌，取消文字底框；有筹码时用三枚圆形筹码表示下注。 */
+.wager,.wager.text-only,.player.folded .wager{padding:0!important;min-width:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:#ffe6a0!important;font-size:11px!important;font-weight:800!important;line-height:18px!important;text-shadow:2px 2px 0 #1b0e08,0 1px 4px #000!important}
+.wager:not(.text-only){gap:7px!important}
+.wager{display:flex!important;align-items:center!important;white-space:nowrap!important;pointer-events:none!important}
+.wager span{display:block!important;padding-left:2px!important;letter-spacing:0!important}
+.wager:not(.text-only) i{position:relative!important;display:block!important;width:18px!important;height:18px!important;border:2px solid #fff1a6!important;border-radius:50%!important;background:radial-gradient(circle,#fff9ce 0 17%,#e9d06c 19% 28%,#7d3bc1 30% 52%,#f7d65d 54% 64%,#44216d 66%)!important;box-shadow:0 2px 0 #221008!important}
+.wager:not(.text-only) i:before,.wager:not(.text-only) i:after{content:""!important;position:absolute!important;width:14px!important;height:14px!important;border:2px solid #fff1a6!important;border-radius:50%!important;background:radial-gradient(circle,#fff9ce 0 17%,#e9d06c 19% 28%,#7d3bc1 30% 52%,#f7d65d 54% 64%,#44216d 66%)!important;box-shadow:0 2px 0 #221008!important}
+.wager:not(.text-only) i:before{left:0!important;top:-5px!important;z-index:-1!important}
+.wager:not(.text-only) i:after{left:0!important;top:-9px!important;z-index:-2!important}
+
+/* 手机横屏六人局：手牌在头像与桌心之间，下注单独进入六个不相交的内圈区域。
+   使用固定座位号而不是“当前剩余人数”排布，淘汰后的空位也不会让信息跳位。 */
+@container game (orientation:landscape) and (max-width:1000px) and (max-height:520px){
+  #players.count-6 .player{z-index:6!important}
+  #players.count-6 .player .hole-cards{z-index:8!important}
+  #players.count-6 .player .wager{z-index:9!important;font-size:10px!important;line-height:15px!important;gap:4px!important}
+  #players.count-6 .player .wager:not(.text-only) i{transform:scale(.82);transform-origin:center!important}
+  #players.count-6 .player .wager:not(.text-only) i:before{top:-5px!important}
+  #players.count-6 .player .wager:not(.text-only) i:after{top:-9px!important}
+
+  /* 左下真人：回退到该轮调整前的手牌与下注坐标。 */
+  #players.count-6 .player.seat-1{--in-x:clamp(90px,12cqw,118px)!important;--in-y:clamp(-68px,-6.5cqw,-48px)!important;--bet-x:clamp(82px,10cqw,102px)!important;--bet-y:clamp(-112px,-11cqw,-84px)!important}
+  /* 左边玩家：牌朝右，下注落在它的右下侧，避开公共牌。 */
+  #players.count-6 .player.seat-2{--in-x:clamp(66px,9cqw,86px)!important;--in-y:0px!important;--bet-x:clamp(104px,12cqw,126px)!important;--bet-y:clamp(48px,6cqw,64px)!important}
+  /* 左上玩家：手牌右下，下注在其下方但保持在底池左侧。 */
+  #players.count-6 .player.seat-3{--in-x:clamp(52px,7cqw,70px)!important;--in-y:clamp(46px,6cqw,64px)!important;--bet-x:clamp(95px,11cqw,120px)!important;--bet-y:clamp(100px,12cqw,126px)!important}
+  /* 右上玩家，与左上镜像。 */
+  #players.count-6 .player.seat-4{--in-x:calc(-1 * clamp(52px,7cqw,70px))!important;--in-y:clamp(46px,6cqw,64px)!important;--bet-x:calc(-1 * clamp(95px,11cqw,120px))!important;--bet-y:clamp(100px,12cqw,126px)!important}
+  /* 右边玩家，与左边镜像。 */
+  #players.count-6 .player.seat-5{--in-x:calc(-1 * clamp(66px,9cqw,86px))!important;--in-y:0px!important;--bet-x:calc(-1 * clamp(104px,12cqw,126px))!important;--bet-y:clamp(48px,6cqw,64px)!important}
+  /* 右下玩家：牌在头像左上，下注在牌的内侧下方，留出公共牌和操作按钮。 */
+  #players.count-6 .player.seat-6{--in-x:calc(-1 * clamp(90px,12cqw,118px))!important;--in-y:clamp(-68px,-6.5cqw,-48px)!important;--bet-x:calc(-1 * clamp(108px,12cqw,132px))!important;--bet-y:clamp(-70px,-7cqw,-52px)!important}
+}
+
+/* 电脑端六人局：左下座位的下注向上收进绿毡内。 */
+@container game (orientation:landscape) and (min-width:1001px){
+  #players.count-6 .player.seat-1{--bet-y:-92px!important}
+}
+
+/* 结算亮牌固定绑定座位：左侧玩家的牌在头像右边，右侧玩家的牌在头像左边。 */
+#players .player:has(.hole-cards.showdown-hand){z-index:45!important;opacity:1!important}
+#players .player .hole-cards.showdown-hand{position:absolute!important;z-index:46!important;top:12px!important;bottom:auto!important;display:flex!important;gap:3px!important;margin:0!important;visibility:visible!important;opacity:1!important;filter:drop-shadow(0 4px 2px #0009)!important}
+#players .player.side-left .hole-cards.showdown-hand{left:calc(50% + 58px)!important;right:auto!important;transform:none!important}
+#players .player.side-right .hole-cards.showdown-hand{right:calc(50% + 58px)!important;left:auto!important;transform:none!important}

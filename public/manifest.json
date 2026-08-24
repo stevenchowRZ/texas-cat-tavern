@@ -1,1 +1,1 @@
-{"name":"德州猫猫酒馆","short_name":"猫猫酒馆","start_url":"/","display":"standalone","orientation":"landscape","background_color":"#130b08","theme_color":"#130b08","icons":[]}
+{"id":"/","name":"德州猫猫酒馆","short_name":"猫猫酒馆","description":"像素猫咪鸡尾酒吧与德州扑克游戏","start_url":"/","scope":"/","display":"standalone","orientation":"landscape","background_color":"#130b08","theme_color":"#130b08","icons":[{"src":"/assets/app-icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},{"src":"/assets/app-icon-512.png","sizes":"512x512","type":"image/png","purpose":"any"}]}

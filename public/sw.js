@@ -1,1 +1,69 @@
-const CACHE='texas-cat-tavern-v3',FILES=['/','/app.js','/pixel-theme.css','/side-layout-v6.css','/manifest.json','/assets/pixel-cat-tavern-bg.png','/assets/cat-avatars/1.png'];self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)))});self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(xs=>Promise.all(xs.filter(x=>x!==CACHE).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});self.addEventListener('fetch',e=>{if(e.request.method==='GET'&&!new URL(e.request.url).pathname.startsWith('/api/'))e.respondWith(fetch(e.request).then(r=>{const c=r.clone();caches.open(CACHE).then(x=>x.put(e.request,c));return r}).catch(()=>caches.match(e.request))) });
+const CACHE='texas-cat-tavern-v98';
+const FILES=[
+  '/',
+  '/app.js',
+  '/tavern-game.js',
+  '/pixel-theme.css',
+  '/tavern.css',
+  '/viewport-lock.css',
+  '/tavern-trial-scale.css',
+  '/side-layout-v6.css',
+  '/manifest.json',
+  '/assets/pixel-cat-tavern-bg.png',
+  '/assets/pixel-cat-tavern-bg-day-v1.png',
+  '/assets/audio/tavern-bgm.mp3',
+  '/assets/app-icon-192.png',
+  '/assets/app-icon-512.png',
+  '/assets/poker-table-real.png',
+  '/assets/bartender-shaker-1s-loop.gif',
+  '/assets/bartender-shaker-flair-18frames.png',
+  '/assets/character-louis-v2.png',
+  '/assets/character-formal-v2.png',
+  '/assets/character-flower-v2.png',
+  '/assets/character-adventure-v2.png',
+  '/assets/character-musician-v2.png',
+  '/assets/character-redhood-v2.png',
+  '/assets/character-pink-bow-v3.png',
+  '/assets/louis-animations/louis-tray-walk-left-loop.gif',
+  '/assets/louis-animations/louis-tray-walk-right-loop.gif',
+  '/assets/louis-animations/louis-serve-right-once.gif',
+  '/assets/guest-animations/aviator-cat-walk-left-loop.gif',
+  '/assets/guest-animations/aviator-cat-turn-sit-back-once.gif',
+  '/assets/guest-animations/aviator-cat-seated-back.png',
+  '/assets/guest-seated-back/guest-pink-bow-seated-back.png',
+  '/assets/guest-seated-back/guest-formal-tabby-seated-back.png',
+  '/assets/guest-seated-back/guest-aviator-seated-back.png',
+  '/assets/guest-seated-back/guest-flower-seated-back.png',
+  '/assets/guest-seated-back/guest-musician-seated-back.png',
+  '/assets/guest-seated-back/guest-redhood-seated-back.png',
+  '/assets/guest-walk-animations/guest-pink-walk-left-loop.gif',
+  '/assets/guest-walk-animations/guest-tabby-walk-left-loop.gif',
+  '/assets/guest-walk-animations/guest-cream-walk-left-loop.gif',
+  '/assets/guest-walk-animations/guest-gray-walk-left-loop.gif',
+  '/assets/guest-walk-animations/guest-orange-walk-left-loop.gif',
+  '/assets/guest-walk-animations/guest-black-walk-left-loop.gif',
+  '/assets/guest-walk-animations/guest-gray-walk-left-isolated-v4.png',
+  '/assets/guest-walk-animations/guest-orange-walk-left-isolated-v4.png',
+  '/assets/guest-walk-animations/guest-black-walk-left-isolated-v4.png',
+  '/assets/guest-walk-animations/guest-tabby-walk-left-isolated-v4.png',
+  '/assets/guest-walk-animations/guest-pink-walk-left-isolated-v4.png',
+  '/assets/cocktails/cocktail-pixel-atlas-v1.png',
+  '/assets/cocktails/cocktail-ingredients-pixel-atlas-v5.png',
+  '/assets/cat-avatars/1.png'
+];
+self.addEventListener('install',event=>{
+  self.skipWaiting();
+  event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)));
+});
+self.addEventListener('activate',event=>{
+  event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim()));
+});
+self.addEventListener('fetch',event=>{
+  if(event.request.method==='GET'&&!new URL(event.request.url).pathname.startsWith('/api/')){
+    event.respondWith(fetch(event.request).then(response=>{
+      const copy=response.clone();
+      caches.open(CACHE).then(cache=>cache.put(event.request,copy));
+      return response;
+    }).catch(()=>caches.match(event.request)));
+  }
+});

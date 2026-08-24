@@ -48,7 +48,7 @@ function handRank(cards) { return combinations(cards,5).map(rankFive).sort(compa
 class PokerGame {
   constructor({smallBlind=10, bigBlind=20, initialChips=1000, blindIntervalMinutes=0}={}) {
     this.baseSmallBlind=Math.max(1,Number(smallBlind)||10);this.baseBigBlind=Math.max(this.baseSmallBlind*2,Number(bigBlind)||20);this.smallBlind=this.baseSmallBlind;this.bigBlind=this.baseBigBlind;this.blindIntervalMinutes=Math.max(0,Math.min(120,Number(blindIntervalMinutes)||0));this.startedAt=Date.now();this.blindLevel=0;this.initialChips=Math.max(this.bigBlind*20,Number(initialChips)||1000);this.players=[];this.dealer=-1;
-    this.status='waiting'; this.handNo=0; this.log=[];this.history=[];this.seatsRandomized=false;this.eliminated=[];
+    this.status='waiting'; this.handNo=0; this.log=[];this.history=[];this.seatsRandomized=false;this.seatCount=0;this.eliminated=[];
   }
   addPlayer({id,name,isBot=false,avatar=1}) {
     if (this.status !== 'waiting') throw new Error('牌局进行中，暂时不能加入');
@@ -58,12 +58,16 @@ class PokerGame {
     this.players.push({id,name:String(name||'玩家').slice(0,12),isBot,avatar:safeAvatar,chips:this.initialChips,hole:[],bet:0,totalBet:0,folded:false,allIn:false,acted:false,lastAction:null,connected:true});
   }
   startHand() {
+    // 座位在本桌第一手即锁定。必须在移除零筹码玩家前补齐旧房间的座位资料，
+    // 否则旧房间会把“剩余人数”误当成座位总数，造成淘汰后重新排位。
+    if(!this.seatCount)this.seatCount=this.players.length;
+    this.players.forEach((p,index)=>{if(!Number.isInteger(p.seatIndex))p.seatIndex=index});
     const live=this.players.filter(p=>p.chips>0);
     if (live.length<2) throw new Error('至少需要两名有筹码的玩家');
     const previousDealerId=this.players[this.dealer]?.id;
     const newlyEliminated=this.players.filter(p=>p.chips<=0);for(const p of newlyEliminated)if(!this.eliminated.some(x=>x.id===p.id))this.eliminated.push(p);
     this.players=this.players.filter(p=>p.chips>0);
-    if(!this.seatsRandomized){shuffle(this.players);this.seatsRandomized=true;}
+    if(!this.seatsRandomized){shuffle(this.players);this.players.forEach((p,index)=>p.seatIndex=index);this.seatsRandomized=true;}
     else if(previousDealerId)this.dealer=this.players.findIndex(p=>p.id===previousDealerId);
     if(this.blindIntervalMinutes>0){this.blindLevel=Math.min(10,Math.floor((Date.now()-this.startedAt)/(this.blindIntervalMinutes*60000)));const multiplier=2**this.blindLevel;this.smallBlind=this.baseSmallBlind*multiplier;this.bigBlind=this.baseBigBlind*multiplier;}
     this.handStartChips=new Map(this.players.map(p=>[p.id,p.chips]));
@@ -113,12 +117,12 @@ class PokerGame {
     this.log.unshift(this.winners.map(w=>`${w.name} 以${w.hand}赢得${w.pot} ${w.amount}`).join('，'));this.status='finished';this.turn=-1;this.recordHistory();
   }
   recordHistory(){const results=this.players.map(p=>({id:p.id,name:p.name,delta:p.chips-(this.handStartChips?.get(p.id)??p.chips)})),hands=this.players.filter(p=>!p.folded).map(p=>({id:p.id,name:p.name,hole:[...p.hole]}));this.history.unshift({handNo:this.handNo,smallBlind:this.smallBlind,bigBlind:this.bigBlind,board:[...(this.board||[])],hands,results,winners:this.winners.map(w=>({id:w.id,name:w.name,amount:w.amount,hand:w.hand,pot:w.pot}))});this.history=this.history.slice(0,5);}
-  resetTournament(){const all=[...this.players,...this.eliminated],seen=new Set();this.players=all.filter(p=>!seen.has(p.id)&&seen.add(p.id));this.eliminated=[];for(const p of this.players)Object.assign(p,{chips:this.initialChips,hole:[],bet:0,totalBet:0,folded:false,allIn:false,acted:false,lastAction:null});this.dealer=-1;this.handNo=0;this.history=[];this.winners=[];this.board=[];this.pot=0;this.currentBet=0;this.smallBlind=this.baseSmallBlind;this.bigBlind=this.baseBigBlind;this.blindLevel=0;this.startedAt=Date.now();this.seatsRandomized=false;this.status='waiting';}
+  resetTournament(){const all=[...this.players,...this.eliminated],seen=new Set();this.players=all.filter(p=>!seen.has(p.id)&&seen.add(p.id));this.eliminated=[];for(const p of this.players)Object.assign(p,{chips:this.initialChips,hole:[],bet:0,totalBet:0,folded:false,allIn:false,acted:false,lastAction:null});this.dealer=-1;this.handNo=0;this.history=[];this.winners=[];this.board=[];this.pot=0;this.currentBet=0;this.smallBlind=this.baseSmallBlind;this.bigBlind=this.baseBigBlind;this.blindLevel=0;this.startedAt=Date.now();this.seatsRandomized=false;this.seatCount=0;this.status='waiting';}
   view(viewerId,room){
-    const viewerIndex=this.players.findIndex(p=>p.id===viewerId),viewer=this.players[viewerIndex],reveal=this.status==='finished';
+    const viewerIndex=this.players.findIndex(p=>p.id===viewerId),viewer=this.players[viewerIndex],reveal=this.status==='finished',seatCount=this.seatCount||this.players.length,viewerSeat=viewer?.seatIndex;
     const ordered=viewerIndex>=0?this.players.map((_,n)=>(viewerIndex+n)%this.players.length):this.players.map((_,n)=>n);
     const nextBlindAt=this.blindIntervalMinutes>0?this.startedAt+(this.blindLevel+1)*this.blindIntervalMinutes*60000:null;
-    return {room,viewerId,status:this.status,handNo:this.handNo,street:this.street,board:this.board||[],pot:(this.pot||0)+this.players.reduce((s,p)=>s+p.bet,0),currentBet:this.currentBet||0,dealer:this.dealer,turn:this.turn,smallBlind:this.smallBlind,bigBlind:this.bigBlind,blindLevel:this.blindLevel,blindIntervalMinutes:this.blindIntervalMinutes,nextBlindAt,initialChips:this.initialChips,players:ordered.map(i=>{const p=this.players[i],showHole=reveal?!p.folded:p.id===viewerId;return{id:p.id,name:p.name,isBot:p.isBot,avatar:p.avatar||1,chips:p.chips,bet:p.bet,lastAction:p.lastAction,folded:p.folded,allIn:p.allIn,connected:p.connected,isDealer:i===this.dealer,isSmallBlind:i===this.smallBlindSeat,isBigBlind:i===this.bigBlindSeat,isTurn:i===this.turn,hole:showHole?p.hole:p.hole.map(()=>null)}}),legal:viewer?this.legal(viewerId):null,winners:this.winners||[],history:this.history,log:this.log.slice(0,12)};
+    return {room,viewerId,status:this.status,handNo:this.handNo,street:this.street,board:this.board||[],pot:(this.pot||0)+this.players.reduce((s,p)=>s+p.bet,0),currentBet:this.currentBet||0,dealer:this.dealer,turn:this.turn,smallBlind:this.smallBlind,bigBlind:this.bigBlind,blindLevel:this.blindLevel,blindIntervalMinutes:this.blindIntervalMinutes,nextBlindAt,initialChips:this.initialChips,seatCount,players:ordered.map((i,displayIndex)=>{const p=this.players[i],showHole=reveal?!p.folded:p.id===viewerId,seatPosition=Number.isInteger(viewerSeat)&&Number.isInteger(p.seatIndex)?(p.seatIndex-viewerSeat+seatCount)%seatCount:(Number.isInteger(p.seatIndex)?p.seatIndex:displayIndex);return{id:p.id,name:p.name,isBot:p.isBot,avatar:p.avatar||1,chips:p.chips,bet:p.bet,lastAction:p.lastAction,folded:p.folded,allIn:p.allIn,connected:p.connected,seatPosition,isDealer:i===this.dealer,isSmallBlind:i===this.smallBlindSeat,isBigBlind:i===this.bigBlindSeat,isTurn:i===this.turn,hole:showHole?p.hole:p.hole.map(()=>null)}}),legal:viewer?this.legal(viewerId):null,winners:this.winners||[],history:this.history,log:this.log.slice(0,12)};
   }
 }
 

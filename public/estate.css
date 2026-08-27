@@ -1,0 +1,181 @@
+/* 猫猫庄园：复用酒馆 1280×720 逻辑画布、像素字体与猫猫币样式。 */
+#estate{position:relative;overflow:hidden;background:#100807;color:#ffe9bd;font-family:"Courier New","Microsoft YaHei",monospace}
+#estate.active{display:block}
+.estate-scene{position:absolute;inset:0;overflow:hidden;background:#0d1024;isolation:isolate}
+.estate-scene:after{content:"";position:absolute;z-index:2;inset:0;pointer-events:none;box-shadow:inset 0 -72px 80px #08040355}
+.estate-scene>img{display:block;width:100%;height:100%;object-fit:cover;image-rendering:pixelated}
+.estate-head{position:absolute;z-index:40;left:0;right:0;top:0;height:78px!important;padding:7px 14px!important;display:grid!important;grid-template-columns:210px 1fr auto;align-items:center;border:0!important;background:transparent!important;box-shadow:none!important}
+.estate-head button{border-radius:0!important}
+.estate-back{position:absolute;right:18px;top:calc(50cqh + 65px);justify-self:auto;padding:10px 14px!important;border:2px solid #87502a!important;background:#2a170e!important;color:#ffd179!important;font-size:20px!important;box-shadow:3px 3px #080403!important}
+.estate-back:hover,.estate-back:focus-visible{border-color:#ffcd69!important;outline:0;box-shadow:0 0 12px #e89d35,3px 3px #080403!important}
+.estate-title{position:absolute;top:15px;left:18px;display:grid;gap:3px;min-width:0;padding:0;border:0;background:transparent;box-shadow:none;text-align:left}
+.estate-title:before,.estate-title:after{content:none}
+.estate-title b{color:#ffd179;font-size:20px;letter-spacing:2px;text-shadow:3px 3px #2b1409}
+.estate-title span{padding:0;color:#f0d29d;font-size:11px;letter-spacing:1px;text-shadow:2px 2px #211008}
+.estate-economy{position:absolute;top:20px;right:22px;display:flex;align-items:center;justify-content:flex-end;gap:8px}
+.estate-income{display:grid;gap:2px;min-width:130px;padding:7px 10px;border:2px solid #684128;background:#24140e;text-align:right}
+.estate-income small{color:#bda17d;font-size:12px}
+.estate-income b{color:#91e4a3;font-size:17px}
+#estate .coin-badge{min-height:0!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;font-size:20px!important;text-shadow:3px 3px #211008,0 0 7px #e88d29}
+.estate-collect{min-width:138px;height:52px;padding:5px 8px!important;display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;align-items:center;border:3px solid #d89b36!important;background:#432617!important;color:#ffe0a0!important;box-shadow:3px 3px #080403!important;text-align:left}
+.estate-collect small{color:#c8a878;font-size:10px}
+.estate-collect b{font-size:17px}
+.estate-collect span{grid-column:2;grid-row:1/3;padding:6px 8px;background:#df9c38;color:#24140b;font-size:13px}
+.estate-collect:disabled{opacity:.58;filter:grayscale(.5)}
+.estate-collect:not(:disabled){animation:estateCollectGlow 1.3s steps(2,end) infinite}
+@keyframes estateCollectGlow{50%{border-color:#ffe083;box-shadow:0 0 15px #e89d35,3px 3px #080403}}
+
+.estate-controls{position:absolute;z-index:35;left:18px;right:18px;top:91px;display:grid;grid-template-columns:auto 340px 1fr;align-items:center;gap:12px;pointer-events:none}
+.estate-controls>*{pointer-events:auto}
+.estate-levels{display:flex;gap:6px;padding:7px;border:2px solid #6b4026;background:#170d09df;box-shadow:4px 4px #080403}
+.estate-levels button{width:54px;height:46px;padding:0!important;border:2px solid #76502f!important;border-radius:0!important;background:#2b1912!important;color:#d8ba8b!important;font-size:15px!important;box-shadow:inset 0 -4px #160b08!important}
+.estate-levels button span{display:block;color:#a78863;font-size:8px}
+.estate-levels button.active{border-color:#ffd25d!important;background:#74451f!important;color:#fff0a2!important;box-shadow:0 0 10px #ffbd2f,inset 0 -4px #3a1e0e!important}
+.estate-car-card{height:62px;padding:5px 9px;display:grid;grid-template-columns:88px 1fr;align-items:center;gap:8px;border:2px solid #6b4026;background:#170d09df;box-shadow:4px 4px #080403}
+.estate-car-card img{width:84px;height:54px;object-fit:contain;image-rendering:pixelated;filter:drop-shadow(2px 4px #080403)}
+.estate-car-card span{display:grid;gap:2px;min-width:0}
+.estate-car-card small{color:#c6a87a;font-size:9px}
+.estate-car-card b{overflow:hidden;color:#ffe09a;font-size:12px;white-space:nowrap;text-overflow:ellipsis}
+.estate-car-card em{color:#91e4a3;font-size:9px;font-style:normal}
+.estate-controls>p{justify-self:end;max-width:430px;margin:0;padding:9px 12px;border-left:4px solid #d89432;background:#170d09d9;color:#e4c899;font-size:12px;line-height:1.45;text-align:right;box-shadow:4px 4px #080403}
+
+.estate-parking-grid{position:absolute;z-index:10;left:0;right:0;bottom:0;height:32%}
+.estate-slot{position:absolute;top:0;bottom:0;left:var(--slot-x);width:18%;min-width:0;padding:0!important;transform:translateX(-50%);border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;cursor:pointer}
+.estate-slot:before{content:"";position:absolute;inset:2% 3%;border:3px dashed transparent;background:transparent;transition:.16s steps(2,end)}
+.estate-slot:hover:before,.estate-slot:focus-visible:before{border-color:#ffe197;background:#ffe19718;outline:0}
+.estate-slot-label{position:absolute;z-index:4;left:50%;top:5%;padding:4px 7px;transform:translateX(-50%);border:2px solid #ead0a2;background:#21140dd6;color:#fff1c8;font-size:12px;white-space:nowrap;box-shadow:3px 3px #080403;opacity:.8}
+.estate-slot.occupied .estate-slot-label{opacity:0}
+.estate-slot.empty:after{content:"+ 停车";position:absolute;left:50%;top:52%;padding:7px 10px;transform:translate(-50%,-50%);border:2px solid #f0d29d;background:#281d36cc;color:#fff5dc;font-size:12px;white-space:nowrap;opacity:0}
+.estate-slot.empty:hover:after,.estate-slot.empty:focus-visible:after{opacity:1}
+.estate-parking-car{position:absolute;z-index:5;left:50%;bottom:20%;width:96%;height:auto;transform:translateX(-50%);image-rendering:pixelated;pointer-events:none;filter:drop-shadow(0 8px 2px #120e1b88);transition:transform .16s steps(2,end)}
+.estate-slot:hover .estate-parking-car{transform:translate(-50%,-4px)}
+.estate-parking-car.mirrored{transform:translateX(-50%) scaleX(-1)}
+.estate-slot:hover .estate-parking-car.mirrored{transform:translate(-50%,-4px) scaleX(-1)}
+.estate-corner-mark{position:absolute;z-index:4;left:18px;bottom:18px;display:grid;padding:7px 10px;border-left:4px solid #d89432;background:#170d09c9;color:#ffe09a;pointer-events:none}
+.estate-corner-mark b{font-size:13px;letter-spacing:4px}.estate-corner-mark span{color:#c69f71;font-size:8px;letter-spacing:2px}
+
+.estate-neon{position:absolute!important;z-index:38!important;left:2%!important;top:17%!important;display:grid!important;grid-template-columns:34px auto!important;grid-template-rows:auto auto!important;gap:0 6px!important;width:auto!important;padding:9px 11px!important;border:3px solid #ff4b50!important;border-radius:0!important;background:#1b0507ed!important;color:#ff8c8f!important;text-align:left!important;transform:rotate(-1deg);box-shadow:0 0 8px #ff4248,0 0 24px #b50f1b,5px 5px #080403!important;animation:estateNeonFlicker 2s steps(2,end) infinite}
+.estate-neon:before{content:"";position:absolute;inset:4px;border:1px solid #ff777a;pointer-events:none}
+.estate-neon span{position:relative;grid-row:1/3;align-self:center;color:#fff1e0;font-size:32px;line-height:1;text-shadow:0 0 4px #fff,0 0 11px #ff3942,0 0 21px #d30818}
+.estate-neon b{position:relative;color:#ffb0aa;font-size:17px;letter-spacing:1px;text-shadow:0 0 2px #fff,0 0 7px #ff4950,0 0 16px #df1723}
+.estate-neon small{position:relative;color:#ff858a;font-size:9px;letter-spacing:1px;text-shadow:0 0 6px #ff2633}
+.estate-neon:focus-visible{outline:3px solid #fff0da!important;outline-offset:3px}
+.estate-neon:active{filter:brightness(1.5);transform:translateY(2px) rotate(-1deg)}
+.estate-neon:disabled{opacity:.34!important;filter:grayscale(1)!important;animation:none!important;cursor:not-allowed!important}
+.tavern-scene.daytime .estate-neon{animation:none!important;filter:none!important}
+@keyframes estateNeonFlicker{0%,11%,18%,100%{filter:brightness(1)}13%{filter:brightness(.45)}15%{filter:brightness(1.45)}}
+
+@media (hover:none),(pointer:coarse){
+  .estate-slot.empty:after{opacity:.7}
+  .estate-controls>p{display:none}
+  .estate-controls{grid-template-columns:auto 340px}
+}
+@media (prefers-reduced-motion:reduce){.estate-neon,.estate-collect{animation:none!important}}
+
+/* 五车测试版：缩小交互框、一级车位下移、车库与选车窗口。 */
+.estate-collect{position:absolute!important;z-index:45;right:18px;top:50%;width:218px;height:106px;min-width:218px;padding:8px!important;transform:translateY(-50%);grid-template-columns:1fr 1fr!important;grid-template-rows:1fr 31px!important;gap:5px;border-width:3px!important;background:#27160fe8!important;text-align:center!important}
+.estate-collect .estate-collect-income,.estate-collect .estate-collect-unclaimed{display:grid;grid-column:auto!important;grid-row:auto!important;gap:3px;align-content:center;min-width:0;padding:1px 5px!important;background:transparent!important}
+.estate-collect .estate-collect-income{border-right:1px solid #a66a36}
+.estate-collect small{font-family:"Microsoft YaHei","SimSun",sans-serif;font-size:11px!important;color:#c8a878!important}
+.estate-collect b{color:#91e4a3!important;font-size:16px!important;white-space:nowrap}
+.estate-collect .estate-collect-action{grid-column:1/-1!important;grid-row:2!important;display:block!important;padding:4px 10px!important;background:#df9c38;color:#24140b;font-family:"Microsoft YaHei","SimSun",sans-serif!important;font-size:20px!important;font-weight:900!important;line-height:22px;letter-spacing:4px;text-align:center}
+.estate-collect:disabled{opacity:.82!important}
+.estate-controls{grid-template-columns:340px 1fr!important;align-items:start!important}
+.estate-level-panel{display:grid;gap:7px;width:340px;pointer-events:auto}
+.estate-garage-button{height:45px;padding:5px 12px!important;display:flex;align-items:center;justify-content:space-between;border:2px solid #d89432!important;border-radius:0!important;background:#2b1912e8!important;color:#ffe09a!important;box-shadow:4px 4px #080403!important}
+.estate-garage-button b{font-size:18px;letter-spacing:4px}.estate-garage-button span{color:#c6a87a;font-size:11px}
+.estate-garage-button:hover,.estate-garage-button:focus-visible{border-color:#ffe083!important;outline:0;box-shadow:0 0 12px #e89d35,4px 4px #080403!important}
+.estate-showroom-button{height:45px;padding:5px 12px!important;display:flex;align-items:center;justify-content:space-between;border:2px solid #9c6fd8!important;border-radius:0!important;background:#21142fe8!important;color:#f2d8ff!important;box-shadow:4px 4px #080403!important}
+.estate-showroom-button b{font-size:17px;letter-spacing:3px}.estate-showroom-button span{color:#d0a9e9;font-size:11px}.estate-showroom-button:hover,.estate-showroom-button:focus-visible{border-color:#f0ccff!important;outline:0;box-shadow:0 0 12px #b66fe8,4px 4px #080403!important}
+.estate-level-panel .estate-car-card{width:340px}
+.estate-car-card img{image-rendering:auto!important}
+.estate-parking-grid{height:32%!important}
+.estate-slot:before{inset:2% 3%!important;border-width:3px!important}
+.estate-parking-car{bottom:20%!important;width:var(--parking-car-width,96%)!important;image-rendering:auto!important;filter:drop-shadow(0 7px 2px #120e1b77)!important}
+.estate-parking-car.variant-a{--parking-car-width:103%;bottom:16.8%!important}.estate-parking-car.variant-b{--parking-car-width:95%;bottom:17.5%!important}.estate-parking-car.variant-c{--parking-car-width:94%;bottom:20%!important}.estate-parking-car.variant-d{--parking-car-width:101%;bottom:14%!important}.estate-parking-car.variant-e{--parking-car-width:98%;bottom:12.7%!important}
+.estate-parking-car.model-amg-g63.variant-a{left:51%;--parking-car-width:86%;bottom:24.5%!important}.estate-parking-car.model-amg-g63.variant-b{left:51%;--parking-car-width:84%;bottom:18.4%!important}.estate-parking-car.model-amg-g63.variant-c{--parking-car-width:96%;bottom:20.4%!important}.estate-parking-car.model-amg-g63.variant-d{left:49%;--parking-car-width:84%;bottom:18.4%!important}.estate-parking-car.model-amg-g63.variant-e{left:54%;--parking-car-width:86%;bottom:24.5%!important}
+.estate-parking-car.model-porsche-911-gt3.variant-a{--parking-car-width:90%;bottom:17%!important}.estate-parking-car.model-porsche-911-gt3.variant-b{--parking-car-width:93%;bottom:17.5%!important}.estate-parking-car.model-porsche-911-gt3.variant-c{--parking-car-width:82%;bottom:21%!important}.estate-parking-car.model-porsche-911-gt3.variant-d{--parking-car-width:93%;bottom:17.5%!important}.estate-parking-car.model-porsche-911-gt3.variant-e{--parking-car-width:90%;bottom:17%!important}
+.estate-parking-car.model-bmw-3-series-gt.variant-a{--parking-car-width:88%;bottom:17%!important}.estate-parking-car.model-bmw-3-series-gt.variant-b{--parking-car-width:86%;bottom:18%!important}.estate-parking-car.model-bmw-3-series-gt.variant-c{--parking-car-width:93%;bottom:15%!important}.estate-parking-car.model-bmw-3-series-gt.variant-d{--parking-car-width:86%;bottom:18%!important}.estate-parking-car.model-bmw-3-series-gt.variant-e{--parking-car-width:88%;bottom:17%!important}
+.estate-parking-car.model-rolls-royce-phantom.variant-a{--parking-car-width:91%;bottom:16%!important}.estate-parking-car.model-rolls-royce-phantom.variant-b{--parking-car-width:88%;bottom:18%!important}.estate-parking-car.model-rolls-royce-phantom.variant-c{--parking-car-width:85%;bottom:19%!important}.estate-parking-car.model-rolls-royce-phantom.variant-d{--parking-car-width:88%;bottom:18%!important}.estate-parking-car.model-rolls-royce-phantom.variant-e{--parking-car-width:91%;bottom:16%!important}
+.estate-parking-car.model-bmw-m4-2025.variant-a{--parking-car-width:83%;bottom:17%!important}.estate-parking-car.model-bmw-m4-2025.variant-b{--parking-car-width:80%;bottom:18%!important}.estate-parking-car.model-bmw-m4-2025.variant-c{--parking-car-width:80%;bottom:20%!important}.estate-parking-car.model-bmw-m4-2025.variant-d{--parking-car-width:80%;bottom:18%!important}.estate-parking-car.model-bmw-m4-2025.variant-e{--parking-car-width:83%;bottom:17%!important}
+.estate-parking-car.model-bmw-z4.variant-a{--parking-car-width:75%;bottom:25%!important}.estate-parking-car.model-bmw-z4.variant-b{--parking-car-width:70%;bottom:25%!important}.estate-parking-car.model-bmw-z4.variant-c{--parking-car-width:68%;bottom:26%!important}.estate-parking-car.model-bmw-z4.variant-d{--parking-car-width:70%;bottom:25%!important}.estate-parking-car.model-bmw-z4.variant-e{--parking-car-width:75%;bottom:25%!important}
+.estate-parking-car.model-porsche-panamera-gts.variant-a{--parking-car-width:84%;bottom:17%!important}.estate-parking-car.model-porsche-panamera-gts.variant-b{--parking-car-width:81%;bottom:18%!important}.estate-parking-car.model-porsche-panamera-gts.variant-c{--parking-car-width:80%;bottom:20%!important}.estate-parking-car.model-porsche-panamera-gts.variant-d{--parking-car-width:81%;bottom:18%!important}.estate-parking-car.model-porsche-panamera-gts.variant-e{--parking-car-width:84%;bottom:17%!important}
+.estate-parking-car.model-chevrolet-camaro-bumblebee.variant-a{--parking-car-width:86%;bottom:13%!important}.estate-parking-car.model-chevrolet-camaro-bumblebee.variant-b{--parking-car-width:76%;bottom:20%!important}.estate-parking-car.model-chevrolet-camaro-bumblebee.variant-c{--parking-car-width:74%;bottom:20%!important}.estate-parking-car.model-chevrolet-camaro-bumblebee.variant-d{--parking-car-width:76%;bottom:20%!important}.estate-parking-car.model-chevrolet-camaro-bumblebee.variant-e{--parking-car-width:86%;bottom:13%!important}
+.estate-parking-car.model-mercedes-maybach.variant-a{--parking-car-width:84%;bottom:17%!important}.estate-parking-car.model-mercedes-maybach.variant-b{--parking-car-width:81%;bottom:18%!important}.estate-parking-car.model-mercedes-maybach.variant-c{--parking-car-width:80%;bottom:20%!important}.estate-parking-car.model-mercedes-maybach.variant-d{--parking-car-width:81%;bottom:18%!important}.estate-parking-car.model-mercedes-maybach.variant-e{--parking-car-width:84%;bottom:17%!important}
+.estate-car-number{position:absolute;z-index:7;left:50%;bottom:11%;padding:3px 5px;transform:translateX(-50%);border:1px solid #ffd478;background:#160c09dd;color:#ffe8b0;font-size:8px;font-style:normal;pointer-events:none}
+.estate-level-1 .estate-parking-grid{height:32%!important}
+.estate-level-1 .estate-slot{width:18%!important}
+.estate-level-1 .estate-slot:before{inset:2% 3%!important}
+.estate-level-1 .estate-parking-car{bottom:20%!important}
+.estate-level-1 .estate-parking-car.model-amg-g63{bottom:20.4%!important}
+.estate-level-1 .estate-car-number{bottom:19%}
+
+.estate-modal[hidden]{display:none!important}
+.estate-modal{position:absolute;z-index:180;inset:0;display:grid;place-items:center;padding:56px 80px;background:#080403d9;opacity:0;transition:opacity .14s steps(2,end)}
+.estate-modal.open{opacity:1}
+.estate-modal>section{width:min(1080px,94cqw);max-height:610px;overflow:hidden;border:5px solid #d8a85c;background:#1b100c;color:#ffe9bd;box-shadow:10px 10px #050201}.estate-modal>section.estate-catalog-modal{width:min(540px,94cqw)}
+.estate-modal>section>header{height:70px!important;padding:10px 14px!important;display:flex!important;align-items:center;justify-content:space-between;border-bottom:4px solid #6c3c20!important;background:#2a170e!important}
+.estate-modal>section>header div{display:grid;gap:2px;text-align:left}.estate-modal>section>header small{color:#c79251;font-size:11px;letter-spacing:2px}.estate-modal>section>header b{color:#ffd179;font-size:25px}
+.estate-modal>section>header button{width:46px;height:46px;padding:0!important;border:2px solid #986035!important;border-radius:0!important;background:#170c09!important;color:#ffe0a0!important;font-size:30px!important;line-height:40px}
+.estate-modal-content{max-height:535px;padding:16px;overflow:auto;background:linear-gradient(#1b100cf5,#100906f5)}.estate-modal-content.estate-catalog-modal-content{max-height:none;padding:10px;overflow:hidden}
+.estate-garage-summary,.estate-current-car{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:12px;padding:10px 13px;border:2px solid #704225;background:#2a180f}
+.estate-garage-summary b,.estate-current-car b{color:#ffe09a;font-size:17px}.estate-garage-summary span,.estate-current-car span{color:#c7a77e;font-size:12px}
+.estate-current-car button{padding:8px 12px!important;border:2px solid #aa6339!important;border-radius:0!important;background:#4a2618!important;color:#ffd5a0!important;font-size:12px!important}
+.estate-picker-hint{margin:0 0 12px;padding:8px 10px;border-left:4px solid #d89432;background:#24140e;color:#d7bb91;font-size:12px}
+.estate-showroom-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.estate-showroom-card{min-width:0;padding:10px;display:grid;grid-template-columns:44% 1fr;align-items:center;gap:10px;border:3px solid #77528e;background:linear-gradient(145deg,#2b1836,#170c20);box-shadow:4px 4px #080403}
+.estate-showroom-car{width:100%;height:132px;object-fit:contain;image-rendering:auto;filter:drop-shadow(0 6px 2px #080403)}
+.estate-showroom-card>div{display:grid;align-content:center;gap:7px;min-width:0}.estate-showroom-card small{color:#c4a4d4;font-size:9px}.estate-showroom-card b{color:#ffe2a1;font-size:15px;line-height:1.25}.estate-showroom-card span{color:#d7b98d;font-size:11px}.estate-showroom-card em{color:#91e4a3;font-size:16px;font-style:normal;font-weight:900}.estate-showroom-card button{margin-top:2px;padding:7px 8px!important;border:2px solid #e2a94c!important;border-radius:0!important;background:#d99331!important;color:#281609!important;font-size:13px!important}.estate-modal>section>header small:empty{display:none}
+.estate-garage-list{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.estate-garage-card{position:relative;min-width:0;padding:9px;display:grid;grid-template-rows:118px 1fr;border:2px solid #684128;background:#2a1912;box-shadow:4px 4px #080403}
+.estate-garage-card>i{position:absolute;left:8px;top:8px;padding:3px 5px;border:1px solid #e0a64f;background:#1a0e0b;color:#ffe09a;font-size:9px;font-style:normal}
+.estate-garage-car{width:100%;height:112px;object-fit:contain;image-rendering:auto;filter:drop-shadow(0 5px 2px #08040399)}
+.estate-garage-card>div{display:grid;align-content:start;gap:4px;min-width:0}.estate-garage-card small{color:#bd8b52;font-size:8px}.estate-garage-card b{overflow:hidden;color:#ffe4aa;font-size:11px;white-space:nowrap;text-overflow:ellipsis}.estate-garage-card span{color:#c4a886;font-size:9px;line-height:1.35}
+.estate-garage-card button{height:33px;margin-top:5px;padding:5px!important;border:2px solid #d89432!important;border-radius:0!important;background:#70401f!important;color:#fff0aa!important;font-size:11px!important;box-shadow:inset 0 -3px #35190d!important}
+.estate-garage-card button:disabled{border-color:#574232!important;background:#32251e!important;color:#8e7e6d!important;box-shadow:none!important}.estate-garage-card button.current:disabled{border-color:#62855b!important;background:#263820!important;color:#a4d99b!important}
+.garage-status{margin-top:6px;padding:7px;border:1px solid #58764e;background:#20301d;color:#9fd396!important;text-align:center}.garage-status.parked{border-color:#8b6333;background:#3b2918;color:#e4bd76!important}
+
+@media (hover:none),(pointer:coarse){.estate-controls{grid-template-columns:auto 340px!important}.estate-garage-list{grid-template-columns:repeat(3,minmax(0,1fr))}.estate-modal>section{max-height:620px}}
+
+/* 抢车位顶部信息栏保持透明，不显示背景框。 */
+#estate .estate-head{
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+#estate .estate-head:before{content:none!important}
+
+/* 庄园等级折叠到独立按钮；车辆摘要仅在入场时短暂显示。 */
+.estate-level-panel{position:relative}
+.estate-estate-button{height:45px;padding:5px 12px!important;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;border:2px solid #b67b3c!important;border-radius:0!important;background:#2a170ee8!important;color:#ffe09a!important;box-shadow:4px 4px #080403!important;text-align:left}
+.estate-estate-button b{font-size:18px;letter-spacing:4px}.estate-estate-button span{min-width:0;color:#c6a87a;font-size:11px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.estate-estate-button i{color:#f7c85b;font-size:16px;font-style:normal}
+.estate-estate-button:hover,.estate-estate-button:focus-visible{border-color:#ffe083!important;outline:0;box-shadow:0 0 12px #e89d35,4px 4px #080403!important}
+.estate-level-menu[hidden]{display:none!important}
+.estate-level-menu{position:absolute;z-index:90;top:52px;left:0;width:340px;padding:7px;border:2px solid #9b6433;background:#180d0beF;box-shadow:5px 5px #080403}
+.estate-level-menu .estate-levels{padding:0;border:0;background:transparent;box-shadow:none}
+.estate-entry-summary[hidden]{display:none!important}
+.estate-entry-summary{position:absolute;z-index:76;top:12px;left:50%;width:350px;min-height:66px;padding:5px 10px;display:grid;grid-template-columns:86px 1fr;align-items:center;gap:8px;border:2px solid #8a552c;background:#170d09e8;box-shadow:4px 4px #080403;color:#ffe7ae;transform:translateX(-50%);pointer-events:none}
+.estate-entry-summary.is-visible{animation:estateEntrySummary 5s steps(2,end) both}
+.estate-entry-summary img{width:84px;height:54px;object-fit:contain;image-rendering:auto;filter:drop-shadow(2px 4px #080403)}
+.estate-entry-summary span{display:grid;gap:2px;min-width:0;text-align:left}.estate-entry-summary small{color:#c6a87a;font-size:9px}.estate-entry-summary b{overflow:hidden;color:#ffe09a;font-size:12px;white-space:nowrap;text-overflow:ellipsis}.estate-entry-summary em{color:#91e4a3;font-size:9px;font-style:normal}
+@keyframes estateEntrySummary{0%,82%{opacity:1;transform:translate(-50%,0)}100%{opacity:0;transform:translate(-50%,-8px)}}
+@media (max-width:700px){.estate-level-panel,.estate-level-menu{width:260px}.estate-entry-summary{top:10px;width:300px;grid-template-columns:72px 1fr}.estate-entry-summary img{width:70px;height:46px}}
+
+/* 庄园图鉴：等级介绍、车位容量与猫猫币解锁。 */
+.estate-level-menu{width:360px;max-height:calc(100cqh - 165px);padding:8px;overflow:auto}
+.estate-manor-catalog{display:grid;gap:7px}
+.estate-manor-card{display:grid;gap:5px;padding:8px 9px;border:2px solid #6a4328;background:#24150feF;box-shadow:3px 3px #080403}
+.estate-manor-card.unlocked{border-color:#567345;background:#1d2b1deF}.estate-manor-card.active{border-color:#f0c45b;box-shadow:0 0 9px #df9c38,3px 3px #080403}
+.estate-manor-card div{display:grid;gap:2px}.estate-manor-card small{color:#bd8b52;font-size:9px;letter-spacing:1px}.estate-manor-card b{color:#ffe2a1;font-size:15px}.estate-manor-card em{color:#c7a77e;font-size:10px;font-style:normal}.estate-manor-card p{margin:1px 0 0;color:#d6bc91;font-size:10px;line-height:1.35}
+.estate-manor-card button{min-height:29px;padding:5px 8px!important;border:2px solid #bd7835!important;border-radius:0!important;background:#5b321c!important;color:#ffe5a4!important;font-size:11px!important;box-shadow:inset 0 -3px #2a1209!important}.estate-manor-card.unlocked button{border-color:#668d58!important;background:#263d25!important;color:#c8f0bd!important}.estate-manor-card.active button{border-color:#8a7548!important;background:#40351f!important;color:#c9b98c!important;box-shadow:none!important}
+.estate-slot.locked{cursor:not-allowed!important;opacity:.42;filter:grayscale(.35)}.estate-slot.locked:before{border-color:#85523a!important;background:#160c09a8}
+@media (max-width:700px){.estate-level-menu{width:280px;max-height:calc(100cqh - 145px)}.estate-manor-card{padding:7px}.estate-manor-card p{font-size:9px}}
+
+/* 居中庄园图鉴：五级标签切换对应豪宅场景与解锁信息。 */
+.estate-catalog-tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));width:min(100%,500px);margin:0 auto 8px;gap:5px}
+.estate-catalog-tabs button{height:33px;padding:3px!important;border:2px solid #76502f!important;border-radius:0!important;background:#2b1912!important;color:#d8ba8b!important;font-size:12px!important;box-shadow:inset 0 -3px #160b08!important}.estate-catalog-tabs button.active{border-color:#ffd25d!important;background:#74451f!important;color:#fff0a2!important;box-shadow:0 0 10px #ffbd2f,inset 0 -3px #3a1e0e!important}
+.estate-catalog-detail{display:grid;grid-template-columns:1fr;gap:6px;align-items:stretch;width:min(100%,512px);margin:0 auto;padding:5px;border:3px solid #704225;background:linear-gradient(145deg,#2b180f,#150b08);box-shadow:5px 5px #080403}
+.estate-catalog-detail>img{width:100%;height:auto;aspect-ratio:16/9;justify-self:center;object-fit:contain;object-position:center;background:#100807;image-rendering:pixelated;border:2px solid #bc8044;box-shadow:3px 3px #080403}
+.estate-catalog-detail>div{width:100%;justify-self:center;display:grid;align-content:start;gap:4px;padding:2px}.estate-catalog-detail small{color:#c69350;font-size:10px;letter-spacing:1px}.estate-catalog-detail b{color:#ffe09a;font-size:20px}.estate-catalog-detail em{color:#d7b688;font-size:13px;font-style:normal}.estate-catalog-detail p{margin:0;color:#e0c39b;font-size:12px;line-height:1.4}.estate-catalog-detail span{padding:8px;border-left:4px solid #d89432;background:#20120d;color:#bfe8ae;font-size:11px;line-height:1.45}
+.estate-catalog-action{margin-top:4px;min-height:40px;padding:7px 10px!important;border:2px solid #d89432!important;border-radius:0!important;background:#70401f!important;color:#fff0aa!important;font-size:14px!important;box-shadow:inset 0 -3px #35190d!important}.estate-catalog-action.travel{border-color:#668d58!important;background:#263d25!important;color:#c8f0bd!important}.estate-catalog-action:disabled{border-color:#7b6540!important;background:#3b301c!important;color:#c9b98c!important;box-shadow:none!important}
+@media (max-width:700px){.estate-catalog-tabs{width:100%;gap:4px;margin-bottom:7px}.estate-catalog-tabs button{height:30px;font-size:11px!important}.estate-catalog-detail{width:100%;gap:5px;padding:4px}.estate-catalog-detail>img{width:100%;height:auto;aspect-ratio:16/9}.estate-catalog-detail>div{width:100%;gap:3px}.estate-catalog-detail b{font-size:18px}.estate-catalog-detail p{font-size:11px}.estate-catalog-detail span{font-size:10px}}

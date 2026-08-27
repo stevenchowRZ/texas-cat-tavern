@@ -1,0 +1,41 @@
+/* 酒馆顶部 HUD：作为场景叠层，不占用酒馆画面高度。 */
+#tavern{position:relative!important}
+#tavern .tavern-head{position:absolute!important;z-index:160!important;inset:0 0 auto!important;height:0!important;min-height:0!important;flex:0 0 0!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;overflow:visible!important;pointer-events:none}
+#tavern .tavern-settings-button{position:absolute;top:14px;left:16px;display:grid;place-items:center;width:43px;height:43px;padding:0!important;border:3px solid #c98532!important;border-radius:0!important;background:#21110b!important;color:#ffda78!important;font:900 28px/1 "Courier New",monospace!important;line-height:1!important;text-shadow:2px 2px #130704!important;box-shadow:4px 4px #090403,0 0 10px #d87f2770!important;cursor:pointer;pointer-events:auto}
+#tavern .tavern-settings-button:hover{filter:brightness(1.2)}
+#tavern .tavern-settings-button:focus-visible{outline:3px solid #fff1a0;outline-offset:3px}
+#tavern .tavern-hud-center{position:absolute;top:15px;left:50%;display:grid;gap:3px;justify-items:center;min-width:270px;transform:translateX(-50%);color:#ffe5a0;text-align:center;pointer-events:none}
+#tavern .tavern-hud-center>div{display:flex;align-items:baseline;justify-content:center;gap:11px}
+#tavern .tavern-hud-center b{color:#ffda79!important;font-size:25px!important;letter-spacing:2px;text-shadow:3px 3px #2b130a,0 0 8px #d47825}
+#tavern .tavern-hud-center .tavern-level{display:inline!important;color:#ffcf62!important;font:900 15px/1 "Courier New",monospace!important;letter-spacing:0;text-shadow:2px 2px #241008}
+#tavern .tavern-hud-center .tavern-level strong{font-size:17px;color:#fff0a9}
+#tavern .tavern-hud-center>#nightStatus{display:block!important;color:#f6d69a!important;font-size:14px!important;letter-spacing:2px;text-shadow:2px 2px #211009}
+#tavern .tavern-title{top:9.5%!important}
+#tavern .tavern-coins{position:absolute;top:20px;right:22px;display:flex!important;align-items:center;gap:6px;padding:0!important;border:0!important;background:transparent!important;color:#ffe18a;white-space:nowrap;pointer-events:none}
+#tavern .tavern-coins .tavern-level{display:inline-flex!important;align-items:baseline;gap:4px;margin-right:8px;padding-right:12px;border-right:2px solid #8f6538;color:#ffcf62!important;font:900 25px/1 "Courier New",monospace!important;letter-spacing:0;text-shadow:2px 2px #241008}
+#tavern .tavern-coins .tavern-level strong{color:#fff0a9;font-size:25px}
+#tavern .tavern-coins .cat-coin-icon{width:23px;height:23px;flex:0 0 auto}
+#tavern .tavern-coins b{color:#ffe39a!important;font:900 25px/1 "Courier New",monospace!important;letter-spacing:1px;text-shadow:3px 3px #211008,0 0 7px #e88d29}
+
+/* 酒保与服务员台词框随文字长度伸缩，长句达到上限后换行。 */
+#tavern .bartender-wrap .staff-dialog,
+#tavern .server-cat .staff-dialog{
+  width:max-content!important;
+  min-width:0!important;
+  max-width:380px!important;
+  white-space:normal!important;
+  overflow-wrap:anywhere;
+}
+#tavern .tavern-settings-panel{position:absolute;top:65px;left:16px;display:grid;gap:11px;width:230px;padding:13px 14px 14px;border:3px solid #a5682d;background:#1c0e0beF;box-shadow:5px 5px #080403,0 0 16px #b96b2838;color:#ffe2a1;pointer-events:auto}
+#tavern .tavern-settings-panel[hidden]{display:none!important}
+#tavern .tavern-settings-panel>b{color:#ffdb80!important;font-size:16px!important;letter-spacing:2px;text-align:left}
+#tavern .tavern-settings-panel label{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#f1ce91;font-size:13px}
+#tavern .music-switch input{position:absolute;inline-size:1px;block-size:1px;opacity:0}
+#tavern .music-switch i{position:relative;width:42px;height:22px;border:2px solid #8c582c;background:#321a10;box-shadow:inset 0 0 0 2px #120805}
+#tavern .music-switch i:after{content:'';position:absolute;top:3px;left:3px;width:12px;height:12px;background:#a77947;box-shadow:1px 1px #100705;transition:transform .12s steps(2,end),background .12s}
+#tavern .music-switch input:checked+i{border-color:#f4bc51;background:#704019}
+#tavern .music-switch input:checked+i:after{background:#ffe090;transform:translateX(18px)}
+#tavern .music-switch input:focus-visible+i{outline:3px solid #fff0a1;outline-offset:2px}
+#tavern .music-volume{display:grid!important;grid-template-columns:auto 1fr;gap:10px!important}
+#tavern .music-volume input{width:100%;accent-color:#efaf3d}
+@container game (max-height:520px){#tavern .tavern-settings-button{top:9px;left:11px;width:36px;height:36px;font-size:23px!important}#tavern .tavern-hud-center{top:9px}#tavern .tavern-hud-center b{font-size:20px!important}#tavern .tavern-hud-center>#nightStatus{font-size:11px!important}#tavern .tavern-coins{top:14px;right:13px}#tavern .tavern-coins .tavern-level{margin-right:5px;padding-right:8px;font-size:19px!important}#tavern .tavern-coins .tavern-level strong{font-size:19px}#tavern .tavern-coins b{font-size:19px!important}#tavern .tavern-coins .cat-coin-icon{width:19px;height:19px}#tavern .tavern-settings-panel{top:52px;left:11px;transform:scale(.88);transform-origin:top left}}

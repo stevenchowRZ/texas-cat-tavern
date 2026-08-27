@@ -31,14 +31,23 @@
   ];
 
   const ingredients={
-    gin:{name:'金酒',cost:20,art:0,group:'基酒'},rum:{name:'白朗姆',cost:19,art:1,group:'基酒'},vodka:{name:'伏特加',cost:19,art:2,group:'基酒'},bourbon:{name:'波本威士忌',cost:27,art:3,group:'基酒'},tequila:{name:'龙舌兰',cost:24,art:4,group:'基酒'},rye:{name:'黑麦威士忌',cost:28,art:5,group:'基酒'},
-    orange:{name:'橙味利口酒',cost:18,art:7,group:'利口酒与苦味剂'},vermouth:{name:'甜味美思',cost:18,art:14,group:'利口酒与苦味剂'},campari:{name:'金巴利',cost:25,art:15,group:'利口酒与苦味剂'},liqueur:{name:'咖啡利口酒',cost:21,art:17,group:'利口酒与苦味剂'},bitters:{name:'芳香苦精',cost:12,art:18,group:'利口酒与苦味剂'},bluecuracao:{name:'蓝橙力娇酒',cost:22,art:16,group:'利口酒与苦味剂'},aperol:{name:'阿佩罗',cost:23,art:6,group:'利口酒与苦味剂'},
-    tonic:{name:'汤力水',cost:8,art:8,group:'调和剂'},soda:{name:'苏打水',cost:7,art:9,group:'调和剂'},cola:{name:'可乐',cost:7,art:10,group:'调和剂'},gingerbeer:{name:'姜汁啤酒',cost:9,art:11,group:'调和剂'},lemonsoda:{name:'柠檬汽水',cost:8,art:12,group:'调和剂'},prosecco:{name:'普罗塞克',cost:22,art:13,group:'调和剂'},syrup:{name:'糖浆',cost:5,art:21,group:'调和剂'},coffee:{name:'浓缩咖啡',cost:10,art:29,group:'调和剂'},cranberry:{name:'蔓越莓汁',cost:9,art:23,group:'调和剂'},tomato:{name:'番茄汁',cost:8,art:24,group:'调和剂'},pineapplejuice:{name:'菠萝汁',cost:9,art:25,group:'调和剂'},orangejuice:{name:'橙汁',cost:8,art:26,group:'调和剂'},coconut:{name:'椰浆',cost:12,art:27,group:'调和剂'},cream:{name:'淡奶油',cost:11,art:28,group:'调和剂'},grenadine:{name:'红石榴糖浆',cost:8,art:22,group:'调和剂'},hotsauce:{name:'辣椒汁',cost:6,art:20,group:'调和剂'},worcestershire:{name:'伍斯特酱',cost:6,art:19,group:'调和剂'},
+    gin:{name:'金酒',cost:100,yield:5,art:0,group:'基酒'},rum:{name:'白朗姆',cost:95,yield:5,art:1,group:'基酒'},vodka:{name:'伏特加',cost:95,yield:5,art:2,group:'基酒'},bourbon:{name:'波本威士忌',cost:135,yield:5,art:3,group:'基酒'},tequila:{name:'龙舌兰',cost:120,yield:5,art:4,group:'基酒'},rye:{name:'黑麦威士忌',cost:140,yield:5,art:5,group:'基酒'},
+    orange:{name:'橙味利口酒',cost:90,yield:5,art:7,group:'利口酒与苦味剂'},vermouth:{name:'甜味美思',cost:90,yield:5,art:14,group:'利口酒与苦味剂'},campari:{name:'金巴利',cost:125,yield:5,art:15,group:'利口酒与苦味剂'},liqueur:{name:'咖啡利口酒',cost:105,yield:5,art:17,group:'利口酒与苦味剂'},bitters:{name:'芳香苦精',cost:60,yield:5,art:18,group:'利口酒与苦味剂'},bluecuracao:{name:'蓝橙力娇酒',cost:110,yield:5,art:16,group:'利口酒与苦味剂'},aperol:{name:'阿佩罗',cost:115,yield:5,art:6,group:'利口酒与苦味剂'},
+    tonic:{name:'汤力水',cost:8,art:8,group:'调和剂'},soda:{name:'苏打水',cost:7,art:9,group:'调和剂'},cola:{name:'可乐',cost:7,art:10,group:'调和剂'},gingerbeer:{name:'姜汁啤酒',cost:9,art:11,group:'调和剂'},lemonsoda:{name:'柠檬汽水',cost:8,art:12,group:'调和剂'},prosecco:{name:'普罗塞克',cost:110,yield:5,art:13,group:'调和剂'},syrup:{name:'糖浆',cost:5,art:21,group:'调和剂'},coffee:{name:'浓缩咖啡',cost:10,art:29,group:'调和剂'},cranberry:{name:'蔓越莓汁',cost:9,art:23,group:'调和剂'},tomato:{name:'番茄汁',cost:8,art:24,group:'调和剂'},pineapplejuice:{name:'菠萝汁',cost:9,art:25,group:'调和剂'},orangejuice:{name:'橙汁',cost:8,art:26,group:'调和剂'},coconut:{name:'椰浆',cost:12,art:27,group:'调和剂'},cream:{name:'淡奶油',cost:11,art:28,group:'调和剂'},grenadine:{name:'红石榴糖浆',cost:8,art:22,group:'调和剂'},hotsauce:{name:'辣椒汁',cost:6,art:20,group:'调和剂'},worcestershire:{name:'伍斯特酱',cost:6,art:19,group:'调和剂'},
     lemon:{name:'柠檬',cost:6,art:32,group:'鲜果与香草'},lime:{name:'青柠',cost:6,art:35,group:'鲜果与香草'},mint:{name:'薄荷',cost:5,art:40,group:'鲜果与香草'},orangeslice:{name:'橙片',cost:5,art:38,group:'鲜果与香草'},orangepeel:{name:'橙皮',cost:4,art:39,group:'鲜果与香草'},cherry:{name:'酒渍樱桃',cost:7,art:44,group:'鲜果与香草'},eggwhite:{name:'蛋清',cost:5,art:30,group:'鲜果与香草'},salt:{name:'海盐',cost:3,art:31,group:'鲜果与香草'},pepper:{name:'盐与黑胡椒',cost:4,art:46,group:'鲜果与香草'}
   };
+  Object.values(ingredients).forEach(item=>{if(!item.yield){item.cost*=5;item.yield=5}});
   const groupOrder=['基酒','利口酒与苦味剂','调和剂','鲜果与香草'];
   const stoolX=[8,20,32,44,56,68,80,92];
   const guestNames=['团子','麻薯','奶盖','芝麻','布丁','栗子','小满','可可','雪饼','米粒','桃酥','乌龙','柚子','豆包','月饼','橘糖'];
+  const staffCandidates=[
+    {id:'taotao',name:'桃桃',avatar:1,title:'笑容招待',skill:'客人小费 +8%',bonus:'tip',value:.08,cost:260,look:'粉色领结亲切醒目，最会让客人开心。'},
+    {id:'chiying',name:'赤影',avatar:2,title:'夜巡值班',skill:'营业时间 +6%',bonus:'time',value:.06,cost:380,look:'红斗篷适合守住深夜的最后一盏灯。'},
+    {id:'afei',name:'阿飞',avatar:3,title:'精准调酒',skill:'酒保制酒速度 +10%',bonus:'brew',value:.10,cost:520,look:'护目镜让每次量酒和摇制都更准确。'},
+    {id:'hualing',name:'花铃',avatar:4,title:'宾客关系',skill:'客人到店速度 +8%',bonus:'guest',value:.08,cost:680,look:'花饰温柔亮眼，擅长招呼新客入座。'},
+    {id:'qinghe',name:'青禾',avatar:5,title:'轻步领班',skill:'服务员移动速度 +10%',bonus:'move',value:.10,cost:850,look:'沉稳正装和敏捷身手让送酒路线更顺。'},
+    {id:'jinxian',name:'金弦',avatar:6,title:'律动协作',skill:'拿酒与送酒速度 +10%',bonus:'serve',value:.10,cost:1050,look:'小提琴家的节拍感让吧台配合更流畅。'}
+  ];
   const heartTalks=[
     {role:'bartender',guest:'明明很想他，却不敢发消息。',reply:'想念可以承认，但别把快乐全交给一条回复。'},
     {role:'server',guest:'我总担心让别人失望。',reply:'照顾别人前，也要给自己的感受留一张凳子。'},
@@ -66,29 +75,34 @@
   let game=loadGame();
   let timeline=loadTimeline();
   let panelView=null;
+  let pendingRecipeUnlocks=[];
   let settlement=null;
-  let nightLedger={made:0,sales:0,revenue:0,tips:0,cost:0};
-  let tickTimer=null,arrivalTimer=null,brewTimer=null,walkTimer=null,serviceTimer=null,autoTimer=null,chatTimer=null,chatClearTimer=null,glowTimer=null,timelineReturnTimer=null,bartenderSpeechTimer=null,bartenderSpeechClearTimer=null,serverSpeechTimer=null,serverSpeechClearTimer=null,phaseBannerTimer=null;
+  let nightLedger={made:0,sales:0,revenue:0,tips:0,cost:0,penalty:0};
+  let tickTimer=null,arrivalTimer=null,brewTimer=null,brewProgressTimer=null,walkTimer=null,serviceTimer=null,autoTimer=null,chatTimer=null,chatClearTimer=null,glowTimer=null,timelineReturnTimer=null,bartenderSpeechTimer=null,bartenderSpeechClearTimer=null,serverSpeechTimer=null,serverSpeechClearTimer=null,phaseBannerTimer=null;
   let servingDrink=false;
   let soundContext=null;
-  const BGM_MUTED_KEY='tavernBgmMutedV1',tavernBgm=new Audio('/assets/audio/tavern-bgm.mp3');
-  tavernBgm.loop=true;tavernBgm.preload='auto';tavernBgm.volume=.2;
-  let bgmUnlocked=false,bgmMuted=localStorage.getItem(BGM_MUTED_KEY)==='1',bgmFadeTimer=null;
+  const BGM_MUTED_KEY='tavernBgmMutedV1',BGM_VOLUME_KEY='tavernBgmVolumeV1',SFX_ENABLED_KEY='tavernSfxEnabledV1',SFX_VOLUME_KEY='tavernSfxVolumeV1',tavernBgm=new Audio('/assets/audio/tavern-bgm.mp3');
+  const savedBgmVolume=Number(localStorage.getItem(BGM_VOLUME_KEY));
+  let bgmVolume=Number.isFinite(savedBgmVolume)?Math.max(0,Math.min(1,savedBgmVolume)):.2;
+  tavernBgm.loop=true;tavernBgm.preload='auto';tavernBgm.volume=bgmVolume;
+  const savedSfxVolume=Number(localStorage.getItem(SFX_VOLUME_KEY));
+  let bgmUnlocked=false,bgmMuted=localStorage.getItem(BGM_MUTED_KEY)==='1',bgmFadeTimer=null,sfxEnabled=localStorage.getItem(SFX_ENABLED_KEY)!=='0',sfxVolume=Number.isFinite(savedSfxVolume)?Math.max(0,Math.min(1,savedSfxVolume)):.4;
   let chatState=null,chatIndex=0;
   let bartenderSpeech='',serverSpeech='',bartenderSpeechIndex=0,serverSpeechIndex=0,lastPhaseBanner=null;
+  let serverNotebookTimer=null,serverNotebookActive=false;
   const staffLines={
-    day:{bartender:['白天先把杯子擦亮，夜里才会闪闪发光。','我在检查今晚的材料，每一杯都要照真实配方。','菜单不用贪多，备得齐、做得稳才重要。'],server:['白天可以先去打一局德州。','右边的联机对战，随时可以约朋友。','今天也慢慢来，别把好运气催跑了。','我先熟悉一下吧台的位置。']},
-    night:{bartender:['客人点什么，我就按订单做什么。','摇壶响起来，今晚正式开始了。','这杯完成了，记得趁香气还在时送到。','心事可以慢慢说，酒也要慢慢摇。'],server:['我来取酒，你安心调制。','同款鸡尾酒可以送给任何点了它的客人。','忙的时候也要记得听客人把话说完。','慢一点没关系，今晚还很长。','杯子端稳了，我这就送过去。']}
+    day:{bartender:['白天先把杯子擦亮，夜里才会闪闪发光。','我在检查今晚的材料，每一杯都要照真实配方。','菜单不用贪多，备得齐、做得稳才重要。'],server:['白天可以先去打一局德州。','右边的联机对战，随时可以约朋友。','今天也慢慢来，别把好运气催跑了。','我先熟悉一下吧台的位置。','简洁是智慧的灵魂。','世事如舞台。','爱所有人，信任少数人。']},
+    night:{bartender:['客人点什么，我就按订单做什么。','摇壶响起来，今晚正式开始了。','这杯完成了，记得趁香气还在时送到。','心事可以慢慢说，酒也要慢慢摇。'],server:['我来取酒，你安心调制。','同款鸡尾酒可以送给任何点了它的客人。','忙的时候也要记得听客人把话说完。','慢一点没关系，今晚还很长。','杯子端稳了，我这就送过去。','黑夜再长，白昼总会到来。','勇气在逆境中成长。','真爱之路从不平坦。']}
   };
 
   function initialState(){return{
     coins:Number(localStorage.getItem('catCoins')||480),
     stock:{gin:2,tonic:2,tequila:2,orange:2,lime:4,rum:0,mint:0,soda:0,campari:0,vermouth:0,bourbon:0,sugar:0,bitters:0,vodka:0,coffee:0,liqueur:0},
-    menu:['gin-tonic'],served:0,night:false,time:30,queue:[],ready:null,brewing:null,carrying:null,servedTonight:0,serverX:28,autoServe:false
+    menu:['gin-tonic'],staff:[],served:0,night:false,time:30,queue:[],ready:[],brewing:null,carrying:null,servedTonight:0,serverX:28,autoServe:false
   }}
   function loadGame(){try{const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved)return normalize(saved)}catch{}return initialState()}
   function levelForServed(served){return Math.min(24,1+Math.floor((Number(served)||0)/3))}
-  function normalize(saved){const base=initialState(),result={...base,...saved,stock:{...base.stock,...(saved.stock||{})},night:false,time:30,queue:[],ready:null,brewing:null,carrying:null,serverX:Number.isFinite(saved.serverX)?saved.serverX:28,autoServe:!!saved.autoServe};const savedLevel=levelForServed(result.served);result.menu=(result.menu||[]).filter(id=>recipes.some(recipe=>recipe.id===id&&recipe.level<=savedLevel));if(!result.menu.length)result.menu=['gin-tonic'];return result}
+  function normalize(saved){const base=initialState(),result={...base,...saved,stock:{...base.stock,...(saved.stock||{})},night:false,time:30,queue:[],ready:[],brewing:null,carrying:null,serverX:Number.isFinite(saved.serverX)?saved.serverX:28,autoServe:!!saved.autoServe};const savedLevel=levelForServed(result.served);result.menu=(result.menu||[]).filter(id=>recipes.some(recipe=>recipe.id===id&&recipe.level<=savedLevel));result.staff=[...new Set((result.staff||[]).filter(id=>staffCandidates.some(member=>member.id===id)))];if(!result.menu.length)result.menu=['gin-tonic'];return result}
   function saveGame(){localStorage.setItem(KEY,JSON.stringify(game));localStorage.setItem('catCoins',String(game.coins))}
   function saveTimeline(){localStorage.setItem(TIMELINE_KEY,JSON.stringify(timeline))}
   function level(){return levelForServed(game.served)}
@@ -98,16 +112,15 @@
   function canMake(recipe){return recipe&&Object.entries(recipe.need).every(([id,count])=>(game.stock[id]||0)>=count)}
   function coin(value){return `${value} 猫猫币`}
   function coinMarkup(value){return `<span class="coin-inline"><i class="cat-coin-icon" aria-hidden="true"></i>${Number(value).toLocaleString()}</span>`}
-  function recipeCost(recipe){return Object.entries(recipe.need).reduce((total,[id,count])=>total+(ingredients[id]?.cost||0)*count,0)}
+  function recipeCost(recipe){return Object.entries(recipe.need).reduce((total,[id,count])=>{const item=ingredients[id];return total+((item?.cost||0)/(item?.yield||1))*count},0)}
+  function staffBonus(type){return staffCandidates.filter(member=>game.staff.includes(member.id)&&member.bonus===type).reduce((total,member)=>total+member.value,0)}
+  function nightDuration(){return Math.round(30*(1+staffBonus('time')))}
   function notify(message){const toast=$('#toast');toast.textContent=message;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1600)}
   function showScreen(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));$(id).classList.add('active')}
 
   function canPoker(){return !game.night&&timeline.phase==='day'}
 
   function renderTimeline(){
-    const el=$('#dayTimeline');if(!el)return;
-    const phases=[['day','白天','德州牌桌赛 / 可跳过'],['night','夜晚','鸡尾酒吧营业']];
-    el.innerHTML=`<b>第 ${timeline.day} 天 · 路易的时间线</b><div>${phases.map(([id,label,task])=>{const done=id==='day'&&timeline.phase==='night';const doneText=timeline.skipped?'✓ 已跳过':'✓ 牌局完成';return `<i class="${timeline.phase===id?'active':''} ${done?'done':''}"><span>${label}</span><small>${done?doneText:task}</small></i>`}).join('<em>›</em>')}</div>`;
     const hint=$('#pokerDayHint');if(hint)hint.textContent=`第 ${timeline.day} 天 · 白天 · 赢光全桌筹码或输光筹码，也可以跳过`;
     $('#pokerNeon')?.classList.add('open');
     $('#friendNeon')?.classList.add('open');
@@ -118,8 +131,20 @@
     if(window.startRandomSoloPoker)window.startRandomSoloPoker();else showScreen('#home');
   }
 
+  function enterEstate(){
+    if(game.night)return notify('鸡尾酒吧营业中，打烊后才能进入庄园');
+    game.serverX=12;paintServer();saveGame();
+    if(window.catEstateGame?.enter)window.catEstateGame.enter();else showScreen('#estate');
+    syncTavernBgm();
+  }
+
+  function returnFromEstate(){
+    game.coins=Number(localStorage.getItem('catCoins')||game.coins);
+    game.serverX=17;showScreen('#tavern');saveGame();renderAll();syncTavernBgm();
+  }
+
   function enterFriendPoker(){
-    if(window.openFriendPokerSetup)window.openFriendPokerSetup();else showScreen('#home');
+    if(window.openPokerLobby)window.openPokerLobby();else showScreen('#home');
   }
 
   function skipDay(){
@@ -138,7 +163,7 @@
     clearTimeout(timelineReturnTimer);timelineReturnTimer=setTimeout(()=>{if(window.leavePokerForTimeline)window.leavePokerForTimeline();else{showScreen('#tavern');game.serverX=32;renderAll()}},2200);
   }
 
-  function startNextDay(){timeline={day:timeline.day+1,phase:'day',dayPoker:false,skipped:false};saveTimeline();game.serverX=28}
+  function startNextDay(){timeline={day:timeline.day+1,phase:'day',dayPoker:false,skipped:false};saveTimeline();game.serverX=28;setTimeout(startStaffSpeech,0)}
 
   function unlockSound(){
     const AudioEngine=window.AudioContext||window.webkitAudioContext;
@@ -149,8 +174,11 @@
   }
 
   function updateMusicControl(){
-    const button=$('#tavernMusic');if(!button)return;
-    button.textContent=bgmMuted?'♪×':'♫';button.classList.toggle('muted',bgmMuted);button.setAttribute('aria-pressed',String(!bgmMuted));button.title=`Chasing What's Gone — Loom Room · ${bgmMuted?'已静音':'播放中'}`;
+    const enabled=$('#tavernMusicEnabled'),volume=$('#tavernMusicVolume'),sfxEnabledControl=$('#tavernSfxEnabled'),sfxVolumeControl=$('#tavernSfxVolume');
+    if(enabled)enabled.checked=!bgmMuted;
+    if(volume)volume.value=String(Math.round(bgmVolume*100));
+    if(sfxEnabledControl)sfxEnabledControl.checked=sfxEnabled;
+    if(sfxVolumeControl)sfxVolumeControl.value=String(Math.round(sfxVolume*100));
   }
 
   function fadeBgm(target,pauseAfter=false){
@@ -161,12 +189,15 @@
 
   function syncTavernBgm(){
     const shouldPlay=bgmUnlocked&&!bgmMuted&&!document.hidden&&$('#tavern')?.classList.contains('active');
-    if(shouldPlay)fadeBgm(.2);else if(!tavernBgm.paused)fadeBgm(0,true);
+    if(shouldPlay)fadeBgm(bgmVolume);else if(!tavernBgm.paused)fadeBgm(0,true);
     updateMusicControl();
   }
 
   function unlockTavernBgm(){if(!bgmUnlocked)bgmUnlocked=true;syncTavernBgm()}
   function toggleTavernBgm(){bgmMuted=!bgmMuted;if(!bgmMuted)bgmUnlocked=true;localStorage.setItem(BGM_MUTED_KEY,bgmMuted?'1':'0');syncTavernBgm()}
+  function setTavernBgmVolume(value){bgmVolume=Math.max(0,Math.min(1,Number(value)||0));localStorage.setItem(BGM_VOLUME_KEY,String(bgmVolume));if(!bgmMuted){bgmUnlocked=true;syncTavernBgm()}else updateMusicControl()}
+  function toggleTavernSfx(){sfxEnabled=!sfxEnabled;localStorage.setItem(SFX_ENABLED_KEY,sfxEnabled?'1':'0');updateMusicControl();if(sfxEnabled)playButtonSound()}
+  function setTavernSfxVolume(value){sfxVolume=Math.max(0,Math.min(1,Number(value)||0));localStorage.setItem(SFX_VOLUME_KEY,String(sfxVolume));updateMusicControl()}
 
   function withSound(callback){
     const context=unlockSound();
@@ -176,12 +207,13 @@
   }
 
   function playButtonSound(){
+    if(!sfxEnabled||sfxVolume<=0)return;
     withSound(context=>{
       const now=context.currentTime;
       [720,340].forEach((frequency,index)=>{
         const oscillator=context.createOscillator(),gain=context.createGain();
         oscillator.type=index?'triangle':'sine';oscillator.frequency.setValueAtTime(frequency,now);oscillator.frequency.exponentialRampToValueAtTime(index?120:210,now+.085);
-        gain.gain.setValueAtTime(index ? .012 : .026,now);gain.gain.exponentialRampToValueAtTime(.0001,now+.09);
+        gain.gain.setValueAtTime((index ? .012 : .026)*sfxVolume,now);gain.gain.exponentialRampToValueAtTime(.0001,now+.09);
         oscillator.connect(gain);gain.connect(context.destination);oscillator.start(now);oscillator.stop(now+.1);
       });
     });
@@ -199,6 +231,19 @@
     });
   }
 
+  function playDeliverySound(){
+    if(!sfxEnabled||sfxVolume<=0)return;
+    withSound(context=>{
+      const now=context.currentTime;
+      [659,880,1175].forEach((frequency,index)=>{
+        const oscillator=context.createOscillator(),gain=context.createGain(),start=now+index*.075;
+        oscillator.type=index===2?'triangle':'sine';oscillator.frequency.setValueAtTime(frequency,start);
+        gain.gain.setValueAtTime(.0001,start);gain.gain.exponentialRampToValueAtTime(.045*sfxVolume,start+.012);gain.gain.exponentialRampToValueAtTime(.0001,start+.19);
+        oscillator.connect(gain);gain.connect(context.destination);oscillator.start(start);oscillator.stop(start+.21);
+      });
+    });
+  }
+
   function playRecipeUnlockSound(){
     withSound(context=>{
       const now=context.currentTime;
@@ -211,15 +256,22 @@
     });
   }
 
-  function celebrateRecipeUnlock(recipe,currentLevel){
+  function celebrateRecipeUnlock(recipe,currentLevel,onClose){
     const popup=$('#recipeCelebration');
-    if(!popup||!recipe)return;
+    if(!popup||!recipe){onClose?.();return}
     popup.innerHTML=`<div class="recipe-celebration-card" role="status"><i class="celebration-burst" aria-hidden="true">✦ ✦ ✦</i><span>LEVEL UP · Lv.${currentLevel}</span><strong>新配方研究成功！</strong>${sprite('cocktail',recipe.art,'celebration-drink')}<b>${recipe.cn}</b><small>${recipe.name} · 新材料现已可采购</small><button type="button">太棒了！</button></div>`;
     popup.hidden=false;popup.classList.remove('show');void popup.offsetWidth;popup.classList.add('show');
     playRecipeUnlockSound();
-    const close=()=>{popup.classList.remove('show');setTimeout(()=>{popup.hidden=true;popup.innerHTML=''},180)};
+    let closed=false;
+    const close=()=>{if(closed)return;closed=true;clearTimeout(popup._timer);popup.classList.remove('show');setTimeout(()=>{popup.hidden=true;popup.innerHTML='';onClose?.()},180)};
     popup.querySelector('button').onclick=close;
     clearTimeout(popup._timer);popup._timer=setTimeout(close,4800);
+  }
+
+  function showPendingRecipeUnlocks(){
+    const next=pendingRecipeUnlocks.shift();
+    if(!next)return;
+    celebrateRecipeUnlock(next.recipe,next.level,showPendingRecipeUnlocks);
   }
 
   function celebrateDrinkReady(){
@@ -235,8 +287,20 @@
   }
   function pixelCat(tone='gray',role='guest'){
     const guestArt={gray:'/assets/character-flower-v2.png',cream:'/assets/character-adventure-v2.png',orange:'/assets/character-musician-v2.png',black:'/assets/character-redhood-v2.png',tabby:'/assets/character-formal-v2.png',pink:'/assets/character-pink-bow-v3.png'};
-    const art=role==='bartender'?'/assets/bartender-shaker-1s-loop.gif':role==='server'?'/assets/character-formal-v2.png':guestArt[tone];
+    const art=role==='bartender'?'/assets/bartender-shaker-1s-loop.gif':role==='server'?'/assets/server-animations/server-notebook-idle-initial.png':guestArt[tone];
     return `<div class="pixel-cat image-character tone-${tone} role-${role}" style="--character-image:url('${art}')" aria-hidden="true"><i class="character-shadow"></i></div>`
+  }
+
+  function updateServerNotebookVisual(){
+    const cat=$('#serverCat')?.querySelector('.pixel-cat');
+    cat?.classList.toggle('notebook-idle',serverNotebookActive&&!game.carrying&&!servingDrink);
+  }
+
+  function resetServerNotebookTimer(){
+    clearTimeout(serverNotebookTimer);serverNotebookActive=false;updateServerNotebookVisual();
+    serverNotebookTimer=setTimeout(()=>{
+      if(!game.carrying&&!servingDrink&&$('#tavern').classList.contains('active')){serverNotebookActive=true;updateServerNotebookVisual()}
+    },5000);
   }
 
   function announcePhase(phase){
@@ -252,9 +316,9 @@
     $('#tavernLevel').textContent=level();
     renderTimeline();
     const visualPhase=timeline.phase==='day'&&!game.night?'day':'night';$('.tavern-scene').classList.toggle('daytime',visualPhase==='day');announcePhase(visualPhase);
-    const phaseLabel=timeline.phase==='day'?'白天':'夜晚';$('#tavernBack').textContent=phaseLabel;
+    const scene=$('.tavern-scene'),estate=$('#estateNeon');scene?.classList.toggle('night-open',game.night);if(estate){estate.disabled=game.night;estate.setAttribute('aria-disabled',String(game.night))}
     if(!game.night){const phaseText={day:'白天 · 德州时间',night:'夜晚 21:30 · 开业准备'}[timeline.phase];$('#nightStatus').textContent=`第 ${timeline.day} 天 · ${phaseText}`;return}
-    const passed=30-game.time,hour=(22+Math.floor(passed/7.5))%24,minute=Math.floor((passed%7.5)/7.5*60);
+    const duration=nightDuration(),quarter=duration/4,passed=duration-game.time,hour=(22+Math.floor(passed/quarter))%24,minute=Math.floor((passed%quarter)/quarter*60);
     $('#nightStatus').textContent=`${String(hour).padStart(2,'0')}:${String(minute).padStart(2,'0')} · 剩余 ${game.time}s`;
   }
 
@@ -270,25 +334,32 @@
       const guestLayer=20+Math.max(0,order?game.queue.indexOf(order):0);
       const status=order?.recipe?.cn||(order?.fresh?order.name:order?.seated?'正在看菜单…':'');
       const statusClass=order?.recipe?'':order?.fresh?'guest-name':'choosing';
-      return `<div class="bar-seat seat-${seat+1}" style="--stool-x:${x}%"><i class="pixel-stool"></i>${order?`<div class="guest-seat ${order.fresh?'arriving':''} ${order.sitting?'sitting':''} ${order.seated?'seated':''}" style="--guest-walk:${walkDistance}cqw;--guest-walk-duration:${walkMs}ms;--guest-walk-delay:-${walkElapsed}ms;--guest-sit-delay:-${sitElapsed}ms;--guest-layer:${guestLayer}" data-order="${order.id}">${talking?`<i class="cloud-dialog guest-dialog">${chatState.guest}</i>`:''}${order.recipe?sprite('cocktail',order.recipe.art,'order-drink'):''}${pixelCat(order.tone,'guest')}${status?`<small class="${statusClass}">${status}</small>`:''}</div>`:''}</div>`
+      const matchingDrink=order?.recipe&&game.carrying?.id===order.recipe.id;
+      const reaction=order?.leaving==='happy'?'<i class="guest-heart-burst" aria-hidden="true"><b>♥</b><b>♥</b><b>♥</b><b>♥</b><b>♥</b><b>♥</b></i>':order?.leaving==='broken'?'<i class="guest-break-heart" aria-hidden="true">💔</i>':'';
+      return `<div class="bar-seat seat-${seat+1}" style="--stool-x:${x}%"><i class="pixel-stool"></i>${order?`<div class="guest-seat ${order.fresh?'arriving':''} ${order.sitting?'sitting':''} ${order.seated?'seated':''} ${order.leaving||''}" style="--guest-walk:${walkDistance}cqw;--guest-walk-duration:${walkMs}ms;--guest-walk-delay:-${walkElapsed}ms;--guest-sit-delay:-${sitElapsed}ms;--guest-layer:${guestLayer}" data-order="${order.id}">${reaction}${talking?`<i class="cloud-dialog guest-dialog">${chatState.guest}</i>`:''}${order.recipe?sprite('cocktail',order.recipe.art,`order-drink ${matchingDrink?'matching-order':''}`):''}${pixelCat(order.tone,'guest')}${status?`<small class="${statusClass}">${status}</small>`:''}</div>`:''}</div>`
     }).join('');
     $('#barAction').classList.toggle('speech-hidden',!!bartenderSpeech);
     $('#bartenderCat').querySelector('.pixel-cat')?.classList.toggle('mixing',!!game.brewing);
     paintServer();
   }
 
-  function speechPeriod(role){return role==='bartender'?20000:8000}
+  function speechPeriod(role){return role==='bartender'?20000:8000+Math.floor(Math.random()*7001)}
   function showStaffSpeech(role){
+    if(role==='bartender'&&game.night){bartenderSpeech='';clearTimeout(bartenderSpeechClearTimer);renderCharacters();return}
     const phase=timeline.phase==='day'&&!game.night?'day':'night',lines=staffLines[phase][role],index=role==='bartender'?bartenderSpeechIndex++:serverSpeechIndex++,line=lines[index%lines.length];
-    if(role==='bartender'){serverSpeech='';clearTimeout(serverSpeechClearTimer);bartenderSpeech=line;clearTimeout(bartenderSpeechClearTimer);bartenderSpeechClearTimer=setTimeout(()=>{bartenderSpeech='';renderCharacters()},5000)}else{bartenderSpeech='';clearTimeout(bartenderSpeechClearTimer);serverSpeech=line;clearTimeout(serverSpeechClearTimer);serverSpeechClearTimer=setTimeout(()=>{serverSpeech='';renderCharacters()},5000)}
+    if(role==='bartender'){serverSpeech='';clearTimeout(serverSpeechClearTimer);bartenderSpeech=line;clearTimeout(bartenderSpeechClearTimer);bartenderSpeechClearTimer=setTimeout(()=>{bartenderSpeech='';renderCharacters()},5000)}else{bartenderSpeech='';clearTimeout(bartenderSpeechClearTimer);serverSpeech=line;clearTimeout(serverSpeechClearTimer);serverSpeechClearTimer=setTimeout(()=>{serverSpeech='';renderCharacters()},2000)}
     renderCharacters();
   }
 
+  function scheduleServerSpeech(){
+    clearTimeout(serverSpeechTimer);
+    serverSpeechTimer=setTimeout(()=>{showStaffSpeech('server');scheduleServerSpeech()},speechPeriod('server'));
+  }
+
   function startStaffSpeech(){
-    clearInterval(bartenderSpeechTimer);clearInterval(serverSpeechTimer);clearTimeout(bartenderSpeechClearTimer);clearTimeout(serverSpeechClearTimer);bartenderSpeech='';serverSpeech='';
-    showStaffSpeech('bartender');
-    bartenderSpeechTimer=setInterval(()=>showStaffSpeech('bartender'),speechPeriod('bartender'));
-    serverSpeechTimer=setInterval(()=>showStaffSpeech('server'),speechPeriod('server'));
+    clearInterval(bartenderSpeechTimer);clearTimeout(serverSpeechTimer);clearTimeout(bartenderSpeechClearTimer);clearTimeout(serverSpeechClearTimer);bartenderSpeech='';serverSpeech='';
+    if(!game.night){showStaffSpeech('bartender');bartenderSpeechTimer=setInterval(()=>showStaffSpeech('bartender'),speechPeriod('bartender'))}
+    showStaffSpeech('server');scheduleServerSpeech();
   }
 
   function showNextChat(){
@@ -305,18 +376,25 @@
     if(game.night)chatTimer=setInterval(showNextChat,9000);
   }
 
+  function readyQueue(){
+    if(!Array.isArray(game.ready))game.ready=game.ready?[game.ready]:[];
+    return game.ready;
+  }
+
   function renderWorkstation(){
-    const bartender=$('#bartenderCat').querySelector('.pixel-cat');
+    const bartender=$('#bartenderCat').querySelector('.pixel-cat'),ready=readyQueue(),panel=$('#bartenderDrinkPanel');
     bartender?.classList.toggle('mixing',!!game.brewing);
-    $('#barAction').textContent=game.brewing?`正在摇制 ${game.brewing.cn}`:game.ready?`${game.ready.cn} 已出杯，等你来取`:(game.night?'等待下一张订单':'');
-    $('#readyDrink').textContent=game.ready?`${game.ready.cn} · 已出杯`:'酒保工作台';
-    $('#mixingGlass').innerHTML=game.ready?sprite('cocktail',game.ready.art,'counter-drink'):'';
+    const progress=game.brewing&&game.brewEndsAt?Math.max(0,Math.min(100,Math.round((Date.now()-(game.brewStartedAt||Date.now()))/(game.brewEndsAt-(game.brewStartedAt||Date.now()))*100))):0;
+    panel.innerHTML=!game.night?'':`${game.brewing?`<div class="bartender-drink-card brewing"><div class="bartender-drink-core">${sprite('cocktail',game.brewing.art,'bartender-panel-drink')}<i class="brew-progress"><em style="width:${progress}%"></em></i><b class="drink-state" aria-label="制作中">制作</b></div></div>`:''}${ready.map((recipe,index)=>`<div class="bartender-drink-card ready" style="--ready-index:${index}"><div class="bartender-drink-core">${sprite('cocktail',recipe.art,'bartender-panel-drink')}<i class="brew-progress"><em style="width:100%"></em></i><b class="drink-state complete" aria-label="已完成">完成</b></div></div>`).join('')}`;
+    $('#barAction').textContent='';
+    $('#readyDrink').textContent='';
+    $('#mixingGlass').innerHTML='';
   }
 
   function renderPrep(){
     const content=$('#tavernContent');
     if(game.night){
-      content.innerHTML=`<div class="service-dashboard"><div><b>今晚已送出 ${game.servedTonight} 杯</b><small>← → 移动；空格取酒。可把酒送给任意点了同款的客人。</small></div><div class="service-actions"><button id="autoServe" class="${game.autoServe?'active':''}">${game.autoServe?'自动托管中':'开启自动托管'}</button><button id="closeNight">提前打烊</button></div></div>`;
+      content.innerHTML=`<div class="service-dashboard"><div><b>今晚已送出 ${game.servedTonight} 杯</b><small>← → 移动；空格取酒 / 送酒；Q 丢弃手中鸡尾酒。</small></div><div class="service-actions"><button id="autoServe" class="${game.autoServe?'active':''}">${game.autoServe?'自动托管中':'开启自动托管'}</button><button id="closeNight">提前打烊</button></div></div>`;
       $('#autoServe').onclick=toggleAutoServe;
       $('#closeNight').onclick=endNight;
       return;
@@ -331,32 +409,45 @@
       return `<label class="menu-card ${chosen?'chosen':''} ${available?'':'short'}"><input type="checkbox" data-menu="${recipe.id}" ${chosen?'checked':''} ${available?'':'disabled'}>${sprite('cocktail',recipe.art)}<span><b>${recipe.cn}</b><small>${recipe.name} · ${recipe.base}</small><em>售价 ${coin(recipe.price)}</em></span></label>`
     }).join('');
     const stockGroups=groupOrder.map(group=>{
-      const buttons=Object.entries(ingredients).filter(([id,item])=>item.group===group&&purchasableIngredient(id)).map(([id,item])=>`<button class="stock-item" data-buy="${id}">${sprite('ingredient',item.art)}<span><b>${item.name}</b><small>库存 ${game.stock[id]||0}</small><em>+1 · ${coin(item.cost)}</em></span></button>`).join('');
+      const buttons=Object.entries(ingredients).filter(([id,item])=>item.group===group&&purchasableIngredient(id)).map(([id,item])=>`<article class="stock-item">${sprite('ingredient',item.art)}<span><b>${item.name}</b><small>库存 <i data-stock-count="${id}">${game.stock[id]||0}</i></small><em>单价 ${item.cost}</em></span><button type="button" data-buy="${id}" aria-label="购买1份${item.name}">购买</button></article>`).join('');
       return `<section class="stock-group"><h3>${group}</h3><div>${buttons}</div></section>`
     }).join('');
     const researchCards=recipes.map(recipe=>{const learned=unlocked(recipe),formula=Object.entries(recipe.need).map(([id,count])=>`${ingredients[id].name}${count>1?` ×${count}`:''}`).join(' + ');return `<article class="research-card ${learned?'learned':'locked'}">${sprite('cocktail',recipe.art)}<div><b>${recipe.cn}</b><small>${recipe.name} · ${recipe.base}</small><p>${formula}</p><em>${learned?'✓ 已学会':`Lv.${recipe.level} 解锁`}</em></div></article>`}).join('');
-    const panelTitles={menu:['今晚菜单','选择有足够材料的鸡尾酒'],stock:['备货间','仅可采购已研究配方所需的基酒与材料'],research:['配方研究','共 24 个等级；每次升级学会一款鸡尾酒']};
-    const panelBody=panelView==='menu'?`<div class="menu-grid">${menuCards}</div>`:panelView==='stock'?`<div class="stock-groups">${stockGroups}</div>`:`<div class="recipe-research-grid">${researchCards}</div>`;
-    const modal=panelView?`<div class="prep-modal" role="dialog" aria-modal="true"><section><header><div><b>${panelTitles[panelView][0]}</b><small>${panelTitles[panelView][1]}</small></div><button id="modalClose" aria-label="关闭">×</button></header>${panelBody}</section></div>`:'';
-    const settlementModal=settlement?`<div class="prep-modal settlement-modal" role="dialog" aria-modal="true"><section><header><div><b>02:00 · 今晚营业结算</b><small>材料成本按本晚实际耗用的采购价计算</small></div><button id="settlementClose" aria-label="关闭结算">×</button></header><div class="settlement-grid"><div><small>售出鸡尾酒</small><b>${settlement.sales} 杯</b></div><div><small>销售收入</small><b>${coinMarkup(settlement.revenue)}</b></div><div><small>客人小费</small><b>${coinMarkup(settlement.tips)}</b></div><div><small>材料成本</small><b class="cost">− ${coinMarkup(settlement.cost)}</b></div><div><small>未售出耗损</small><b>${settlement.waste} 杯</b></div><div class="profit"><small>今晚净盈利</small><b class="${settlement.profit>=0?'positive':'negative'}">${settlement.profit>=0?'+':'−'} ${coinMarkup(Math.abs(settlement.profit))}</b></div></div><footer><span>毛利率 ${settlement.margin}%</span><span>当前余额 ${coinMarkup(game.coins)}</span></footer><button id="settlementConfirm" class="settlement-confirm">收下账本</button></section></div>`:'';
-    content.innerHTML=`<div class="prep-toolbar"><button id="menuToggle" class="${panelView==='menu'?'active':''}">今晚菜单</button><button id="stockToggle" class="${panelView==='stock'?'active':''}">备货间</button><button id="researchToggle" class="${panelView==='research'?'active':''}">配方研究</button><button id="openNight" class="open-night" ${game.menu.length?'':'disabled'}>22:00 开始营业</button></div>${modal}${settlementModal}`;
+    const staffCards=staffCandidates.map(member=>{const hired=game.staff.includes(member.id);return `<article class="staff-card ${hired?'hired':''}"><img src="/assets/cat-avatars/${member.avatar}.png" alt="${member.name}"><div><b>${member.name} · ${member.title}</b><small>${member.look}</small><em>${member.skill}</em></div><button type="button" data-recruit="${member.id}" ${hired?'disabled':''}>${hired?'已招募':`招募 · ${coin(member.cost)}`}</button></article>`}).join('');
+    const hiredSkills=staffCandidates.filter(member=>game.staff.includes(member.id)).map(member=>member.skill).join('　·　');
+    const staffPanel=`<div class="staff-summary"><b>当前员工 ${game.staff.length} / ${staffCandidates.length}</b><small>${hiredSkills||'尚未招募员工；各项永久加成可以累计。'}</small></div><div class="staff-grid">${staffCards}</div>`;
+    const panelTitles={menu:['今晚菜单','选择有足够材料的鸡尾酒'],stock:['备货间',''],research:['配方研究','共 24 个等级；每次升级学会一款鸡尾酒'],staff:['员工招募','六名员工各有一项永久加成；全部招募后仍保持合理收益节奏']};
+    const panelBody=panelView==='menu'?`<div class="menu-grid">${menuCards}</div>`:panelView==='stock'?`<div class="stock-groups">${stockGroups}</div>`:panelView==='research'?`<div class="recipe-research-grid">${researchCards}</div>`:staffPanel;
+    const modal=panelView?`<div class="prep-modal ${panelView==='stock'?'stock-modal':''}" role="dialog" aria-modal="true"><section><header><div><b>${panelTitles[panelView][0]}</b><small>${panelTitles[panelView][1]}</small></div><button id="modalClose" aria-label="关闭">×</button></header>${panelBody}</section></div>`:'';
+    const settlementModal=settlement?`<div class="prep-modal settlement-modal" role="dialog" aria-modal="true"><section><header><div><b>第 ${timeline.day} 天 · 夜晚营业结算</b><small>材料成本按本晚实际耗用的采购价计算</small></div><button id="settlementClose" aria-label="关闭结算">×</button></header><div class="settlement-grid"><div><small>售出鸡尾酒</small><b>${settlement.sales} 杯</b></div><div><small>销售收入</small><b>${coinMarkup(settlement.revenue)}</b></div><div><small>客人小费</small><b>${coinMarkup(settlement.tips)}</b></div><div><small>材料成本</small><b class="cost">− ${coinMarkup(settlement.cost)}</b></div><div><small>超时离场扣款</small><b class="cost">− ${coinMarkup(settlement.penalty)}</b></div><div><small>未售出耗损</small><b>${settlement.waste} 杯</b></div></div><footer><span>毛利率 ${settlement.margin}%</span><span class="${settlement.profit>=0?'positive':'negative'}">今晚净盈利 ${settlement.profit>=0?'+':'−'} ${coinMarkup(Math.abs(settlement.profit))}</span></footer><button id="settlementConfirm" class="settlement-confirm">收下账本</button></section></div>`:'';
+    content.innerHTML=`<div class="prep-toolbar"><button id="menuToggle" class="${panelView==='menu'?'active':''}">今晚菜单</button><button id="stockToggle" class="${panelView==='stock'?'active':''}">备货间</button><button id="researchToggle" class="${panelView==='research'?'active':''}">配方研究</button><button id="staffToggle" class="${panelView==='staff'?'active':''}">员工招募</button><button id="openNight" class="open-night" ${game.menu.length?'':'disabled'}>22:00 开始营业</button></div>${modal}${settlementModal}`;
     $('#menuToggle').onclick=()=>{panelView=panelView==='menu'?null:'menu';renderPrep()};
     $('#stockToggle').onclick=()=>{panelView=panelView==='stock'?null:'stock';renderPrep()};
     $('#researchToggle').onclick=()=>{panelView=panelView==='research'?null:'research';renderPrep()};
+    $('#staffToggle').onclick=()=>{panelView=panelView==='staff'?null:'staff';renderPrep()};
     $('#openNight').onclick=startNight;
     if(panelView){$('#modalClose').onclick=()=>{panelView=null;renderPrep()};$('.prep-modal').onclick=event=>{if(event.target.classList.contains('prep-modal')){panelView=null;renderPrep()}}}
-    if(settlement){const closeSettlement=()=>{settlement=null;startNextDay();renderAll()};$('#settlementClose').onclick=closeSettlement;$('#settlementConfirm').onclick=closeSettlement;$('.settlement-modal').onclick=event=>{if(event.target.classList.contains('settlement-modal'))closeSettlement()}}
-    content.querySelectorAll('[data-menu]').forEach(input=>input.onchange=()=>{game.menu=input.checked?[...new Set([...game.menu,input.dataset.menu])]:game.menu.filter(id=>id!==input.dataset.menu);saveGame();renderPrep()});
-    content.querySelectorAll('[data-buy]').forEach(button=>button.onclick=()=>buyIngredient(button.dataset.buy));
+    if(settlement){const closeSettlement=()=>{settlement=null;startNextDay();renderAll();setTimeout(showPendingRecipeUnlocks,220)};$('#settlementClose').onclick=closeSettlement;$('#settlementConfirm').onclick=closeSettlement;$('.settlement-modal').onclick=event=>{if(event.target.classList.contains('settlement-modal'))closeSettlement()}}
+    content.querySelectorAll('[data-menu]').forEach(input=>input.onchange=()=>{game.menu=input.checked?[...new Set([...game.menu,input.dataset.menu])]:game.menu.filter(id=>id!==input.dataset.menu);saveGame();input.closest('.menu-card')?.classList.toggle('chosen',input.checked);const openNight=$('#openNight');if(openNight)openNight.disabled=!game.menu.length});
+    content.querySelectorAll('[data-buy]').forEach(button=>button.onclick=()=>buyIngredient(button.dataset.buy,1));
+    content.querySelectorAll('[data-recruit]').forEach(button=>button.onclick=()=>recruitStaff(button.dataset.recruit));
   }
 
   function renderAll(){renderHud();renderCharacters();renderWorkstation();renderPrep()}
 
-  function buyIngredient(id){
+  function buyIngredient(id,quantity=1){
     const item=ingredients[id];
     if(!item||!purchasableIngredient(id))return notify('先研究对应配方，才能采购这项材料');
-    if(game.coins<item.cost)return notify('猫猫币不足');
-    game.coins-=item.cost;game.stock[id]=(game.stock[id]||0)+1;saveGame();renderHud();renderPrep();
+    quantity=Math.max(1,Math.min(99,Math.floor(Number(quantity)||1)));const total=item.cost*quantity;
+    if(game.coins<total)return notify(`猫猫币不足，需要 ${coin(total)}`);
+    const uses=(item.yield||1)*quantity;game.coins-=total;game.stock[id]=(game.stock[id]||0)+uses;saveGame();renderHud();const stockCount=document.querySelector(`[data-stock-count="${id}"]`);if(stockCount)stockCount.textContent=game.stock[id];notify(`采购 ${item.name} ×${quantity}`);
+  }
+
+  function recruitStaff(id){
+    if(game.night)return notify('营业期间不能办理员工招募');
+    const member=staffCandidates.find(item=>item.id===id);if(!member||game.staff.includes(id))return;
+    if(game.coins<member.cost)return notify(`猫猫币不足，需要 ${coin(member.cost)}`);
+    game.coins-=member.cost;game.staff.push(id);saveGame();renderHud();renderPrep();notify(`${member.name} 已加入酒馆 · ${member.skill}`);
   }
 
   function addGuest(){
@@ -373,19 +464,32 @@
     const walkMs=Math.max(2600,Math.round(((8-seat)*11)/18*1000)),walkStartedAt=Date.now();
     game.queue.push({id,seat,name,recipe:null,tone:guestTones[Math.floor(Math.random()*guestTones.length)],walkMs,walkStartedAt,chatEligible:Math.random()<1/3,hasSpoken:false,fresh:true,sitting:false,seated:false});
     renderCharacters();
-    setTimeout(()=>{const order=game.queue.find(item=>item.id===id);if(!order)return;order.fresh=false;order.sitting=true;order.sitStartedAt=Date.now();renderCharacters();setTimeout(()=>{const seatedOrder=game.queue.find(item=>item.id===id);if(!seatedOrder)return;seatedOrder.sitting=false;seatedOrder.seated=true;delete seatedOrder.sitStartedAt;renderCharacters();const menuWaitMs=Math.floor(Math.random()*3001);setTimeout(()=>{const orderingGuest=game.queue.find(item=>item.id===id);if(!orderingGuest||!orderingGuest.seated)return;orderingGuest.recipe=choices[Math.floor(Math.random()*choices.length)];renderCharacters();tryBrew()},menuWaitMs)},960)},walkMs+50);
+    setTimeout(()=>{const order=game.queue.find(item=>item.id===id);if(!order)return;order.fresh=false;order.sitting=true;order.sitStartedAt=Date.now();renderCharacters();setTimeout(()=>{const seatedOrder=game.queue.find(item=>item.id===id);if(!seatedOrder)return;seatedOrder.sitting=false;seatedOrder.seated=true;delete seatedOrder.sitStartedAt;renderCharacters();const menuWaitMs=Math.floor(Math.random()*3001);setTimeout(()=>{const orderingGuest=game.queue.find(item=>item.id===id);if(!orderingGuest||!orderingGuest.seated)return;orderingGuest.recipe=choices[Math.floor(Math.random()*choices.length)];orderingGuest.orderedAt=Date.now();renderCharacters();tryBrew();setTimeout(()=>expireGuestOrder(id),10000)},menuWaitMs)},960)},walkMs+50);
+  }
+
+  function removeGuestAfterReaction(id){
+    setTimeout(()=>{const order=game.queue.find(item=>item.id===id);if(!order||!order.leaving)return;if(chatState?.guestId===id)chatState=null;game.queue=game.queue.filter(item=>item.id!==id);saveGame();renderCharacters();renderWorkstation();tryBrew()},850);
+  }
+
+  function expireGuestOrder(id){
+    const order=game.queue.find(item=>item.id===id);
+    if(!game.night||!order||!order.recipe||order.leaving||order.serving)return;
+    const penalty=Math.ceil(order.recipe.price/3);order.leaving='broken';nightLedger.penalty+=penalty;game.coins=Math.max(0,game.coins-penalty);saveGame();renderHud();renderCharacters();notify(`${order.name} 等待太久离开 · 扣除 ${coin(penalty)}`);removeGuestAfterReaction(id);tryBrew();
   }
 
   function tryBrew(){
-    if(!game.night||game.ready||game.brewing)return;
-    const inService=[game.ready,game.brewing,game.carrying].filter(Boolean).reduce((count,recipe)=>{count[recipe.id]=(count[recipe.id]||0)+1;return count},{});
-    const demand=game.queue.filter(order=>order.seated&&order.recipe).reduce((count,order)=>{count[order.recipe.id]=(count[order.recipe.id]||0)+1;return count},{});
-    const order=game.queue.find(item=>item.seated&&item.recipe&&demand[item.recipe.id]>(inService[item.recipe.id]||0)&&canMake(item.recipe));
+    if(!game.night||game.brewing)return;
+    const inService=[...readyQueue(),game.brewing,game.carrying].filter(Boolean).reduce((count,recipe)=>{count[recipe.id]=(count[recipe.id]||0)+1;return count},{});
+    const demand=game.queue.filter(order=>order.seated&&order.recipe&&!order.leaving).reduce((count,order)=>{count[order.recipe.id]=(count[order.recipe.id]||0)+1;return count},{});
+    const order=game.queue.find(item=>item.seated&&item.recipe&&!item.leaving&&demand[item.recipe.id]>(inService[item.recipe.id]||0)&&canMake(item.recipe));
     if(!order)return;
     Object.entries(order.recipe.need).forEach(([id,count])=>game.stock[id]-=count);
     nightLedger.made++;nightLedger.cost+=recipeCost(order.recipe);
-    game.brewing=order.recipe;saveGame();renderWorkstation();
-    clearTimeout(brewTimer);brewTimer=setTimeout(()=>{game.ready=game.brewing;game.brewing=null;saveGame();renderWorkstation();paintServer();celebrateDrinkReady()},1050);
+    game.brewing=order.recipe;
+    const brewMs=Math.round(1050*(1-staffBonus('brew')));
+    game.brewStartedAt=Date.now();game.brewEndsAt=game.brewStartedAt+brewMs;saveGame();renderWorkstation();
+    clearInterval(brewProgressTimer);brewProgressTimer=setInterval(renderWorkstation,80);
+    clearTimeout(brewTimer);brewTimer=setTimeout(()=>{clearInterval(brewProgressTimer);if(!game.night)return;const finished=game.brewing;game.brewing=null;game.brewStartedAt=null;game.brewEndsAt=null;if(finished)readyQueue().push(finished);saveGame();renderWorkstation();paintServer();celebrateDrinkReady();setTimeout(tryBrew,80)},brewMs);
   }
 
   function paintServer(){
@@ -397,47 +501,56 @@
     carry.innerHTML=game.carrying?sprite('cocktail',game.carrying.art,'carried-drink'):'';
     cat?.classList.toggle('carrying',!!game.carrying);
     cat?.classList.toggle('serving',servingDrink);
-    const instruction=tray.querySelector('span');if(instruction)instruction.textContent=game.night?'← → 移动　空格取酒 / 送酒':canPoker()?'← → 控制路易　走到《德州扑克》霓虹灯进入随机牌局':'← → 控制路易　夜晚准备经营酒吧';
+    updateServerNotebookVisual();
+    const instruction=tray.querySelector('span');if(instruction)instruction.textContent=game.night?'← → 移动　空格取酒 / 送酒　Q 丢弃':canPoker()?'← 到头进庄园　→ 到头进德州':'← 到头进庄园　→ 移动路易';
   }
 
   function serviceAction(){
+    resetServerNotebookTimer();
     if(!game.night)return;
     if(servingDrink)return;
     if(!game.carrying){
-      if(!game.ready)return notify(game.brewing?'酒保正在摇酒':'还没有做好的鸡尾酒');
+      if(!readyQueue().length)return notify(game.brewing?'酒保正在摇酒':'还没有做好的鸡尾酒');
       if(Math.abs(game.serverX-18)>10)return notify('移动到酒保旁边再按空格取酒');
-      game.carrying=game.ready;game.ready=null;saveGame();notify(`拿到 ${game.carrying.cn}`);renderWorkstation();paintServer();setTimeout(tryBrew,300);return;
+      game.carrying=readyQueue().shift();saveGame();notify(`拿到 ${game.carrying.cn}`);renderWorkstation();renderCharacters();paintServer();setTimeout(tryBrew,80);return;
     }
-    const seated=game.queue.filter(order=>order.seated&&order.recipe),matching=seated.filter(order=>order.recipe.id===game.carrying.id);
+    const seated=game.queue.filter(order=>order.seated&&order.recipe&&!order.leaving),matching=seated.filter(order=>order.recipe.id===game.carrying.id);
     if(!seated.length)return notify('客人还没有坐好点单');
     if(!matching.length)return notify(`目前没有客人点 ${game.carrying.cn}`);
     const order=matching.find(item=>Math.abs(game.serverX-stoolX[item.seat])<=8);
     if(!order)return notify('移动到任意一位点了同款酒的客人面前再按空格');
-    servingDrink=true;paintServer();
+    servingDrink=true;order.serving=true;paintServer();
     clearTimeout(serviceTimer);serviceTimer=setTimeout(()=>{
       if(!game.night)return;
-      const tip=game.time>12?10:4,gain=game.carrying.price+tip;
+      const baseTip=game.time>Math.round(nightDuration()*.4)?10:4,tip=Math.round(baseTip*(1+staffBonus('tip'))),gain=game.carrying.price+tip;
       nightLedger.sales++;nightLedger.revenue+=game.carrying.price;nightLedger.tips+=tip;
       if(chatState?.guestId===order.id)chatState=null;
-      const previousLevel=level();game.coins+=gain;game.served++;game.servedTonight++;const currentLevel=level(),newRecipe=currentLevel>previousLevel?recipes.find(recipe=>recipe.level===currentLevel):null;game.carrying=null;game.queue=game.queue.filter(item=>item.id!==order.id);servingDrink=false;saveGame();notify(newRecipe?`升级 Lv.${currentLevel} · 学会 ${newRecipe.cn}`:`送给第 ${order.seat+1} 号凳客人 +${coin(gain)}`);renderHud();renderCharacters();renderWorkstation();renderPrep();paintServer();if(newRecipe)celebrateRecipeUnlock(newRecipe,currentLevel);setTimeout(tryBrew,250);
-    },720);
+      const deliveryMs=Date.now()-(order.orderedAt||Date.now()),previousLevel=level();game.coins+=gain;game.served++;game.servedTonight++;const currentLevel=level(),newRecipe=currentLevel>previousLevel?recipes.find(recipe=>recipe.level===currentLevel):null;if(newRecipe)pendingRecipeUnlocks.push({recipe:newRecipe,level:currentLevel});game.carrying=null;servingDrink=false;playDeliverySound();if(deliveryMs<=5000){order.leaving='happy';order.serving=false;removeGuestAfterReaction(order.id)}else game.queue=game.queue.filter(item=>item.id!==order.id);saveGame();notify(`送给第 ${order.seat+1} 号凳客人 +${coin(gain)}`);renderHud();renderCharacters();renderWorkstation();renderPrep();paintServer();setTimeout(tryBrew,250);
+    },Math.round(720*(1-staffBonus('serve'))));
+  }
+
+  function discardCarriedDrink(){
+    if(!game.night||!game.carrying||servingDrink)return;
+    const discarded=game.carrying;game.carrying=null;saveGame();notify(`已丢弃 ${discarded.cn}`);renderCharacters();renderWorkstation();paintServer();setTimeout(tryBrew,80);
   }
 
   function moveServer(delta){
-    game.serverX=Math.max(12,Math.min(88,game.serverX+delta));paintServer();
-    const cat=$('#serverCat').querySelector('.pixel-cat'),direction=delta<0?'left':'right';cat?.classList.remove('moving-left','moving-right');cat?.classList.add(`moving-${direction}`);clearTimeout(walkTimer);walkTimer=setTimeout(()=>cat?.classList.remove('moving-left','moving-right'),600);
-    if(!game.night&&delta>0&&game.serverX>=88&&canPoker())enterRandomPoker();
+    resetServerNotebookTimer();
+    const adjustedDelta=delta*(1+staffBonus('move'));game.serverX=Math.max(12,Math.min(88,game.serverX+adjustedDelta));paintServer();
+    const cat=$('#serverCat').querySelector('.pixel-cat'),direction=adjustedDelta<0?'left':'right';cat?.classList.remove('moving-left','moving-right');cat?.classList.add(`moving-${direction}`);clearTimeout(walkTimer);walkTimer=setTimeout(()=>cat?.classList.remove('moving-left','moving-right'),600);
+    if(!game.night&&adjustedDelta<0&&game.serverX<=12){enterEstate();return}
+    if(!game.night&&adjustedDelta>0&&game.serverX>=88&&canPoker())enterRandomPoker();
   }
 
   function autoServeStep(){
     if(!game.night||!game.autoServe)return;
     if(!game.carrying){
-      if(!game.ready){tryBrew();return}
+      if(!readyQueue().length){tryBrew();return}
       const distance=18-game.serverX;
       if(Math.abs(distance)<=4){game.serverX=18;paintServer();serviceAction();return}
       moveServer(Math.sign(distance)*4);return;
     }
-    const order=game.queue.find(item=>item.seated&&item.recipe?.id===game.carrying.id);
+    const order=game.queue.find(item=>item.seated&&!item.leaving&&item.recipe?.id===game.carrying.id);
     if(!order)return;
     const target=stoolX[order.seat],distance=target-game.serverX;
     if(Math.abs(distance)<=4){game.serverX=target;paintServer();serviceAction();return}
@@ -446,7 +559,7 @@
 
   function startAutoServe(){
     clearInterval(autoTimer);
-    if(game.night&&game.autoServe)autoTimer=setInterval(autoServeStep,150);
+    if(game.night&&game.autoServe)autoTimer=setInterval(autoServeStep,Math.round(150*(1-staffBonus('serve'))));
   }
 
   function toggleAutoServe(){
@@ -458,25 +571,26 @@
     if(timeline.phase!=='night')return notify('请先完成白天德州牌桌赛，或选择跳过白天');
     if(!game.menu.length)return notify('至少选择一款今晚菜单');
     unlockSound();
-    settlement=null;nightLedger={made:0,sales:0,revenue:0,tips:0,cost:0};
-    servingDrink=false;game.night=true;game.time=30;game.queue=[];game.ready=null;game.brewing=null;game.carrying=null;game.servedTonight=0;game.serverX=32;panelView=null;saveGame();renderAll();
-    addGuest();startAutoServe();startChatLoop();arrivalTimer=setInterval(addGuest,3500);tickTimer=setInterval(()=>{game.time--;renderHud();if(game.time<=0)endNight()},1000);
+    settlement=null;pendingRecipeUnlocks=[];nightLedger={made:0,sales:0,revenue:0,tips:0,cost:0,penalty:0};
+    servingDrink=false;game.night=true;game.time=nightDuration();game.queue=[];game.ready=[];game.brewing=null;game.brewStartedAt=null;game.brewEndsAt=null;game.carrying=null;game.servedTonight=0;game.serverX=32;panelView=null;saveGame();renderAll();startStaffSpeech();
+    addGuest();startAutoServe();startChatLoop();arrivalTimer=setInterval(addGuest,Math.round(3500*(1-staffBonus('guest'))));tickTimer=setInterval(()=>{game.time--;renderHud();if(game.time<=0)endNight()},1000);
   }
 
   function endNight(){
     if(!game.night)return;
-    const gross=nightLedger.revenue+nightLedger.tips,profit=gross-nightLedger.cost;
+    const gross=nightLedger.revenue+nightLedger.tips,profit=gross-nightLedger.cost-nightLedger.penalty;
     settlement={...nightLedger,waste:Math.max(0,nightLedger.made-nightLedger.sales),profit,margin:gross?Math.round(profit/gross*100):0};
-    clearInterval(tickTimer);clearInterval(arrivalTimer);clearInterval(autoTimer);clearInterval(chatTimer);clearTimeout(chatClearTimer);clearTimeout(brewTimer);clearTimeout(glowTimer);clearTimeout(serviceTimer);servingDrink=false;$('#bartenderCat').classList.remove('drink-ready-glow');chatState=null;panelView=null;game.night=false;game.queue=[];game.ready=null;game.brewing=null;game.carrying=null;saveGame();notify(`02:00 打烊 · 净盈利 ${coin(profit)}`);renderAll();
+    clearInterval(tickTimer);clearInterval(arrivalTimer);clearInterval(autoTimer);clearInterval(chatTimer);clearInterval(brewProgressTimer);clearInterval(bartenderSpeechTimer);clearTimeout(serverSpeechTimer);clearTimeout(chatClearTimer);clearTimeout(brewTimer);clearTimeout(glowTimer);clearTimeout(serviceTimer);servingDrink=false;bartenderSpeech='';serverSpeech='';$('#bartenderCat').classList.remove('drink-ready-glow');chatState=null;panelView=null;game.night=false;game.queue=[];game.ready=[];game.brewing=null;game.brewStartedAt=null;game.brewEndsAt=null;game.carrying=null;saveGame();notify(`02:00 打烊 · 净盈利 ${coin(profit)}`);renderAll();
   }
 
   function handleKey(event){
     if(!$('#tavern').classList.contains('active'))return;
     unlockTavernBgm();
-    if(['ArrowLeft','ArrowRight'].includes(event.key)||(game.night&&event.key===' '))event.preventDefault();
+    if(['ArrowLeft','ArrowRight'].includes(event.key)||(game.night&&[' ','q','Q'].includes(event.key)))event.preventDefault();
     if(event.key==='ArrowLeft')moveServer(-5);
     if(event.key==='ArrowRight')moveServer(5);
     if(game.night&&event.key===' ')serviceAction();
+    if(game.night&&event.key.toLowerCase()==='q')discardCarriedDrink();
   }
 
   function handleControlSound(event){
@@ -486,18 +600,46 @@
     playButtonSound();
   }
 
+  function bindTouchMove(button,delta){
+    let repeatTimer=null;
+    const stop=()=>{clearInterval(repeatTimer);repeatTimer=null};
+    button.addEventListener('pointerdown',event=>{
+      if(!$('#tavern').classList.contains('active'))return;
+      event.preventDefault();
+      unlockTavernBgm();
+      stop();
+      moveServer(delta);
+      repeatTimer=setInterval(()=>{if(!$('#tavern').classList.contains('active')){stop();return}moveServer(delta)},115);
+      try{button.setPointerCapture(event.pointerId)}catch{}
+    });
+    button.addEventListener('pointerup',stop);
+    button.addEventListener('pointercancel',stop);
+    button.addEventListener('lostpointercapture',stop);
+  }
+
   window.catDayTimeline={canPoker,refresh:()=>{showScreen('#tavern');game.serverX=32;renderAll()}};
+  window.catTavernEstate={enter:enterEstate,returnToTavern:returnFromEstate};
   window.addEventListener('cat-poker-tournament-finished',finishPokerStage);
   window.addEventListener('cat-free-poker-hand-finished',finishFreePoker);
-  $('#enterTavern').onclick=()=>{game.coins=Number(localStorage.getItem('catCoins')||game.coins);showScreen('#tavern');game.serverX=32;renderAll()};
-  $('#tavernBack').onclick=()=>notify(`第 ${timeline.day} 天 · ${timeline.phase==='day'?'白天德州':'夜晚营业'}`);
+  window.addEventListener('cat-estate-coins-changed',event=>{const balance=Number(event.detail?.coins);if(Number.isFinite(balance)){game.coins=balance;saveGame();renderHud()}});
+  $('#enterTavern').onclick=()=>{game.coins=Number(localStorage.getItem('catCoins')||game.coins);showScreen('#tavern');game.serverX=32;renderAll();resetServerNotebookTimer()};
+  $('#estateNeon').onclick=enterEstate;
   $('#pokerNeon').onclick=enterRandomPoker;
   $('#friendNeon').onclick=enterFriendPoker;
   $('#serveTray').onclick=serviceAction;
-  $('#tavernMusic').onclick=toggleTavernBgm;
+  bindTouchMove($('#touchMoveLeft'),-3);
+  bindTouchMove($('#touchMoveRight'),3);
+  $('#touchServe').onclick=()=>{unlockTavernBgm();serviceAction()};
+  $('#tavernSettings').onclick=event=>{event.stopPropagation();const panel=$('#tavernSettingsPanel'),button=$('#tavernSettings');const open=panel.hidden;panel.hidden=!open;button.setAttribute('aria-expanded',String(open));if(open)updateMusicControl()};
+  $('#tavernMusicEnabled').onchange=event=>{if(event.target.checked===bgmMuted)toggleTavernBgm()};
+  $('#tavernMusicVolume').oninput=event=>setTavernBgmVolume(Number(event.target.value)/100);
+  $('#tavernSfxEnabled').onchange=event=>{if(event.target.checked!==sfxEnabled)toggleTavernSfx()};
+  $('#tavernSfxVolume').oninput=event=>setTavernSfxVolume(Number(event.target.value)/100);
+  document.addEventListener('pointerdown',event=>{const panel=$('#tavernSettingsPanel'),button=$('#tavernSettings');if(!panel.hidden&&!panel.contains(event.target)&&!button.contains(event.target)){panel.hidden=true;button.setAttribute('aria-expanded','false')}});
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'){const panel=$('#tavernSettingsPanel'),button=$('#tavernSettings');if(!panel.hidden){panel.hidden=true;button.setAttribute('aria-expanded','false');button.focus()}}});
   document.addEventListener('pointerdown',handleControlSound);
   document.addEventListener('keydown',handleKey);
   document.addEventListener('visibilitychange',syncTavernBgm);
   new MutationObserver(syncTavernBgm).observe($('#tavern'),{attributes:true,attributeFilter:['class']});
-  showScreen('#tavern');renderAll();startStaffSpeech();updateMusicControl();
+  showScreen('#tavern');renderAll();resetServerNotebookTimer();startStaffSpeech();updateMusicControl();
 })();

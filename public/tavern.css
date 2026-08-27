@@ -8,16 +8,20 @@
 /* 角色按用户提供的六款全身猫造型制作，并保留游戏动画 */
 .pixel-cat.image-character{position:relative;width:76px;height:122px;background-image:var(--character-image);background-repeat:no-repeat;background-position:center bottom;background-size:contain;filter:drop-shadow(3px 5px #080403);image-rendering:pixelated;animation:characterIdle .85s steps(2,end) infinite alternate}.pixel-cat.image-character .character-shadow{position:absolute;z-index:-1;left:16%;right:16%;bottom:0;height:10px;border-radius:50%;background:#09040399;transform:translateY(5px)}@keyframes characterIdle{to{transform:translateY(-3px)}}.pixel-cat.image-character.walking{animation:characterWalk .18s steps(2,end) infinite alternate}@keyframes characterWalk{from{transform:translate(-2px,0) rotate(-1deg)}to{transform:translate(3px,-4px) rotate(2deg)}}.pixel-cat.image-character.mixing{animation:characterMix .24s steps(2,end) infinite alternate}.pixel-cat.image-character.mixing:after{content:'';position:absolute;z-index:8;left:50%;top:44%;width:18px;height:31px;border:3px solid #281b16;background:linear-gradient(90deg,#898985,#fff1be,#777570);transform:translateX(-50%)}@keyframes characterMix{from{transform:translateX(-4px) rotate(-3deg)}to{transform:translate(5px,-4px) rotate(4deg)}}
 .pixel-cat.image-character.role-bartender,.pixel-cat.image-character.role-bartender.mixing{animation:none}.pixel-cat.image-character.role-bartender.mixing:after{content:none}
-#bartenderCat{position:relative;z-index:0;width:80px;height:122px}#bartenderCat.drink-ready-glow:before{content:'';position:absolute;z-index:-1;left:-36px;top:-20px;width:150px;height:150px;background:repeating-conic-gradient(from 0deg,#ffe182 0 5deg,transparent 5deg 15deg);-webkit-mask:radial-gradient(circle,transparent 0 31%,#000 33% 57%,transparent 59%);mask:radial-gradient(circle,transparent 0 31%,#000 33% 57%,transparent 59%);filter:drop-shadow(0 0 7px #ffc34f);pointer-events:none;animation:readyRays .86s steps(6,end) both}#bartenderCat.drink-ready-glow:after{content:'';position:absolute;z-index:-1;left:-14px;top:8px;width:104px;height:104px;border:3px solid #fff0a1;border-radius:50%;box-shadow:0 0 8px #ffd461,0 0 18px #ffad3f;pointer-events:none;animation:readyRing .86s steps(6,end) both}@keyframes readyRays{0%{opacity:0;transform:scale(.45) rotate(0)}35%{opacity:1}100%{opacity:0;transform:scale(1.16) rotate(25deg)}}@keyframes readyRing{0%{opacity:0;transform:scale(.45)}35%{opacity:1}100%{opacity:0;transform:scale(1.28)}}.shaker{display:none!important}
+#bartenderCat{position:relative;z-index:0;width:136px;height:200px}#bartenderCat .pixel-cat.image-character.role-bartender{width:136px;height:200px;background-size:auto 160px}#bartenderCat.drink-ready-glow:before{content:'';position:absolute;z-index:-1;left:-36px;top:-20px;width:150px;height:150px;background:repeating-conic-gradient(from 0deg,#ffe182 0 5deg,transparent 5deg 15deg);-webkit-mask:radial-gradient(circle,transparent 0 31%,#000 33% 57%,transparent 59%);mask:radial-gradient(circle,transparent 0 31%,#000 33% 57%,transparent 59%);filter:drop-shadow(0 0 7px #ffc34f);pointer-events:none;animation:readyRays .86s steps(6,end) both}#bartenderCat.drink-ready-glow:after{content:'';position:absolute;z-index:-1;left:-14px;top:8px;width:104px;height:104px;border:3px solid #fff0a1;border-radius:50%;box-shadow:0 0 8px #ffd461,0 0 18px #ffad3f;pointer-events:none;animation:readyRing .86s steps(6,end) both}@keyframes readyRays{0%{opacity:0;transform:scale(.45) rotate(0)}35%{opacity:1}100%{opacity:0;transform:scale(1.16) rotate(25deg)}}@keyframes readyRing{0%{opacity:0;transform:scale(.45)}35%{opacity:1}100%{opacity:0;transform:scale(1.28)}}.shaker{display:none!important}
 .pixel-cat{--fur:#8c8176;--fur2:#514942;--cloth:#2b2828;position:relative;width:58px;height:112px;image-rendering:pixelated;filter:drop-shadow(3px 4px #080403);animation:catIdle .8s steps(2,end) infinite alternate}.pixel-cat.tone-cream{--fur:#ddcaa7;--fur2:#8c745b;--cloth:#6b3f37}.pixel-cat.tone-orange{--fur:#c87535;--fur2:#74401f;--cloth:#2b4b63}.pixel-cat.tone-black{--fur:#393638;--fur2:#171617;--cloth:#692f38}.pixel-cat.tone-white{--fur:#e5ddd0;--fur2:#9e968b;--cloth:#4b385c}.pixel-cat.tone-tabby{--fur:#9a7657;--fur2:#4c3325;--cloth:#33513d}.pixel-cat.tone-brown{--fur:#9b7452;--fur2:#4b3020;--cloth:#20242d}.pixel-cat.tone-silver{--fur:#aaa097;--fur2:#534c48;--cloth:#392b2a}@keyframes catIdle{to{transform:translateY(-2px)}}
 .cat-head{position:absolute;z-index:4;left:7px;top:8px;width:45px;height:39px;border:3px solid #1e1511;border-radius:4px 4px 13px 13px;background:var(--fur);box-shadow:inset 8px 0 var(--fur2),inset -5px 0 #d9c7ad}.ear{position:absolute;top:-13px;width:16px;height:19px;border:3px solid #1e1511;background:var(--fur);clip-path:polygon(50% 0,100% 100%,0 100%)}.ear.left{left:-3px}.ear.right{right:-3px}.cat-face{position:absolute;inset:0}.eye{position:absolute;top:13px;width:7px;height:9px;background:#151313;box-shadow:inset 2px 2px #f8e096}.eye.left{left:9px}.eye.right{right:9px}.nose{position:absolute;left:50%;top:26px;width:5px;height:4px;transform:translateX(-50%);background:#5d2d2a}.cat-body{position:absolute;z-index:3;left:9px;top:45px;width:41px;height:48px;border:3px solid #1c1512;border-radius:9px 9px 5px 5px;background:var(--cloth);box-shadow:inset 7px 0 #151516,inset -5px 0 #54403b}.shirt-detail{position:absolute;left:17px;top:4px;width:5px;height:32px;background:#d8c3a4;box-shadow:0 11px #a56b3c}.arm{position:absolute;top:7px;width:12px;height:39px;border:3px solid #1d1512;background:var(--cloth);transform-origin:top}.arm.left{left:-11px;transform:rotate(8deg)}.arm.right{right:-11px;transform:rotate(-8deg)}.arm:after{content:'';position:absolute;left:1px;bottom:-6px;width:7px;height:9px;background:var(--fur);border:2px solid #1d1512}.leg{position:absolute;z-index:2;bottom:0;width:19px;height:28px;border:3px solid #1b1412;background:#242020}.leg.left{left:8px}.leg.right{right:8px}.leg:after{content:'';position:absolute;bottom:-3px;width:22px;height:8px;border:3px solid #1b1412;background:#442c20}.leg.left:after{right:-1px}.leg.right:after{left:-1px}.cat-tail{position:absolute;z-index:1;right:-13px;bottom:15px;width:25px;height:36px;border-right:8px solid var(--fur2);border-bottom:8px solid var(--fur2);border-radius:0 0 22px 0;transform-origin:left bottom;animation:tailWag .65s steps(2,end) infinite alternate}@keyframes tailWag{to{transform:rotate(12deg)}}
 .role-bartender .cat-body{--cloth:#3a2821}.role-bartender .shirt-detail{background:#fff0cd;box-shadow:-6px 9px #b8453b,6px 9px #b8453b}.role-server .cat-body{--cloth:#18252c}.role-server .shirt-detail{background:#d8e2dc;box-shadow:0 11px #784a29}.role-guest .cat-body{box-shadow:inset 7px 0 #252020,inset -5px 0 #62493e}
 .pixel-cat.walking .leg.left{animation:walkLeft .18s steps(2,end) infinite alternate}.pixel-cat.walking .leg.right{animation:walkRight .18s steps(2,end) infinite alternate}@keyframes walkLeft{to{transform:translateX(-5px)}}@keyframes walkRight{to{transform:translateX(5px)}}.pixel-cat.mixing{animation:mixBody .24s steps(2,end) infinite alternate}.pixel-cat.mixing .arm.left{animation:mixLeft .24s steps(2,end) infinite alternate}.pixel-cat.mixing .arm.right{animation:mixRight .24s steps(2,end) infinite alternate}.pixel-cat.mixing:after{content:'';position:absolute;z-index:9;left:50%;top:46px;width:18px;height:29px;border:3px solid #281b16;background:linear-gradient(90deg,#898985,#fff1be,#777570);transform:translateX(-50%)}@keyframes mixBody{to{transform:translate(4px,-3px) rotate(2deg)}}@keyframes mixLeft{to{transform:translate(10px,-15px) rotate(-42deg)}}@keyframes mixRight{to{transform:translate(-10px,-15px) rotate(42deg)}}
-.bartender-wrap{position:absolute;z-index:5;left:25%;bottom:34%;width:80px}.bartender-wrap>#barAction{position:absolute;left:66px;top:-10px;width:135px;padding:4px 6px;border:2px solid #3f2418;background:#fff1d8;color:#3d241b;font-size:8px;font-style:normal;box-shadow:3px 3px #100807}.server-cat{position:absolute!important;z-index:10;left:var(--server-x,28%);right:auto!important;bottom:4%;width:78px!important;height:126px;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;transform:translateX(-50%);transition:left .11s steps(2,end);overflow:visible}.server-cat:disabled{opacity:1!important;filter:none!important}.server-cat>span{position:absolute;left:50%;bottom:-4px;transform:translateX(-50%);width:155px;padding:3px;background:#170c09df;color:#ffd17a;font-size:8px;text-align:center}.server-cat:focus-visible{outline:3px solid #ffd06f!important}.carryDrink,.carried-drink{pointer-events:none}#carryDrink{position:absolute;z-index:12;right:-4px;top:9px}.carried-drink{width:34px!important;height:42px!important;padding:2px;border:2px solid #3c231a;background-color:#fff0d3!important}
+.bartender-wrap{position:absolute;z-index:5;left:25%;bottom:34%;width:136px}.bartender-wrap>#barAction{position:absolute;left:122px;top:-10px;width:135px;padding:4px 6px;border:2px solid #3f2418;background:#fff1d8;color:#3d241b;font-size:8px;font-style:normal;box-shadow:3px 3px #100807}.server-cat{position:absolute!important;z-index:10;left:var(--server-x,28%);right:auto!important;bottom:4%;width:78px!important;height:126px;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;transform:translateX(-50%);transition:left .11s steps(2,end);overflow:visible}.server-cat:disabled{opacity:1!important;filter:none!important}.server-cat>span{position:absolute;left:50%;bottom:-4px;transform:translateX(-50%);width:155px;padding:3px;background:#170c09df;color:#ffd17a;font-size:8px;text-align:center}.server-cat:focus-visible{outline:3px solid #ffd06f!important}.carryDrink,.carried-drink{pointer-events:none}#carryDrink{position:absolute;z-index:12;right:-4px;top:9px}.carried-drink{width:34px!important;height:42px!important;padding:2px;border:2px solid #3c231a;background-color:#fff0d3!important}
 .guest-line{position:absolute;z-index:8;right:12%;bottom:31%;display:flex;align-items:end;gap:5px}.guest-seat{position:relative;width:72px;height:118px}.guest-seat.arriving{animation:guestArrive 1s steps(6,end) both}@keyframes guestArrive{from{transform:translateX(240px)}to{transform:translateX(0)}}.guest-seat.next{filter:drop-shadow(0 0 5px #ffd16a)}.guest-seat .pixel-cat{position:absolute;left:7px;bottom:0;transform:scale(.84);transform-origin:center bottom}.guest-seat .order-drink{position:absolute;z-index:12;left:42px;top:-31px;width:36px!important;height:43px!important;padding:2px;border:3px solid #3b231b;border-radius:9px;background-color:#fff2d5!important;box-shadow:3px 3px #100806}.guest-seat .order-drink:after{content:'';position:absolute;bottom:-7px;left:9px;border:4px solid transparent;border-top-color:#fff2d5}.guest-seat>small{position:absolute;z-index:13;left:50%;bottom:-10px;transform:translateX(-50%);padding:2px 4px;background:#1a0e0bcc;color:#ffd48a;font-size:7px;white-space:nowrap}.no-guests{color:#c6a87a;font-size:9px}
 .guest-seat.arriving .pixel-cat.tone-cream{background-image:url('/assets/guest-walk-animations/guest-cream-walk-left-loop.gif')!important;animation:none}.guest-seat.sitting .pixel-cat.tone-cream{background-image:url('/assets/guest-animations/aviator-cat-turn-sit-back-once.gif')!important;animation:none}.guest-seat.seated .pixel-cat.tone-cream{background-image:url('/assets/guest-animations/aviator-cat-seated-back.png')!important;animation:none}
 .pixel-cat.image-character.role-server{animation:none;background-size:auto 100px}.pixel-cat.image-character.role-server.carrying{background-image:url('/assets/louis-animations/louis-serve-right-once.gif')!important;background-size:auto 100px!important}.pixel-cat.image-character.role-server.carrying.moving-left{background-image:url('/assets/louis-animations/louis-tray-walk-left-loop.gif')!important}.pixel-cat.image-character.role-server.carrying.moving-right{background-image:url('/assets/louis-animations/louis-tray-walk-right-loop.gif')!important}.pixel-cat.image-character.role-server.carrying.serving{background-image:url('/assets/louis-animations/louis-serve-right-once.gif')!important}.server-cat.carrying #carryDrink{left:50%;right:auto;top:60px;transform:translateX(-50%);transform-origin:center bottom}.server-cat.serving #carryDrink{animation:louisServeDrink .72s steps(6,end) both}@keyframes louisServeDrink{0%{transform:translateX(-50%) translateY(0);opacity:1}62%{transform:translateX(26px) translateY(-5px);opacity:1}100%{transform:translateX(45px) translateY(0);opacity:0}}
 /* 图集 */
+
+
+/* 服务员同比放大 10%，让外层定位与角色画布保持一致。 */
+.server-cat{width:94px!important;height:151px}.pixel-cat.image-character.role-server{width:91px!important;height:146px!important}.server-cat.carrying #carryDrink{top:72px}
 .atlas-sprite{display:block;flex:0 0 auto;background-repeat:no-repeat;background-color:transparent;image-rendering:pixelated}.atlas-sprite.cocktail{background-image:url('/assets/cocktails/cocktail-pixel-atlas-v1.png');background-size:800% 300%;background-position:var(--atlas-x) var(--atlas-y)}.atlas-sprite.ingredient{background-image:url('/assets/cocktails/cocktail-ingredients-pixel-atlas-v5.png');background-size:800% 600%;background-position:var(--atlas-x) var(--atlas-y)}.counter-drink{width:42px!important;height:48px!important}
 .tavern-scene>.mixing-glass{position:absolute!important;z-index:60!important;left:20%!important;top:auto!important;bottom:46%!important;width:42px!important;height:48px!important;transform:translateX(-50%);overflow:visible!important;pointer-events:none}.tavern-scene>.mixing-glass .counter-drink{position:relative;z-index:61;background-color:transparent!important;filter:drop-shadow(2px 3px #10080788)}#carryDrink{z-index:12!important;background:transparent!important;box-shadow:none!important}#carryDrink .carried-drink{padding:0!important;border:0!important;border-radius:0!important;background-color:transparent!important;box-shadow:none!important;filter:drop-shadow(2px 3px #10080788)}
 /* 四座像素吧台：客人走到空凳、坐下、再显示点单 */
@@ -51,6 +55,15 @@
 .poker-neon{border-color:#4c7381!important;background:#061117ed!important;box-shadow:0 0 8px #61dcff,0 0 22px #147795,4px 4px #070307!important}.poker-neon:before{border-color:#78d8ec!important}.poker-neon b{color:#a8efff!important;text-shadow:0 0 2px #fff,0 0 7px #64e5ff,0 0 15px #1fa7d1!important}.poker-neon small,.poker-neon.open small{color:#87c9d7!important;text-shadow:0 0 5px #3bc9eb!important}.poker-neon.open{border-color:#7ce5fb!important;box-shadow:0 0 8px #61dcff,0 0 22px #147795,4px 4px #070307!important}.friend-neon{border-color:#e9ad35!important;background:#180d05e8!important;box-shadow:0 0 9px #ffcf57,0 0 24px #dc7f0b,5px 5px #080403!important;color:#ffe277!important}.friend-neon:before{border-color:#ffd66b!important}.friend-neon b{color:#ffe277!important;text-shadow:0 0 2px #fff6bc,0 0 7px #ffc533,0 0 16px #df8500!important}.friend-neon small{color:#fff1a9!important;text-shadow:0 0 6px #ffb72e!important}.tavern-scene.daytime .poker-neon,.tavern-scene.daytime .friend-neon{animation:none!important;filter:none!important}
 /* 角色台词贴近人物，并在酒保说话时隐藏同位置的工作提示。 */
 .bartender-wrap .staff-dialog,.server-cat .staff-dialog{top:-10px!important}.bartender-wrap .staff-dialog{left:66px!important}.server-cat .staff-dialog{left:52px!important}#barAction:empty,#barAction.speech-hidden{display:none!important}
+/* 酒保头顶订单：制作进度与完成鸡尾酒均不占用吧台桌面。 */
+.bartender-drink-panel{position:absolute;z-index:38;left:50px;bottom:106px;display:grid;gap:4px;width:166px;pointer-events:none}.bartender-drink-card{display:flex;align-items:center;gap:4px;min-height:31px;padding:3px 5px;border:2px solid #5b3a29;background:#fff1d8;color:#3d241b;box-shadow:3px 3px #100807;font-style:normal}.bartender-drink-card>div{display:flex;align-items:center;gap:4px;min-width:0}.bartender-drink-card span{display:grid;min-width:0;gap:1px}.bartender-drink-card b{overflow:hidden;font-size:7px;white-space:nowrap;text-overflow:ellipsis}.bartender-drink-card small{font-size:6px;line-height:1.1}.bartender-panel-drink{flex:0 0 auto;width:19px!important;height:24px!important}.bartender-drink-card.ready{border-color:#c38432;background:#fff0c8}.brew-progress{display:block;overflow:hidden;width:100%;height:5px;margin-top:2px;border:1px solid #5c3823;background:#331c13}.brew-progress em{display:block;height:100%;background:#edb74a;box-shadow:0 0 5px #fff0a1;transition:width .08s linear}.guest-seat .order-drink.matching-order{animation:matchingDrinkFlash .48s steps(2,end) infinite!important;filter:drop-shadow(0 0 4px #fff5a9)}@keyframes matchingDrinkFlash{50%{filter:brightness(1.9) drop-shadow(0 0 8px #fff7a4);transform:scale(1.12)}}@container game (max-width:760px),(max-height:430px){.bartender-drink-panel{bottom:86px;left:42px;width:132px;gap:3px}.bartender-drink-card{min-height:26px;padding:2px 4px}.bartender-panel-drink{width:16px!important;height:20px!important}.bartender-drink-card b{font-size:6px}.bartender-drink-card small{font-size:5px}.brew-progress{height:4px}}
+/* 营业时酒保专心制作；订单面板固定在酒保正上方，客人的点单提示贴近头部。 */
+.bartender-drink-panel{left:50%!important;bottom:150px!important;width:184px!important;transform:translateX(-50%)}.bartender-drink-card{min-height:39px!important;padding:5px 7px!important;gap:6px!important}.bartender-panel-drink{width:24px!important;height:30px!important}.bartender-drink-card b{font-size:10px!important}.bartender-drink-card small{font-size:8px!important}.brew-progress{height:6px!important;margin-top:3px!important}.tavern-scene.night-open #estateNeon,.tavern-scene.night-open #pokerNeon,.tavern-scene.night-open #friendNeon{display:none!important}.guest-seat .order-drink{top:-6px!important}.guest-seat.leaving:before{position:absolute;z-index:35;left:50%;top:-13px;display:block;transform:translateX(-50%);font-size:24px;line-height:1;pointer-events:none;animation:guestReaction .85s steps(6,end) both}.guest-seat.leaving.happy:before{content:'♥';color:#f53b3b;text-shadow:2px 2px #7e1717,0 0 7px #ffb2b2}.guest-seat.leaving.broken:before{content:'💔';filter:drop-shadow(2px 2px #651312)}@keyframes guestReaction{0%{opacity:0;transform:translate(-50%,9px) scale(.45)}35%{opacity:1;transform:translate(-50%,-5px) scale(1.25)}100%{opacity:0;transform:translate(-50%,-22px) scale(.9)}}@container game (max-width:760px),(max-height:430px){.bartender-drink-panel{left:50%!important;bottom:119px!important;width:150px!important}.bartender-drink-card{min-height:31px!important;padding:3px 5px!important}.bartender-panel-drink{width:20px!important;height:25px!important}.bartender-drink-card b{font-size:8px!important}.bartender-drink-card small{font-size:6px!important}.guest-seat .order-drink{top:-3px!important}.guest-seat.leaving:before{top:-9px;font-size:20px}}
+.bartender-drink-panel{bottom:163px!important}.bartender-drink-card{display:block!important}.bartender-drink-card>.bartender-drink-core{display:grid!important;grid-template-columns:30px minmax(76px,1fr) 30px;align-items:center;gap:7px;width:100%}.bartender-drink-card .brew-progress{display:block!important;min-width:76px!important;width:100%!important;margin:0!important}.drink-state{display:grid;place-items:center;width:28px;height:22px;color:#7d4824;font-size:9px!important;line-height:1!important;text-shadow:none!important}.drink-state.complete{color:#3c7b37;font-family:"Microsoft YaHei","SimSun",sans-serif!important;font-size:9px!important;font-weight:900!important;text-shadow:1px 1px #f9ffd2!important}.guest-seat.sitting .order-drink,.guest-seat.seated .order-drink{top:10px!important}@container game (max-width:760px),(max-height:430px){.bartender-drink-panel{bottom:129px!important}.bartender-drink-card>.bartender-drink-core{grid-template-columns:25px minmax(55px,1fr) 25px;gap:5px}.bartender-drink-card .brew-progress{min-width:55px!important}.drink-state{width:24px;height:18px;font-size:7px!important}.drink-state.complete{font-size:7px!important}.guest-seat.sitting .order-drink,.guest-seat.seated .order-drink{top:8px!important}}
+.drink-state,.drink-state.complete{display:grid!important;place-items:center!important;width:32px!important;height:22px!important;font:700 9px/1 "Microsoft YaHei","SimSun",sans-serif!important;text-align:center!important;white-space:nowrap!important;text-shadow:none!important}.drink-state{color:#7d4824!important}.drink-state.complete{color:#3c7b37!important}@container game (max-width:760px),(max-height:430px){.drink-state,.drink-state.complete{width:26px!important;height:18px!important;font-size:7px!important}}
+.bar-counter>#readyDrink:empty{display:none!important}.guest-seat.leaving:before{display:none!important;content:none!important}.guest-heart-burst{position:absolute;z-index:36;left:50%;top:-5px;width:1px;height:1px;pointer-events:none}.guest-heart-burst b{position:absolute;display:block;color:#f53b3b;font:900 36px/1 Arial,sans-serif;text-shadow:3px 3px #7e1717,0 0 10px #ffb2b2;animation:guestHeartBurst .82s steps(6,end) both}.guest-heart-burst b:nth-child(1){--heart-x:-42px;--heart-y:-40px;animation-delay:0ms}.guest-heart-burst b:nth-child(2){--heart-x:-14px;--heart-y:-66px;animation-delay:45ms}.guest-heart-burst b:nth-child(3){--heart-x:20px;--heart-y:-58px;animation-delay:85ms}.guest-heart-burst b:nth-child(4){--heart-x:45px;--heart-y:-30px;animation-delay:25ms}.guest-heart-burst b:nth-child(5){--heart-x:-31px;--heart-y:-79px;animation-delay:105ms}.guest-heart-burst b:nth-child(6){--heart-x:8px;--heart-y:-91px;animation-delay:65ms}@keyframes guestHeartBurst{0%{opacity:0;transform:translate(-50%,5px) scale(.35)}32%{opacity:1}100%{opacity:0;transform:translate(var(--heart-x),var(--heart-y)) scale(1.08)}}.guest-break-heart{position:absolute;z-index:37;left:50%;top:-8px;display:block;font:900 38px/1 Arial,sans-serif;filter:drop-shadow(3px 3px 0 #651312);pointer-events:none;animation:guestBreakHeart .85s steps(6,end) both}@keyframes guestBreakHeart{0%{opacity:0;transform:translate(-50%,9px) scale(.3) rotate(-18deg)}32%{opacity:1;transform:translate(-50%,-4px) scale(1.2) rotate(8deg)}100%{opacity:0;transform:translate(-50%,-29px) scale(.8) rotate(-9deg)}}@container game (max-width:760px),(max-height:430px){.guest-heart-burst b{font-size:26px}.guest-break-heart{font-size:28px}}
+/* 手机端：左右移动使用半透明三角按钮，右侧圆形按钮负责拿酒/递酒。 */
+.tavern-touch-controls{position:absolute;z-index:120;inset:0;display:none;pointer-events:none}.tavern-touch-controls button{pointer-events:auto;touch-action:none;-webkit-tap-highlight-color:transparent;user-select:none}.touch-direction{position:absolute;bottom:88px;width:112px;height:112px;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important}.touch-direction:before{content:'';position:absolute;inset:9px;opacity:.6;filter:drop-shadow(3px 4px 0 #130907);background:#ffd266;clip-path:polygon(100% 0,100% 100%,0 50%)}.touch-direction:active:before{opacity:.85;transform:scale(.92)}.touch-left{left:12px}.touch-right{position:relative;right:auto;bottom:auto}.touch-right:before{clip-path:polygon(0 0,100% 50%,0 100%)}.touch-right-stack{position:absolute;right:12px;bottom:88px;display:flex;flex-direction:column;align-items:center;gap:5px;pointer-events:none}.touch-right-stack>*{pointer-events:auto}.touch-serve{width:74px;height:74px;padding:0!important;border:4px solid #ffdc86!important;border-radius:50%!important;background:#6c3518aa!important;color:#fff0b9!important;font-family:"Microsoft YaHei","SimSun",sans-serif!important;font-size:18px!important;font-weight:700!important;line-height:1.05!important;text-align:center!important;text-shadow:2px 2px #281107!important;box-shadow:0 0 0 3px #2a130bbb,3px 4px #120806!important}.touch-serve:active{transform:scale(.91);background:#9b5425d9!important}@media (hover:none),(pointer:coarse){#tavern.active .tavern-touch-controls{display:block}}
 /* 配方研究：每级一个配方，未学习项目保持灰色。 */
 .prep-toolbar{grid-template-columns:repeat(4,minmax(0,1fr))!important}.recipe-research-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.research-card{display:flex;align-items:center;gap:9px;min-height:92px;padding:8px;border:3px solid #79502c;background:#f1ddba;color:#332016;box-shadow:4px 4px #080403}.research-card>.cocktail{width:48px;height:64px}.research-card>div{display:grid;min-width:0;gap:3px}.research-card b{font-size:11px}.research-card small{color:#765b45;font-size:8px}.research-card p{margin:2px 0;color:#493326;font-size:8px;line-height:1.35}.research-card em{color:#a15a24;font-size:8px;font-style:normal}.research-card.learned{border-color:#e1a23e;box-shadow:0 0 10px #e8a63a55,4px 4px #080403}.research-card.locked{border-color:#554b43;background:#847d73;color:#332f2c;filter:grayscale(1);opacity:.5}.research-card.locked em{color:#3c3733}
 /* 八位客人从右侧入口按各自凳子距离直线走入，再转身坐上高脚凳。 */
@@ -105,3 +118,330 @@
 .guest-seat.arriving .pixel-cat.tone-gray,.guest-seat.arriving .pixel-cat.tone-orange,.guest-seat.arriving .pixel-cat.tone-black,.guest-seat.arriving .pixel-cat.tone-tabby,.guest-seat.arriving .pixel-cat.tone-pink{left:50%!important;bottom:calc(-1 * var(--guest-foot-gap))!important;width:114px!important;height:183px!important;scale:1!important;transform:translateX(-50%)!important;background-image:var(--guest-walk-sheet)!important;background-size:600% 100%!important;background-repeat:no-repeat!important;background-position:0 0;image-rendering:pixelated;animation:guestWalkSixClean .66s steps(1,end) infinite!important}
 .guest-seat.arriving .pixel-cat.tone-gray .character-shadow,.guest-seat.arriving .pixel-cat.tone-orange .character-shadow,.guest-seat.arriving .pixel-cat.tone-black .character-shadow,.guest-seat.arriving .pixel-cat.tone-tabby .character-shadow,.guest-seat.arriving .pixel-cat.tone-pink .character-shadow{display:none!important}
 @keyframes guestWalkSixClean{0%{background-position:0% 0}16.666%{background-position:20% 0}33.333%{background-position:40% 0}50%{background-position:60% 0}66.666%{background-position:80% 0}83.333%,100%{background-position:100% 0}}
+
+/* 客人猫在当前尺寸基础上再放大 10%，行走、爬凳与坐姿保持同一视觉比例。 */
+#tavern .guest-seat{width:123px!important;height:202px!important}
+#tavern .pixel-cat.image-character.role-guest{width:119px!important;height:190px!important}
+#tavern .guest-seat.arriving .pixel-cat.tone-cream{left:50%!important;width:135px!important;height:176px!important;transform:translateX(-50%)!important;background-size:contain!important;background-position:center bottom!important}
+#tavern .guest-seat.sitting .pixel-cat.role-guest,
+#tavern .guest-seat.seated .pixel-cat.role-guest{width:128px!important;height:154px!important;background-size:128px 207px!important}
+
+/* 六位客人独立坐姿尺寸：同时作用于爬凳和坐稳状态。 */
+#tavern .guest-seat.sitting .pixel-cat.tone-gray,
+#tavern .guest-seat.seated .pixel-cat.tone-gray{
+  width:128px!important;height:154px!important;background-size:128px 207px!important;
+}
+
+/* 最终币面覆盖：使用透明像素硬币素材，隐藏旧的 CSS 猫爪。 */
+#tavern .cat-coin-icon{border:0!important;border-radius:0!important;background:url('/assets/ui/cat-coin-paw-v1.png') center/contain no-repeat!important;box-shadow:none!important;image-rendering:pixelated}#tavern .cat-coin-icon:before,#tavern .cat-coin-icon:after{display:none!important}
+#tavern .guest-seat.sitting .pixel-cat.tone-cream,
+#tavern .guest-seat.seated .pixel-cat.tone-cream{
+  width:128px!important;height:154px!important;background-size:128px 207px!important;
+}
+#tavern .guest-seat.sitting .pixel-cat.tone-orange,
+#tavern .guest-seat.seated .pixel-cat.tone-orange{
+  width:148px!important;height:154px!important;background-size:148px 207px!important;
+}
+#tavern .guest-seat.sitting .pixel-cat.tone-black,
+#tavern .guest-seat.seated .pixel-cat.tone-black{
+  width:148px!important;height:154px!important;background-size:148px 207px!important;
+}
+#tavern .guest-seat.sitting .pixel-cat.tone-tabby,
+#tavern .guest-seat.seated .pixel-cat.tone-tabby{
+  width:128px!important;height:154px!important;background-size:128px 207px!important;
+}
+#tavern .guest-seat.sitting .pixel-cat.tone-pink,
+#tavern .guest-seat.seated .pixel-cat.tone-pink{
+  width:138px!important;height:160px!important;background-size:138px 207px!important;
+}
+#tavern .guest-seat.arriving .pixel-cat.tone-gray{width:135px!important;height:187px!important}
+#tavern .guest-seat.arriving .pixel-cat.tone-orange{width:135px!important;height:187px!important}
+#tavern .guest-seat.arriving .pixel-cat.tone-black{width:135px!important;height:200px!important}
+#tavern .guest-seat.arriving .pixel-cat.tone-tabby{width:135px!important;height:200px!important}
+#tavern .guest-seat.arriving .pixel-cat.tone-pink{width:140px!important;height:230px!important}
+#tavern .guest-seat.arriving .pixel-cat.tone-gray{--guest-foot-gap:19px}
+#tavern .guest-seat.arriving .pixel-cat.tone-orange{--guest-foot-gap:25px}
+#tavern .guest-seat.arriving .pixel-cat.tone-black{--guest-foot-gap:30px}
+#tavern .guest-seat.arriving .pixel-cat.tone-tabby{--guest-foot-gap:25px}
+#tavern .guest-seat.arriving .pixel-cat.tone-pink{--guest-foot-gap:36px}
+
+/* 五项营业准备入口：菜单、备货、研究、招募与开业。 */
+#tavern .prep-toolbar{grid-template-columns:repeat(5,minmax(0,1fr))!important}
+
+/* 备货数量选择。 */
+#tavern .stock-item{display:grid!important;grid-template-columns:auto minmax(0,1fr) auto!important;gap:7px!important}
+#tavern .stock-buy-row{display:flex;align-items:center;gap:4px}
+#tavern .stock-buy-row input{width:48px;height:30px;padding:3px 4px;border:2px solid #7a5232;background:#120b08;color:#ffe0a0;font:700 12px "Courier New",monospace;text-align:center;outline:none}
+#tavern .stock-buy-row button{height:30px;padding:3px 7px!important;border:2px solid #986132!important;background:#70401f!important;color:#ffe2a0!important;font-size:9px!important;white-space:nowrap}
+
+/* 员工招募：六名员工均为永久、小幅且可累计的经营加成。 */
+#tavern .staff-summary{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:9px;padding:8px 10px;border:2px solid #77502f;background:#2a1912;color:#ffe0a0}
+#tavern .staff-summary b{font-size:11px;white-space:nowrap}
+#tavern .staff-summary small{color:#c9aa82;font-size:8px;text-align:right}
+#tavern .staff-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+#tavern .staff-card{display:grid;grid-template-columns:82px minmax(0,1fr) auto;align-items:center;gap:10px;min-height:104px;padding:8px;border:3px solid #6a4429;background:#332019;color:#ffe4ad;box-shadow:4px 4px #080403}
+#tavern .staff-card.hired{border-color:#8ca85d;background:#27301f}
+#tavern .staff-card>img{width:82px;height:82px;border:3px solid #bd8847;background:#15202a;object-fit:cover;image-rendering:pixelated}
+#tavern .staff-card>div{display:grid;gap:4px;min-width:0}
+#tavern .staff-card b{font-size:11px;color:#ffe09a}
+#tavern .staff-card small{font-size:8px;line-height:1.35;color:#c9ad88}
+#tavern .staff-card em{font-size:9px;font-style:normal;color:#8fe0a0}
+#tavern .staff-card>button{min-width:100px;padding:7px 8px!important;font-size:9px!important}
+#tavern .staff-card>button:disabled{opacity:1!important;border-color:#668050!important;background:#34452b!important;color:#bde29a!important}
+
+/* 手机控制键靠近屏幕底部：左、拿/递、右同一水平线；全部使用无边框半透明白色。 */
+#tavern .touch-direction{bottom:14px;width:94px;height:94px}
+#tavern .touch-direction:before{inset:8px;opacity:.6;filter:none;background:#fff}
+#tavern .touch-left{left:10px}
+#tavern .touch-right-stack{right:10px;bottom:14px;flex-direction:row;align-items:center;gap:9px}
+#tavern .touch-right{width:94px;height:94px}
+#tavern .touch-serve{width:66px;height:66px;border:0!important;background:#ffffff99!important;color:#36271f!important;text-shadow:none!important;box-shadow:none!important;font-size:16px!important}
+#tavern .touch-serve:active{background:#ffffffd9!important}
+
+/* 备货间材料图标再次放大一倍；数量框只允许直接输入，不显示上下箭头。 */
+#tavern .prep-modal .stock-item>.ingredient{width:80px!important;height:80px!important}
+@container game (max-width:760px),(max-height:430px){#tavern .prep-modal .stock-item>.ingredient{width:91px!important;height:91px!important}}
+
+/* 裁掉配料图集单元格的透明留白，完整展示信息，并让卡片按内容收紧。 */
+#tavern .prep-modal .stock-groups{
+  grid-template-columns:repeat(2,max-content)!important;
+  justify-content:center;
+  align-items:start;
+}
+#tavern .prep-modal .stock-group{width:max-content;max-width:none}
+#tavern .prep-modal .stock-group>div{
+  grid-template-columns:repeat(2,max-content)!important;
+  align-items:start;
+}
+#tavern .prep-modal .stock-item{
+  width:max-content;
+  min-width:0;
+  grid-template-columns:80px max-content auto!important;
+  gap:2px!important;
+  padding:2px!important;
+}
+#tavern .prep-modal .stock-item>.ingredient{
+  position:relative;
+  overflow:hidden;
+  background-image:none!important;
+}
+#tavern .prep-modal .stock-item>.ingredient:before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:250%;
+  height:250%;
+  transform:translate(-50%,-50%);
+  background-image:url('/assets/cocktails/cocktail-ingredients-pixel-atlas-v5.png');
+  background-repeat:no-repeat;
+  background-size:800% 600%;
+  background-position:var(--atlas-x) var(--atlas-y);
+  image-rendering:pixelated;
+}
+#tavern .prep-modal .stock-item>span{min-width:max-content!important;gap:3px}
+#tavern .prep-modal .stock-item b,
+#tavern .prep-modal .stock-item small,
+#tavern .prep-modal .stock-item em{
+  overflow:visible!important;
+  max-width:none!important;
+  text-overflow:clip!important;
+  white-space:nowrap!important;
+}
+@container game (max-width:760px),(max-height:430px){
+  #tavern .prep-modal .stock-groups{grid-template-columns:max-content!important}
+  #tavern .prep-modal .stock-item{grid-template-columns:91px max-content auto!important}
+}
+
+/* 备货间购物车：分类纵向排列、配料卡统一大小，点击整张卡片选择。 */
+#tavern .prep-modal .stock-groups{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  justify-content:stretch!important;
+  gap:10px!important;
+  padding-bottom:76px;
+}
+#tavern .prep-modal .stock-group{width:100%!important;box-sizing:border-box}
+#tavern .prep-modal .stock-group>div{
+  display:grid!important;
+  grid-template-columns:repeat(auto-fill,minmax(250px,1fr))!important;
+  gap:8px!important;
+}
+#tavern .prep-modal .stock-item{
+  position:relative;
+  width:100%!important;
+  height:92px!important;
+  min-height:92px!important;
+  box-sizing:border-box;
+  grid-template-columns:80px minmax(0,1fr) 18px!important;
+  align-items:center!important;
+  padding:4px!important;
+  cursor:pointer;
+}
+#tavern .prep-modal .stock-item>span{min-width:0!important;text-align:left}
+#tavern .prep-modal .stock-item.cart-selected{
+  border-color:#efb64c!important;
+  background:#50301d!important;
+  box-shadow:0 0 10px #e99b3255,inset 0 0 0 2px #9d6935!important;
+}
+#tavern .cart-check{color:#ffd86d;font-size:18px;font-style:normal;text-align:center}
+#tavern .stock-cart-bar{
+  position:sticky;
+  z-index:6;
+  left:0;
+  right:0;
+  bottom:-12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  margin:10px -12px -12px;
+  padding:10px 14px;
+  border-top:4px solid #704326;
+  background:#26150ff5;
+  box-shadow:0 -7px 16px #08040399;
+}
+#tavern .stock-cart-bar>span{display:grid;gap:3px}
+#tavern .stock-cart-bar b{color:#ffe09a;font-size:12px}
+#tavern .stock-cart-bar small{color:#c9aa82;font-size:9px}
+#tavern .stock-cart-bar button{min-width:132px;padding:8px 12px!important;font-size:11px!important}
+@container game (max-width:760px),(max-height:430px){
+  #tavern .prep-modal .stock-group>div{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  #tavern .prep-modal .stock-item{grid-template-columns:91px minmax(0,1fr) 16px!important;height:102px!important;min-height:102px!important}
+}
+
+/* 单份直接采购：缩小图标与统一卡片，右侧恢复购买按钮。 */
+#tavern .prep-modal .stock-groups{padding-bottom:0}
+#tavern .prep-modal .stock-item>.ingredient{width:53px!important;height:53px!important}
+#tavern .prep-modal .stock-item{
+  grid-template-columns:53px minmax(0,1fr) auto!important;
+  gap:10px!important;
+  height:90px!important;
+  min-height:82px!important;
+  padding:8px 10px!important;
+  cursor:default;
+}
+#tavern .prep-modal .stock-item>span{gap:6px!important}
+#tavern .prep-modal .stock-item>button{
+  min-width:72px;
+  height:80px;
+  padding:7px 11px!important;
+  border:2px solid #986132!important;
+  background:#70401f!important;
+  color:#ffe2a0!important;
+  font-size:14px!important;
+  font-weight:700!important;
+}
+@container game (max-width:760px),(max-height:430px){
+  #tavern .prep-modal .stock-item>.ingredient{width:61px!important;height:61px!important}
+  #tavern .prep-modal .stock-item{grid-template-columns:61px minmax(0,1fr) auto!important;gap:8px!important;height:92px!important;min-height:92px!important;padding:8px!important}
+  #tavern .prep-modal .stock-item>button{min-width:68px;height:42px;font-size:13px!important}
+}
+
+/* 配料卡与购买按钮按实际内容收紧，避免卡片和按钮出现大块空白。 */
+#tavern .prep-modal .stock-group>div{
+  display:flex!important;
+  flex-wrap:wrap;
+  align-items:flex-start;
+  gap:8px!important;
+}
+#tavern .prep-modal .stock-item{
+  width:max-content!important;
+  height:auto!important;
+  min-height:0!important;
+  grid-template-columns:53px max-content auto!important;
+  column-gap:9px!important;
+  row-gap:4px!important;
+  padding:6px 7px!important;
+}
+#tavern .prep-modal .stock-item>span{
+  min-width:max-content!important;
+  gap:4px!important;
+  padding:2px 0;
+}
+#tavern .prep-modal .stock-item>button{
+  min-width:0!important;
+  width:auto!important;
+  height:auto!important;
+  align-self:center;
+  padding:8px 11px!important;
+  line-height:1.2!important;
+}
+@container game (max-width:760px),(max-height:430px){
+  #tavern .prep-modal .stock-item{grid-template-columns:61px max-content auto!important;height:auto!important;min-height:0!important;padding:6px 7px!important}
+  #tavern .prep-modal .stock-item>button{min-width:0!important;width:auto!important;height:auto!important;padding:8px 10px!important}
+}
+
+/* 备货间统一四列卡片；购买时仅更新数字，弹窗无需回到顶部。 */
+#tavern .prep-modal.stock-modal>section{width:min(1120px,94cqw)}
+#tavern .prep-modal .stock-group>div{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  align-items:stretch;
+  gap:8px!important;
+}
+#tavern .prep-modal .stock-item{
+  width:100%!important;
+  height:88px!important;
+  min-height:88px!important;
+  grid-template-columns:53px minmax(0,1fr) auto!important;
+  padding:7px 8px 13px!important;
+}
+#tavern .prep-modal .stock-item>span{min-width:0!important}
+#tavern .prep-modal .stock-item [data-stock-count]{color:inherit;font:inherit;font-style:normal}
+@container game (max-width:760px),(max-height:430px){
+  #tavern .prep-modal .stock-group>div{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+  #tavern .prep-modal .stock-item{height:94px!important;min-height:94px!important;grid-template-columns:61px minmax(0,1fr) auto!important;padding:7px 7px 13px!important}
+}
+
+/* 右侧营业霓虹灯上移，与下方德州入口保持清晰间距。 */
+#tavern .tavern-title{top:1%!important}
+
+/* 顶部信息栏只保留内容，去除背景框、边线与阴影。 */
+#tavern .tavern-head{
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+#tavern .tavern-head:before{content:none!important}
+
+/* 德州入口与赛前大厅：单人、联机先选玩法，再显示各自所需的设置。 */
+#tavern #friendNeon{display:none!important}
+#home .poker-lobby{gap:10px!important;padding:16px!important;border-color:#a56432!important;background:linear-gradient(135deg,#25130fea,#160b09f0)!important}
+#home .lobby-heading{display:grid;gap:3px;text-align:center;padding-bottom:8px;border-bottom:2px solid #87512d}
+#home .lobby-heading small{color:#b88a55;font-size:9px;letter-spacing:3px}
+#home .lobby-heading b{color:#ffe09a;font-size:20px;letter-spacing:2px;text-shadow:3px 3px #2b130a}
+#home .lobby-heading span{color:#d0ae7e;font-size:10px}
+#home .mode-picker{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+#home .mode-picker button{display:grid;gap:3px;min-height:57px;padding:8px 10px!important;border:3px solid #634126!important;border-radius:2px!important;background:#130b08!important;color:#cfab78!important;box-shadow:4px 4px #080403!important;text-align:left!important}
+#home .mode-picker button b{color:#f0cf85;font-size:15px}
+#home .mode-picker button small{font-size:9px;color:#ad8b63}
+#home .mode-picker button.selected{border-color:#f3bd48!important;background:#503017!important;box-shadow:0 0 0 2px #9c5e25 inset,4px 4px #080403!important}
+#home .mode-picker button.selected b{color:#fff0a9}
+#home .profile-row{padding:8px;border:2px solid #654025;background:#120b08aa}
+#home .settings{padding:8px;border:2px solid #654025;background:#120b08aa}
+#home .setting-note{padding:5px 8px;border-left:3px solid #d99635;background:#2a180f;color:#e4c48f!important}
+#home.solo-poker .friend-only{display:none!important}
+#home.friend-poker .solo-only{display:none!important}
+#home.friend-poker .profile-row.friend-only{display:grid!important}
+#home.friend-poker .setting-note .friend-only{display:inline!important}
+#home.friend-poker .lobby-actions>.friend-only:not(.join){display:block!important}
+#home.solo-poker .lobby-actions{grid-template-columns:1fr!important}
+#home.solo-poker .lobby-actions .solo-only{min-height:54px!important}
+#home.friend-poker .lobby-actions{grid-template-columns:.9fr 1.3fr!important}
+#home.friend-poker .lobby-actions .join{display:grid!important}
+#home .mode-picker button{pointer-events:auto!important;cursor:pointer}
+#home.friend-poker .avatar-picker button{pointer-events:auto!important;cursor:pointer}
+
+@container game (orientation:landscape) and (max-height:430px){
+  #home .poker-lobby{gap:6px!important;padding:9px!important}
+  #home .lobby-heading{padding-bottom:4px}
+  #home .lobby-heading b{font-size:15px}
+  #home .lobby-heading span{font-size:8px}
+  #home .mode-picker{gap:6px}
+  #home .mode-picker button{min-height:42px;padding:5px 7px!important}
+  #home .mode-picker button b{font-size:12px}
+  #home .mode-picker button small{font-size:8px}
+  #home .profile-row,#home .settings{padding:5px}
+  #home.solo-poker .lobby-actions .solo-only{min-height:42px!important}
+}

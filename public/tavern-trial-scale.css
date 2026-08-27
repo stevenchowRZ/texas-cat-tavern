@@ -18,9 +18,10 @@
 #tavern .guest-seat>small{font-size:12px!important}
 #tavern .no-guests{font-size:18px!important}
 
-#tavern .cloud-dialog,#tavern .guest-dialog,#tavern .staff-dialog{min-width:260px!important;max-width:380px!important;padding:9px 12px!important;font-size:16px!important;line-height:1.35!important}
+#tavern .cloud-dialog,#tavern .guest-dialog,#tavern .staff-dialog,#tavern #barAction{width:max-content!important;min-width:260px!important;max-width:380px!important;padding:9px 12px!important;border:2px solid #5b3a29!important;border-radius:0!important;background:#fff1d8!important;color:#3d241b!important;font-family:"Microsoft YaHei","SimSun",sans-serif!important;font-size:16px!important;font-style:normal!important;font-weight:400!important;line-height:1.35!important;letter-spacing:0!important;text-align:left!important;text-shadow:none!important;box-shadow:3px 3px #100807!important}
 #tavern .bartender-wrap .staff-dialog{left:104px!important}
 #tavern .server-cat .staff-dialog{left:78px!important}
+#tavern .bartender-wrap>#barAction{left:104px!important;top:-10px!important}
 
 #tavern .prep-toolbar button{height:52px!important;font-size:22px!important}
 #tavern .drawer-head b{font-size:22px!important}
@@ -58,8 +59,8 @@
 #tavern .day-objective small{font-size:16px!important}
 #tavern .day-objective-actions button{font-size:16px!important}
 
-#tavern .poker-neon b,#tavern .friend-neon b{font-size:24px!important}
-#tavern .poker-neon small,#tavern .friend-neon small{font-size:12px!important}
+#tavern .poker-neon b,#tavern .friend-neon b,#tavern .estate-neon b{font-size:24px!important}
+#tavern .poker-neon small,#tavern .friend-neon small,#tavern .estate-neon small{font-size:12px!important}
 #tavern .research-card b{font-size:22px!important}
 #tavern .research-card small,#tavern .research-card p,#tavern .research-card em{font-size:16px!important}
 
@@ -76,7 +77,20 @@ body:has(#tavern.active) #toast{font-size:20px!important}
 #tavern #bartenderCat{width:120px!important;height:183px!important}
 #tavern .bartender-wrap{width:120px!important}
 #tavern .server-cat{width:117px!important;height:189px!important}
+#tavern .server-cat{width:140px!important;height:227px!important}
+#tavern .pixel-cat.image-character.role-server{width:137px!important;height:220px!important}
+#tavern .server-cat{bottom:calc(42% - 12px)!important}
+#tavern .pixel-cat.image-character.role-server.notebook-idle{background-image:url('/assets/server-animations/server-notebook-idle-loop.gif')!important;background-size:contain!important;animation:none!important}
 #tavern .bar-seat{height:280px!important}
 #tavern .guest-seat{width:120px!important;height:205px!important}
 #tavern .guest-seat .pixel-cat{scale:1!important}
 #tavern .pixel-cat.image-character.role-guest{width:114px!important;height:183px!important}
+
+#tavern .staff-summary b{font-size:20px!important}
+#tavern .staff-summary small{font-size:14px!important}
+#tavern .staff-card b{font-size:19px!important}
+#tavern .staff-card small{font-size:14px!important}
+#tavern .staff-card em{font-size:16px!important}
+#tavern .staff-card>button{font-size:15px!important}
+#tavern .stock-buy-row input{width:60px;height:38px;font-size:18px!important}
+#tavern .stock-buy-row button{height:38px;font-size:15px!important}

@@ -1,7 +1,7 @@
 /* v6：桌面左右双列座位，中上和中下保持完全空白 */
 /* 旧主题也定义了 .player.turn 的动效；默认一律静止，只提示当前真人玩家。 */
 .player .avatar{animation:none!important;filter:none!important}
-.player.your-turn .avatar{animation:viewerTurn 1s steps(2,end) infinite alternate!important}
+.player.your-turn .avatar{animation:none!important;filter:none!important}
 @keyframes viewerTurn{to{filter:brightness(1.38)}}
 
 @media (orientation:landscape){
@@ -164,3 +164,29 @@
 #players .player .hole-cards.showdown-hand{position:absolute!important;z-index:46!important;top:12px!important;bottom:auto!important;display:flex!important;gap:3px!important;margin:0!important;visibility:visible!important;opacity:1!important;filter:drop-shadow(0 4px 2px #0009)!important}
 #players .player.side-left .hole-cards.showdown-hand{left:calc(50% + 58px)!important;right:auto!important;transform:none!important}
 #players .player.side-right .hole-cards.showdown-hand{right:calc(50% + 58px)!important;left:auto!important;transform:none!important}
+
+/* 德州扑克操作区：放大横屏触控按钮与文字，保持右下角三键布局。 */
+@container game (orientation:landscape){
+  #table .controls{width:min(40cqw,500px)!important;right:max(10px,env(safe-area-inset-right))!important;bottom:max(8px,env(safe-area-inset-bottom))!important}
+  #table .controls #turnText{bottom:49px!important;font-size:12px!important}
+  #table .actions{gap:7px!important}
+  #table .actions button{height:45px!important;padding:5px 8px!important;font-size:16px!important;border-width:3px!important}
+  #table #raiseBox{bottom:53px!important}
+}
+
+/* 顶栏：加大常用操作与牌局信息；房间号、盲注等按行呈现。 */
+#table header #leave{left:16px!important;top:13px!important;width:46px!important;height:42px!important;padding:0!important;font-size:28px!important;line-height:34px!important;border:3px solid #704521!important;background:#542e19!important;box-shadow:3px 3px 0 #080403!important}
+#table #handGuide{left:76px!important;top:13px!important;padding:9px 15px!important;border:3px solid #704521!important;background:#542e19!important;box-shadow:3px 3px 0 #080403!important;font-size:16px!important;line-height:20px!important}
+#table header .room-info{right:16px!important;top:12px!important;width:max-content!important;min-width:0!important;max-width:min(34cqw,360px)!important;padding:8px 12px!important;gap:5px!important}
+#table header .room-info b{font-size:19px!important;line-height:1.05!important}
+#table header .room-info span{display:grid!important;grid-template-columns:1fr!important;gap:3px!important;font-size:12px!important;line-height:1.15!important}
+#table header .room-info span i{display:block!important;font-style:normal!important;white-space:nowrap!important}
+#table header #copy{display:none!important}
+
+@container game (max-width:760px),(max-height:430px){
+  #table header #leave{left:11px!important;top:9px!important;width:40px!important;height:36px!important;font-size:23px!important;line-height:28px!important}
+  #table #handGuide{left:59px!important;top:9px!important;padding:7px 11px!important;font-size:13px!important;line-height:16px!important}
+  #table header .room-info{right:11px!important;top:8px!important;width:max-content!important;min-width:0!important;padding:6px 9px!important;gap:3px!important}
+  #table header .room-info b{font-size:15px!important}
+  #table header .room-info span{gap:2px!important;font-size:10px!important}
+}

@@ -171,8 +171,25 @@
   #table .controls #turnText{bottom:49px!important;font-size:12px!important}
   #table .actions{gap:7px!important}
   #table .actions button{height:45px!important;padding:5px 8px!important;font-size:16px!important;border-width:3px!important}
-  #table #raiseBox{bottom:53px!important}
+#table #raiseBox{bottom:53px!important}
 }
+
+/* 真人弃牌后仍保留自己的明牌，但明确变暗；其他弃牌玩家的牌在动画结束后消失。 */
+#players .player.folded .hole-cards.showdown-hand,#players .player.folded .hole-cards.hidden-hand{display:none!important}
+#players .player.folded .hole-cards.folded-self-hand{display:flex!important;opacity:.42!important;filter:grayscale(1) brightness(.56)!important;pointer-events:none!important}
+#players .player.folded .hole-cards.folded-self-hand .card{box-shadow:3px 4px 0 #070403!important}
+
+/* 真人手牌下方的实时牌力提示：九档条从高牌到同花顺逐段点亮。 */
+.player .hole-cards.self-hand .hand-power{position:absolute!important;z-index:12!important;left:50%!important;top:calc(100% + 6px)!important;display:grid!important;grid-template-columns:auto 1fr!important;align-items:start!important;gap:6px!important;min-width:112px!important;transform:translateX(-50%)!important;color:#dce9ff!important;font-size:13px!important;font-weight:900!important;line-height:16px!important;white-space:nowrap!important;text-shadow:2px 2px 0 #071228,0 0 5px #53d6ff!important}
+.player .hole-cards.self-hand .hand-power b{font:inherit!important;line-height:14px!important}
+.player .hole-cards.self-hand .hand-power span{display:flex!important;gap:1px!important;width:74px!important;height:12px!important;padding:2px!important;border:2px solid #7194c7!important;border-radius:3px!important;background:#18355f!important;box-shadow:2px 2px 0 #071228!important}
+.player .hole-cards.self-hand .hand-power i{display:block!important;flex:1!important;min-width:0!important;background:#2d4f82!important;box-shadow:inset 0 1px #5276aa!important}
+.player .hole-cards.self-hand .hand-power i.active{background:linear-gradient(180deg,#ff5d63,#db1729)!important;box-shadow:0 0 5px #ff4d55,inset 0 1px #ffd1b7!important}
+.player .hole-cards.self-hand .hand-power.level-4 i.active,.player .hole-cards.self-hand .hand-power.level-5 i.active{background:linear-gradient(180deg,#ffcf55,#e5831a)!important;box-shadow:0 0 5px #ffc33d!important}
+.player .hole-cards.self-hand .hand-power.level-6 i.active,.player .hole-cards.self-hand .hand-power.level-7 i.active,.player .hole-cards.self-hand .hand-power.level-8 i.active{background:linear-gradient(180deg,#ffef91,#ffae27)!important;box-shadow:0 0 7px #ffe968!important}
+@container game (orientation:landscape) and (max-height:430px){.player .hole-cards.self-hand .hand-power{top:calc(100% + 3px)!important;font-size:10px!important;line-height:12px!important;gap:4px!important;min-width:82px!important}.player .hole-cards.self-hand .hand-power b{line-height:11px!important}.player .hole-cards.self-hand .hand-power span{width:54px!important;height:9px!important;padding:1px!important;border-width:1px!important}}
+#result.showdown-result{z-index:130!important;max-width:76%!important;color:#fff4b4!important;font-size:clamp(18px,2cqw,30px)!important;font-weight:900!important;letter-spacing:1px!important;line-height:1.3!important;text-shadow:0 0 4px #fff8bf,0 0 10px #ffc52d,0 0 22px #df8500,3px 3px 0 #321307!important;animation:showdownResultGlow 1.05s ease-in-out infinite alternate!important}
+@keyframes showdownResultGlow{from{filter:brightness(1);transform:translateX(-50%) scale(1)}to{filter:brightness(1.3);transform:translateX(-50%) scale(1.05)}}
 
 /* 顶栏：加大常用操作与牌局信息；房间号、盲注等按行呈现。 */
 #table header #leave{left:16px!important;top:13px!important;width:46px!important;height:42px!important;padding:0!important;font-size:28px!important;line-height:34px!important;border:3px solid #704521!important;background:#542e19!important;box-shadow:3px 3px 0 #080403!important}
@@ -190,3 +207,25 @@
   #table header .room-info b{font-size:15px!important}
   #table header .room-info span{gap:2px!important;font-size:10px!important}
 }
+
+/* 牌桌左上控制区：退出、设置、牌力说明按竖向关系固定，避免被旧布局重排。 */
+#table header #pokerSettings{position:absolute!important;z-index:61!important;left:68px!important;top:13px!important;display:grid!important;place-items:center!important;width:43px!important;height:43px!important;padding:0!important;border:0!important;background:transparent!important;color:#ffda78!important;font:900 28px/1 "Courier New",monospace!important;line-height:1!important;text-shadow:2px 2px #130704!important;box-shadow:none!important;pointer-events:auto!important}
+#table #handGuide{z-index:61!important;left:16px!important;top:62px!important;padding:8px 13px!important;border:3px solid #704521!important;background:#542e19!important;box-shadow:3px 3px 0 #080403!important;font-size:14px!important;line-height:18px!important}
+#table .poker-settings-panel{z-index:62!important;top:104px!important;left:72px!important;right:auto!important;pointer-events:auto!important}
+@container game (max-width:760px),(max-height:430px){
+  #table header #pokerSettings{left:57px!important;top:9px!important;width:43px!important;height:43px!important;font-size:28px!important}
+  #table #handGuide{left:11px!important;top:58px!important;padding:7px 11px!important;font-size:12px!important;line-height:16px!important}
+  #table .poker-settings-panel{top:94px!important;left:57px!important;transform:scale(.88);transform-origin:top left}
+}
+
+/* 单人赛中途退出：使用游戏内居中确认框，避免浏览器原生弹窗。 */
+#leaveConfirm[hidden]{display:none!important}
+#leaveConfirm{position:fixed;z-index:500;inset:0;display:grid;place-items:center;padding:24px;background:#080403c9;backdrop-filter:blur(2px)}
+#leaveConfirm section{width:min(520px,76cqw);padding:24px 28px 22px;border:4px solid #b77636;background:linear-gradient(145deg,#2c170e,#120a07);box-shadow:8px 8px 0 #080403;color:#ffe6ad;text-align:center}
+#leaveConfirm small{display:block;color:#d89a46;font-size:12px;font-weight:900;letter-spacing:3px}
+#leaveConfirm h2{margin:10px 0 9px;color:#ffdc83;font-size:23px;line-height:1.3;text-shadow:2px 2px #321508}
+#leaveConfirm p{margin:0;color:#f3cf97;font-size:15px;line-height:1.7}
+#leaveConfirm section>div{display:flex;justify-content:center;gap:16px;margin-top:20px}
+#leaveConfirm button{min-width:124px;padding:11px 16px!important;border:3px solid #d29346!important;border-radius:1px!important;background:#3a2317!important;color:#ffe7af!important;font-size:16px!important;font-weight:900!important;box-shadow:3px 3px 0 #080403!important}
+#leaveConfirm #leaveConfirmAccept{border-color:#d45a42!important;background:#9a372a!important;color:#fff0d1!important}
+@container game (max-width:760px),(max-height:430px){#leaveConfirm section{width:min(500px,78cqw);padding:16px 20px 15px;border-width:3px}#leaveConfirm small{font-size:9px;letter-spacing:2px}#leaveConfirm h2{margin:7px 0 5px;font-size:16px}#leaveConfirm p{font-size:11px;line-height:1.5}#leaveConfirm section>div{gap:10px;margin-top:12px}#leaveConfirm button{min-width:96px;padding:8px 10px!important;border-width:2px!important;font-size:12px!important;box-shadow:2px 2px 0 #080403!important}}

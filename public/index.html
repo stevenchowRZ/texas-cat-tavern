@@ -10,15 +10,16 @@
   <meta name="apple-mobile-web-app-title" content="德州猫猫酒馆">
   <link rel="manifest" href="/manifest.json">
   <link rel="apple-touch-icon" href="/assets/app-icon-192.png">
-<link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/theme.css"><link rel="stylesheet" href="/layout.css"><link rel="stylesheet" href="/seats.css"><link rel="stylesheet" href="/landscape.css"><link rel="stylesheet" href="/seat-counts.css"><link rel="stylesheet" href="/six-seats.css"><link rel="stylesheet" href="/uniform-seats.css"><link rel="stylesheet" href="/table-final.css"><link rel="stylesheet" href="/effects.css"><link rel="stylesheet" href="/scene-v2.css"><link rel="stylesheet" href="/ux-v3.css"><link rel="stylesheet" href="/layout-v4.css"><link rel="stylesheet" href="/deal-v5.css"><link rel="stylesheet" href="/pixel-theme.css"><link rel="stylesheet" href="/side-layout-v6.css"><link rel="stylesheet" href="/tavern.css"><link rel="stylesheet" href="/estate.css?v=121"><link rel="stylesheet" href="/viewport-lock.css"><link rel="stylesheet" href="/tavern-trial-scale.css"><link rel="stylesheet" href="/tavern-hud-v2.css?v=2">
+<link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/theme.css"><link rel="stylesheet" href="/layout.css"><link rel="stylesheet" href="/seats.css"><link rel="stylesheet" href="/landscape.css"><link rel="stylesheet" href="/seat-counts.css"><link rel="stylesheet" href="/six-seats.css"><link rel="stylesheet" href="/uniform-seats.css"><link rel="stylesheet" href="/table-final.css"><link rel="stylesheet" href="/effects.css"><link rel="stylesheet" href="/scene-v2.css"><link rel="stylesheet" href="/ux-v3.css"><link rel="stylesheet" href="/layout-v4.css"><link rel="stylesheet" href="/deal-v5.css"><link rel="stylesheet" href="/pixel-theme.css"><link rel="stylesheet" href="/side-layout-v6.css"><link rel="stylesheet" href="/tavern.css?v=22"><link rel="stylesheet" href="/estate.css?v=159"><link rel="stylesheet" href="/viewport-lock.css"><link rel="stylesheet" href="/tavern-trial-scale.css"><link rel="stylesheet" href="/tavern-hud-v2.css?v=15">
   <title>德州猫猫酒馆</title>
 </head>
 <body><main id="app">
   <section id="home" class="screen">
-    <div class="brand"><span class="mark">♠</span><button id="enterTavern" class="brand-tavern">← 返回猫猫酒馆 <small>完成白天牌桌赛后进入夜晚</small></button><p id="pokerDayHint">选择玩法后设置牌局，随时开桌</p></div>
+    <div id="lobbyCoins" class="lobby-coins" aria-label="当前猫猫币"><i class="cat-coin-icon" aria-hidden="true"></i><b>0</b></div>
+    <div class="brand"><span class="mark">♠</span><button id="enterTavern" class="brand-tavern">&lt;-猫猫酒馆 <small>完成白天牌桌赛后进入夜晚</small></button><p id="pokerDayHint">选择玩法后设置牌局，随时开桌</p></div>
     <div class="panel poker-lobby">
-      <div class="lobby-heading"><small>CAT’S HOLD’EM</small><b>选择你的牌局</b><span>单人练习或与好友同桌</span></div>
-      <div class="mode-picker" role="group" aria-label="选择玩法"><button type="button" data-lobby-mode="solo" onclick="window.openPokerLobby?.('solo')"><b>♠ 单人练习</b><small>与猫咪 AI 即刻开局</small></button><button type="button" data-lobby-mode="friend" onclick="window.openPokerLobby?.('friend')"><b>♣ 好友联机</b><small>创建或加入好友房</small></button></div>
+      <div class="lobby-heading"><small>CAT’S HOLD’EM</small><b>选择你的牌局</b></div>
+      <div class="mode-picker" role="group" aria-label="选择玩法"><button type="button" data-lobby-mode="solo" onclick="window.openPokerLobby?.('solo')"><b>♠ 单人竞标赛</b><small>与猫咪 AI 争夺最终排名</small></button><button type="button" data-lobby-mode="friend" onclick="window.openPokerLobby?.('friend')"><b>♣ 好友联机</b><small>创建或加入好友房</small></button></div>
       <div class="profile-row friend-only">
         <label class="name-field">当前姓名<input id="name" maxlength="12" value="路易" readonly></label>
         <fieldset class="avatar-field louis-avatar-locked"><legend>选择猫猫头像</legend><div id="avatarPicker" class="avatar-picker" aria-label="选择猫猫头像">
@@ -31,35 +32,44 @@
         <label>初始盲注<select id="blinds"><option value="5/10">5 / 10</option><option value="10/20" selected>10 / 20</option><option value="25/50">25 / 50</option><option value="50/100">50 / 100</option></select></label>
         <label>盲注升级<select id="blindInterval"><option value="0">不变化</option><option value="5">每 5 分钟</option><option value="10" selected>每 10 分钟</option><option value="15">每 15 分钟</option><option value="30">每 30 分钟</option></select></label>
       </div>
-      <p class="setting-note"><span class="solo-only">空位会由猫咪 AI 自动补齐。</span><span class="friend-only">真人选择昵称和头像；开局后空位会由猫咪 AI 补齐。</span></p>
-      <div class="lobby-actions"><button class="primary solo-only" data-mode="solo">开始单人练习 <small>立即与猫咪 AI 对局</small></button><button class="secondary friend-only" data-mode="host">创建好友房 <small>同一 Wi‑Fi / 手机热点</small></button><div class="join friend-only"><input id="roomInput" inputmode="numeric" maxlength="6" placeholder="6 位房间码"><button id="joinBtn">加入房间</button></div></div>
+      <p class="setting-note friend-only">真人选择昵称和头像；开局后空位会由猫咪 AI 补齐。</p>
+      <div id="soloStakeInfo" class="solo-stake-info solo-only" aria-live="polite"></div>
+      <div class="lobby-actions"><button class="primary solo-only" data-mode="solo">开&nbsp;&nbsp;始</button><button class="secondary friend-only" data-mode="host">创建好友房 <small>同一 Wi‑Fi / 手机热点</small></button><div class="join friend-only"><input id="roomInput" inputmode="numeric" maxlength="6" placeholder="6 位房间码"><button id="joinBtn">加入房间</button></div></div>
     </div>
     <p class="hint">仅供娱乐练习，不含现金与充值功能</p>
   </section>
   <section id="tavern" class="screen active">
     <header class="tavern-head">
       <button id="tavernSettings" class="tavern-settings-button" type="button" aria-label="酒馆设置" aria-expanded="false">⚙</button>
+      <button id="tavernHelp" class="tavern-help-button" type="button" aria-label="操作说明" aria-expanded="false">?</button>
       <div class="tavern-hud-center"><div><b>德州猫猫酒馆</b></div><span id="nightStatus">第 1 天 · 白天</span></div>
       <div class="tavern-coins"><span class="tavern-level">Lv. <strong id="tavernLevel">1</strong></span><i class="cat-coin-icon" aria-label="猫猫币"></i><b id="tavernCoins">0</b></div>
       <section id="tavernSettingsPanel" class="tavern-settings-panel" aria-label="音乐设置" hidden>
         <b>设置</b>
-        <label class="music-switch"><span>背景音乐</span><input id="tavernMusicEnabled" type="checkbox"><i aria-hidden="true"></i></label>
-        <label class="music-volume"><span>音量</span><input id="tavernMusicVolume" type="range" min="0" max="100" step="1" value="20"></label>
+        <label class="music-switch"><span>全局背景音乐</span><input id="tavernMusicEnabled" type="checkbox"><i aria-hidden="true"></i></label>
+        <label class="music-volume"><span>背景音量</span><input id="tavernMusicVolume" type="range" min="0" max="100" step="1" value="20"></label>
         <label class="music-switch"><span>按键音效</span><input id="tavernSfxEnabled" type="checkbox"><i aria-hidden="true"></i></label>
         <label class="music-volume"><span>音效音量</span><input id="tavernSfxVolume" type="range" min="0" max="100" step="1" value="40"></label>
+        <label class="language-select"><span>语言</span><select data-language-select aria-label="语言"><option value="zh">中文</option><option value="en">English</option></select></label>
+      </section>
+      <section id="tavernHelpPanel" class="tavern-help-panel" aria-label="操作说明" hidden>
+        <div class="help-dialog" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+          <header class="guide-title"><div><b id="helpTitle">酒馆指南</b><small>TAVERN GUIDE</small></div><button id="tavernHelpClose" type="button" aria-label="关闭">×</button></header>
+          <div class="help-layout"><nav class="help-sidebar" aria-label="酒馆指南分类"><button type="button" data-help-section="tutorial"><b>新手指引</b><small>FIRST NIGHT</small></button><button type="button" data-help-section="controls"><b>操作说明</b><small>CONTROLS</small></button></nav><section id="tavernHelpContent" class="help-main" aria-live="polite"></section></div>
+        </div>
       </section>
     </header>
     <div class="tavern-scene">
       <div id="phaseBanner" class="phase-banner" aria-live="polite"></div>
       <div class="tavern-title"><strong>鸡尾酒吧营业</strong><small>22:00 — 2:00</small></div>
       <button id="estateNeon" class="estate-neon" type="button" aria-label="进入庄园"><span aria-hidden="true">←</span><b>进入庄园</b><small>PAW ESTATE</small></button>
-      <button id="pokerNeon" class="poker-neon" type="button" aria-label="进入德州扑克"><b>《德州扑克》</b><small>选择玩法 →</small></button>
+      <button id="pokerNeon" class="poker-neon" type="button" aria-label="进入德州扑克"><b>《德州扑克》</b><small>TEXAS HOLD'EM</small></button>
       <button id="friendNeon" class="friend-neon" type="button" aria-label="进入联机对战"><b>《联机对战》</b><small>ONLINE TABLE</small></button>
       <div class="backbar" aria-hidden="true"><div class="bottle-row">▥ ▥ ▥ ▥ ▥ ▥ ▥</div><div class="bottle-row">▥ ▥ ▥ ▥ ▥ ▥ ▥</div></div>
       <div class="lamp lamp-left" aria-hidden="true"></div><div class="lamp lamp-right" aria-hidden="true"></div>
       <div class="bartender-wrap"><div id="bartenderCat"></div><div id="bartenderDrinkPanel" class="bartender-drink-panel" aria-live="polite"></div><i id="barAction"></i></div>
       <div id="guestLine" class="guest-line" aria-label="等待点单的猫咪客人"></div>
-      <button id="serveTray" class="server-cat" disabled><div id="serverCat"></div><i id="carryDrink" aria-hidden="true"></i><span>← → 移动　空格取酒 / 送酒</span></button>
+      <button id="serveTray" class="server-cat" disabled><div id="serverCat"></div><i id="carryDrink" aria-hidden="true"></i><i id="serverStamina" class="server-stamina" role="img" aria-label="体力 100%"><b aria-hidden="true"></b></i></button>
       <div id="tavernTouchControls" class="tavern-touch-controls" aria-label="手机服务员控制">
         <button id="touchMoveLeft" class="touch-direction touch-left" type="button" aria-label="向左移动"></button>
         <div class="touch-right-stack">
@@ -76,6 +86,16 @@
   <section id="estate" class="screen" aria-label="猫猫庄园停车场">
     <div class="estate-scene" id="estateScene">
       <img id="estateImage" src="/assets/estate-parking/estate-5.png" alt="五级猫猫庄园与门前五个车位">
+      <div class="estate-atmosphere" aria-hidden="true">
+        <span class="estate-cloud-glow cloud-glow-one"></span>
+        <span class="estate-cloud-glow cloud-glow-two"></span>
+        <span class="estate-cloud-glow cloud-glow-three"></span>
+        <span class="estate-leaf-gust leaf-gust-one"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="estate-leaf-gust leaf-gust-two"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="estate-leaf-gust leaf-gust-three"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="estate-tree-wind"><i></i><i></i><i></i></span>
+        <span class="estate-sky-birds"><img src="/assets/estate-parking/bird-sky.svg" alt=""><img src="/assets/estate-parking/bird-sky.svg" alt=""><img src="/assets/estate-parking/bird-sky.svg" alt=""></span>
+      </div>
       <div id="estateParkingGrid" class="estate-parking-grid" aria-label="庄园停车位"></div>
       <div class="estate-corner-mark" aria-hidden="true"><b>PAW</b><span>ESTATE</span></div>
     </div>
@@ -86,15 +106,15 @@
     </header>
     <div id="estateEntrySummary" class="estate-entry-summary" role="status" aria-live="polite" hidden></div>
     <button id="estateCollect" class="estate-collect" type="button" disabled>
-      <span class="estate-collect-income"><small>停车收益</small><b id="estateIncomeRate">0 / 小时</b></span>
-      <span class="estate-collect-unclaimed"><small>待领取停车费</small><b id="estateUnclaimed">0</b></span>
+      <span class="estate-collect-income"><small>停车收益</small><b id="estateIncomeRate">0/小时</b></span>
+      <span class="estate-collect-unclaimed"><small>待领取</small><b id="estateUnclaimed">0</b></span>
       <span class="estate-collect-action">收取</span>
     </button>
     <aside class="estate-controls" aria-label="庄园与车辆测试控制">
       <div class="estate-level-panel">
-        <button id="estateEstateToggle" class="estate-estate-button" type="button"><b>庄园</b><span id="estateEstateCount">五级庄园 · 5车位</span><i aria-hidden="true">▾</i></button>
-        <button id="estateGarage" class="estate-garage-button" type="button"><b>车库</b><span id="estateGarageCount">5 辆车</span></button>
-        <button id="estateShowroom" class="estate-showroom-button" type="button"><b>名车展厅</b><span>购入新座驾 →</span></button>
+<button id="estateEstateToggle" class="estate-estate-button" type="button"><b>庄园</b><span id="estateEstateCount" hidden></span></button>
+<button id="estateGarage" class="estate-garage-button" type="button"><b>车库</b><span id="estateGarageCount" hidden></span></button>
+<button id="estateShowroom" class="estate-showroom-button" type="button"><b>购车</b></button>
       </div>
     </aside>
     <div id="estateModal" class="estate-modal" hidden>
@@ -105,10 +125,10 @@
     </div>
   </section>
   <section id="table" class="screen">
-    <header><button id="leave">‹</button><div class="room-info"><b>德州猫猫酒馆</b><span id="roomLabel"></span></div><button id="copy">邀请</button></header>
+    <header><button id="leave">‹</button><button id="pokerSettings" class="poker-settings-button" type="button" aria-label="德州设置" aria-expanded="false">⚙</button><div class="room-info"><b>德州猫猫酒馆</b><span id="roomLabel"></span></div><div class="poker-header-actions"><button id="copy">邀请</button></div><section id="pokerSettingsPanel" class="poker-settings-panel" aria-label="声音设置" hidden><b>声音设置</b><label class="music-switch"><span>全局背景音乐</span><input id="pokerMusicEnabled" type="checkbox"><i aria-hidden="true"></i></label><label class="music-volume"><span>背景音量</span><input id="pokerMusicVolume" type="range" min="0" max="100" step="1" value="20"></label><label class="music-switch"><span>按键音效</span><input id="pokerSfxEnabled" type="checkbox" onchange="setPokerSfxEnabled(this.checked)"><i aria-hidden="true"></i></label><label class="music-volume"><span>音效音量</span><input id="pokerSfxVolume" type="range" min="0" max="100" step="1" value="40" oninput="setPokerSfxVolume(Number(this.value)/100)"></label><label class="language-select"><span>语言</span><select data-language-select aria-label="语言"><option value="zh">中文</option><option value="en">English</option></select></label></section></header>
     <div class="casino"><div class="table-logo">CAT’S<br><b>HOLD’EM</b></div><div class="felt"><div id="pot" class="pot">底池 0</div><div id="board" class="cards board"></div><div id="players"></div><div id="result"></div></div></div>
     <div id="waiting" class="waiting"><h2>等待玩家加入</h2><p id="seatStatus">把房间码发给同一网络中的好友</p><strong id="bigCode"></strong><button id="start" class="primary">开始牌局</button></div>
     <div id="controls" class="controls"><div id="turnText"></div><div id="raiseBox"><div class="raise-head"><span>加注到</span><b id="raiseValue"></b></div><input id="raise" type="range"><div class="quick-bets"><button data-bet="min">最小</button><button data-bet="half">½ 底池</button><button data-bet="pot">底池</button><button data-bet="all">全下</button></div><div class="stepper"><button id="minus">−</button><button id="confirmRaise">确认加注</button><button id="plus">＋</button></div></div><div class="actions"><button id="fold">弃牌</button><button id="checkCall">过牌</button><button id="raiseBtn">加注</button></div></div>
   </section>
-  <div id="rotateHint"><span>↻</span><b>请横屏进入猫猫酒馆</b><small>旋转手机后即可设置房间和开始游戏</small></div><div id="recipeCelebration" class="recipe-celebration" hidden></div><div id="toast"></div>
-</main><script src="/app.js"></script><script src="/tavern-game.js?v=2"></script><script src="/estate-game.js?v=121"></script></body></html>
+  <div id="rotateHint"><span>↻</span><b>请横屏进入猫猫酒馆</b><small>旋转手机后即可设置房间和开始游戏</small></div><i id="gamepadCursor" aria-hidden="true"></i><div id="tavernTutorial" class="tavern-tutorial" hidden></div><div id="recipeCelebration" class="recipe-celebration" hidden></div><div id="leaveConfirm" class="leave-confirm" hidden><section role="dialog" aria-modal="true" aria-labelledby="leaveConfirmTitle"><small>单人竞标赛</small><h2 id="leaveConfirmTitle">确定要中途退出本场单人赛吗？</h2><p>已支付的入场费不会退还，本场也不会获得任何奖励。</p><div><button id="leaveConfirmCancel" type="button">继续比赛</button><button id="leaveConfirmAccept" type="button">确认退出</button></div></section></div><div id="toast"></div>
+</main><script src="/i18n.js?v=19"></script><script src="/app.js?v=4"></script><script src="/tavern-game.js?v=26"></script><script src="/estate-game.js?v=149"></script></body></html>

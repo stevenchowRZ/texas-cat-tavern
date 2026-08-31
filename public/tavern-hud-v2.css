@@ -1,7 +1,7 @@
 /* 酒馆顶部 HUD：作为场景叠层，不占用酒馆画面高度。 */
 #tavern{position:relative!important}
 #tavern .tavern-head{position:absolute!important;z-index:160!important;inset:0 0 auto!important;height:0!important;min-height:0!important;flex:0 0 0!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;overflow:visible!important;pointer-events:none}
-#tavern .tavern-settings-button{position:absolute;top:14px;left:16px;display:grid;place-items:center;width:43px;height:43px;padding:0!important;border:3px solid #c98532!important;border-radius:0!important;background:#21110b!important;color:#ffda78!important;font:900 28px/1 "Courier New",monospace!important;line-height:1!important;text-shadow:2px 2px #130704!important;box-shadow:4px 4px #090403,0 0 10px #d87f2770!important;cursor:pointer;pointer-events:auto}
+#tavern .tavern-settings-button{position:absolute;top:14px;left:16px;display:grid;place-items:center;width:86px;height:86px;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;color:#ffda78!important;font:900 56px/1 "Courier New",monospace!important;line-height:1!important;text-shadow:3px 3px #130704!important;box-shadow:none!important;cursor:pointer;pointer-events:auto}
 #tavern .tavern-settings-button:hover{filter:brightness(1.2)}
 #tavern .tavern-settings-button:focus-visible{outline:3px solid #fff1a0;outline-offset:3px}
 #tavern .tavern-hud-center{position:absolute;top:15px;left:50%;display:grid;gap:3px;justify-items:center;min-width:270px;transform:translateX(-50%);color:#ffe5a0;text-align:center;pointer-events:none}
@@ -26,7 +26,7 @@
   white-space:normal!important;
   overflow-wrap:anywhere;
 }
-#tavern .tavern-settings-panel{position:absolute;top:65px;left:16px;display:grid;gap:11px;width:230px;padding:13px 14px 14px;border:3px solid #a5682d;background:#1c0e0beF;box-shadow:5px 5px #080403,0 0 16px #b96b2838;color:#ffe2a1;pointer-events:auto}
+#tavern .tavern-settings-panel{position:absolute;top:61px;left:16px;right:auto;display:grid;gap:11px;width:230px;padding:13px 14px 14px;border:3px solid #a5682d;background:#1c0e0beF;box-shadow:5px 5px #080403,0 0 16px #b96b2838;color:#ffe2a1;pointer-events:auto}
 #tavern .tavern-settings-panel[hidden]{display:none!important}
 #tavern .tavern-settings-panel>b{color:#ffdb80!important;font-size:16px!important;letter-spacing:2px;text-align:left}
 #tavern .tavern-settings-panel label{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#f1ce91;font-size:13px}
@@ -36,6 +36,211 @@
 #tavern .music-switch input:checked+i{border-color:#f4bc51;background:#704019}
 #tavern .music-switch input:checked+i:after{background:#ffe090;transform:translateX(18px)}
 #tavern .music-switch input:focus-visible+i{outline:3px solid #fff0a1;outline-offset:2px}
-#tavern .music-volume{display:grid!important;grid-template-columns:auto 1fr;gap:10px!important}
-#tavern .music-volume input{width:100%;accent-color:#efaf3d}
-@container game (max-height:520px){#tavern .tavern-settings-button{top:9px;left:11px;width:36px;height:36px;font-size:23px!important}#tavern .tavern-hud-center{top:9px}#tavern .tavern-hud-center b{font-size:20px!important}#tavern .tavern-hud-center>#nightStatus{font-size:11px!important}#tavern .tavern-coins{top:14px;right:13px}#tavern .tavern-coins .tavern-level{margin-right:5px;padding-right:8px;font-size:19px!important}#tavern .tavern-coins .tavern-level strong{font-size:19px}#tavern .tavern-coins b{font-size:19px!important}#tavern .tavern-coins .cat-coin-icon{width:19px;height:19px}#tavern .tavern-settings-panel{top:52px;left:11px;transform:scale(.88);transform-origin:top left}}
+#tavern .music-volume{display:grid!important;grid-template-columns:76px minmax(0,1fr);gap:10px!important}
+#tavern .music-volume input{display:block;width:100%;min-width:0;margin:0;accent-color:#efaf3d}
+#tavern .tavern-settings-panel .language-select{display:grid!important;grid-template-columns:76px minmax(0,1fr)!important;align-items:center!important;justify-content:initial!important;gap:10px!important;color:#f1ce91;font-size:13px}
+#tavern .tavern-settings-panel .language-select>span{min-width:0;white-space:nowrap}
+#tavern .language-select select,#table .poker-settings-panel .language-select select{width:100%;min-width:0;height:30px;padding:4px 27px 4px 8px;border:2px solid #8c582c;border-radius:0;background-color:#28140d;background-image:linear-gradient(45deg,transparent 50%,#ffe09a 50%),linear-gradient(135deg,#ffe09a 50%,transparent 50%),linear-gradient(#5d351e,#5d351e);background-position:calc(100% - 13px) 11px,calc(100% - 8px) 11px,calc(100% - 23px) 0;background-size:5px 5px,5px 5px,1px 100%;background-repeat:no-repeat;color:#ffe09a;font:800 13px/1 "Courier New","Microsoft YaHei",monospace;box-shadow:inset 2px 2px #100704;outline:none;appearance:none;cursor:pointer}
+#tavern .language-select select:focus-visible,#table .poker-settings-panel .language-select select:focus-visible{border-color:#fff0a1;box-shadow:0 0 0 2px #c88232,inset 2px 2px #100704}
+#tavern .language-select select option,#table .poker-settings-panel .language-select select option{background:#28140d;color:#ffe09a;font:800 13px "Courier New","Microsoft YaHei",monospace}
+#table .poker-settings-panel .music-volume{display:grid!important;grid-template-columns:70px minmax(0,1fr)!important;gap:8px!important}
+#table .poker-settings-panel .music-volume input{display:block;width:100%;min-width:0;margin:0}
+#table .poker-settings-panel .language-select{display:grid!important;grid-template-columns:70px minmax(0,1fr)!important;align-items:center!important;justify-content:initial!important;gap:8px!important;color:#f1ce91;font-size:11px}
+#table .poker-settings-panel .language-select>span{min-width:0;white-space:nowrap}
+#table .poker-settings-panel .language-select select{height:26px;padding-top:3px;padding-bottom:3px;font-size:10px;background-position:calc(100% - 12px) 9px,calc(100% - 7px) 9px,calc(100% - 21px) 0}
+#table .poker-settings-panel .language-select select option{font-size:10px}
+html[lang="en"] #tavern .tavern-settings-panel{width:270px}
+html[lang="en"] #tavern .music-volume,html[lang="en"] #tavern .language-select{grid-template-columns:104px minmax(0,1fr)}
+html[lang="en"] #table .poker-settings-panel .music-volume,html[lang="en"] #table .poker-settings-panel .language-select{grid-template-columns:82px minmax(0,1fr)!important}
+html[lang="en"] #tavern .prep-toolbar button{letter-spacing:0!important}
+@container game (max-height:520px){#tavern .tavern-settings-button{top:10px;left:14px;right:auto;width:43px;height:43px;font-size:28px!important}#tavern .tavern-hud-center{top:9px}#tavern .tavern-hud-center b{font-size:20px!important}#tavern .tavern-hud-center>#nightStatus{font-size:11px!important}#tavern .tavern-coins{top:14px;right:13px}#tavern .tavern-coins .tavern-level{margin-right:5px;padding-right:8px;font-size:19px!important}#tavern .tavern-coins .tavern-level strong{font-size:19px}#tavern .tavern-coins b{font-size:19px!important}#tavern .tavern-coins .cat-coin-icon{width:19px;height:19px}#tavern .tavern-settings-panel{top:55px;left:12px;right:auto;transform:scale(.88);transform-origin:top left}}
+
+/* 酒馆设置齿轮固定在左上角。 */
+#tavern .tavern-head>#tavernSettings.tavern-settings-button{position:absolute!important;z-index:220!important;top:11px!important;left:16px!important;right:auto!important;width:43px!important;height:43px!important;font-size:28px!important;transform:none!important;visibility:visible!important}
+@container game (max-height:520px){#tavern .tavern-head>#tavernSettings.tavern-settings-button{top:10px!important;left:14px!important;right:auto!important;width:43px!important;height:43px!important;font-size:28px!important}}
+
+/* 齿轮右侧的操作说明，所有控制方式在同一个简洁面板中呈现。 */
+#tavern .tavern-head>#tavernHelp.tavern-help-button{position:absolute!important;z-index:220!important;top:11px!important;left:65px!important;display:grid!important;place-items:center;width:43px!important;height:43px!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;color:#ffe19a!important;font:900 34px/1 "Courier New",monospace!important;text-shadow:2px 2px #160805,0 0 7px #d3802f!important;box-shadow:none!important;cursor:pointer;pointer-events:auto;transform:translateY(-1px)!important}
+#tavern .tavern-help-button:hover{filter:brightness(1.28);transform:translateY(-2px)!important}
+#tavern .tavern-help-button:focus-visible{outline:3px solid #fff1a0;outline-offset:3px}
+#tavern .tavern-help-panel{position:absolute;z-index:230;top:61px;left:16px;width:356px;padding:0;border:3px solid #b27635;background:linear-gradient(135deg,#3b1e12 0,#180b09 46%,#28130d 100%);box-shadow:6px 6px #080403,0 0 0 2px #3b2012,0 0 22px #c2783044;color:#f1ce91;pointer-events:auto;overflow:hidden}
+#tavern .tavern-help-panel[hidden]{display:none!important}
+#tavern .guide-title{display:flex;align-items:baseline;justify-content:space-between;padding:10px 12px 9px;border-bottom:2px solid #8d5529;background:linear-gradient(90deg,#5a2c18,#25110c 72%)}
+#tavern .guide-title b{color:#ffe09a!important;font-size:16px!important;letter-spacing:3px;text-shadow:2px 2px #1a0905}
+#tavern .guide-title small{color:#d7a260;font:700 8px/1 "Courier New",monospace;letter-spacing:1px}
+#tavern .control-guide{display:grid;gap:0}
+#tavern .control-card{display:grid;grid-template-columns:92px minmax(0,1fr);gap:10px;padding:9px 11px;border-bottom:1px solid #6a391f;background:linear-gradient(90deg,#2a130e,#170a08)}
+#tavern .control-card:last-child{border-bottom:0;background:linear-gradient(90deg,#2c150e,#1d0d09)}
+#tavern .control-card header{display:grid;align-content:center;gap:3px;padding-right:9px;border-right:1px solid #774522}
+#tavern .control-card strong{color:#ffd978;font-size:12px;letter-spacing:1px}
+#tavern .control-card header small{color:#b78047;font:700 7px/1 "Courier New",monospace;letter-spacing:.5px}
+#tavern .control-card dl{display:grid;gap:4px;margin:0}
+#tavern .control-card dl>div{display:grid;grid-template-columns:64px minmax(0,1fr);align-items:center;gap:6px;min-height:16px}
+#tavern .control-card dt{color:#bf8d5a;font-size:9px;white-space:nowrap}
+#tavern .control-card dd{margin:0;color:#f2d4a2;font-size:10px;line-height:1.25}
+#tavern .control-card kbd{display:inline-grid;place-items:center;min-width:18px;min-height:15px;margin-right:3px;padding:1px 4px;border:1px solid #b98042;background:linear-gradient(#54301a,#29150d);color:#fff0bd;font:700 9px/1 "Courier New",monospace;text-align:center;box-shadow:1px 1px #080403}
+@container game (max-height:520px){#tavern .tavern-head>#tavernHelp.tavern-help-button{top:10px!important;left:62px!important}#tavern .tavern-help-panel{top:55px;left:12px;transform:scale(.88);transform-origin:top left}}
+
+/* 操作说明改为居中弹窗，并把首次营业的三步流程固定收纳在其中。 */
+#tavern .tavern-help-panel{position:fixed!important;z-index:2800!important;inset:0!important;display:grid!important;place-items:center!important;width:auto!important;padding:0!important;border:0!important;background:radial-gradient(circle at 50% 42%,#75401a55,transparent 42%),#080403dc!important;box-shadow:none!important;overflow:hidden!important;transform:none!important;backdrop-filter:blur(2px)}
+#tavern .tavern-help-panel[hidden]{display:none!important}
+#tavern .tavern-help-panel .help-dialog{position:relative;display:grid;grid-template-rows:auto minmax(0,1fr) auto;width:920px;height:500px;overflow:hidden;padding:14px 18px 16px;border:4px solid #c1833c;background:linear-gradient(145deg,#4a2515,#1b0d09 56%,#2a130d);box-shadow:0 0 0 3px #3b1d10,8px 8px #060302,0 0 30px #df923e55;color:#f4d6a1;image-rendering:pixelated;transform:scale(var(--help-scale,1));transform-origin:center}
+#tavern .tavern-help-panel .help-dialog:before{content:'';position:absolute;inset:7px;border:1px solid #70411f;pointer-events:none}
+#tavern .help-dialog>.guide-title{position:relative;display:flex!important;align-items:center!important;justify-content:space-between!important;margin:0!important;padding:2px 4px 11px!important;border:0!important;border-bottom:3px solid #774320!important;background:transparent!important;box-shadow:none!important}
+#tavern .help-dialog>.guide-title>div{display:grid;gap:3px}
+#tavern .help-dialog>.guide-title b{font-size:26px!important;line-height:1.1}
+#tavern .help-dialog>.guide-title small{font-size:10px!important;letter-spacing:3px}
+#tavern #tavernHelpClose{display:grid;place-items:center;width:38px;height:34px;padding:0!important;border:2px solid #8b5529!important;background:#1a0b07!important;color:#ffd77f!important;font:900 26px/1 "Courier New",monospace!important;box-shadow:3px 3px #080403!important}
+#tavern #tavernHelpClose:hover{background:#a86629!important;color:#1b0c06!important}
+#tavern .help-service-guide{position:relative;padding:10px 4px 9px;border-bottom:2px solid #70411f}
+#tavern .help-section-title{display:flex;align-items:baseline;justify-content:space-between;margin:0 4px 7px}
+#tavern .help-section-title b{color:#ffd978;font-size:15px;letter-spacing:1px}
+#tavern .help-section-title small{color:#b78047;font:700 9px/1 "Courier New",monospace;letter-spacing:1px}
+#tavern .help-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+#tavern .help-steps article{display:grid;grid-template-columns:42px minmax(0,1fr);gap:7px;min-height:116px;padding:9px 8px;border:2px solid #70411f;background:linear-gradient(145deg,#32190f,#170a07);box-shadow:3px 3px #080403}
+#tavern .help-steps article>strong{color:#efad45;font:900 29px/1 "Courier New",monospace;text-shadow:2px 2px #35150b}
+#tavern .help-steps article>div{display:grid;align-content:start;gap:4px}
+#tavern .help-steps article b{color:#ffe3a3;font-size:14px;line-height:1.15}
+#tavern .help-steps article p{margin:0;color:#dcc097;font-size:11px;line-height:1.35}
+#tavern .help-steps article small{display:block;margin-top:auto;padding:4px 5px;border-left:3px solid #e5a644;background:#0f0705;color:#ffd77f;font-size:10px;line-height:1.25}
+#tavern .help-controls{position:relative;min-height:0;padding:10px 4px 0}
+#tavern .help-controls .control-guide{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+#tavern .help-controls .control-card{display:grid;grid-template-columns:78px minmax(0,1fr);gap:8px;min-height:105px;padding:8px;border:2px solid #70411f!important;background:linear-gradient(145deg,#2a130e,#170a08)!important;box-shadow:3px 3px #080403}
+#tavern .help-controls .control-card:last-child{border-bottom:2px solid #70411f!important}
+#tavern .help-controls .control-card header{padding-right:7px;border-right:1px solid #774522}
+#tavern .help-controls .control-card dl{gap:3px}
+#tavern .help-controls .control-card dl>div{grid-template-columns:58px minmax(0,1fr);gap:4px;min-height:14px}
+#tavern .help-controls .control-card dt{font-size:9px}
+#tavern .help-controls .control-card dd{font-size:10px}
+#tavern .help-controls .control-card kbd{min-height:14px;font-size:8px}
+
+/* 酒馆指南：左侧切换分类，右侧按页呈现内容，避免信息堆叠。 */
+#tavern .tavern-help-panel .help-dialog{grid-template-rows:auto minmax(0,1fr);height:470px}
+#tavern .help-layout{position:relative;display:grid;grid-template-columns:190px minmax(0,1fr);min-height:0;padding-top:13px;gap:13px}
+#tavern .help-sidebar{display:grid;align-content:start;gap:8px;padding:9px;border:2px solid #70411f;background:linear-gradient(145deg,#29130d,#130806);box-shadow:3px 3px #080403}
+#tavern .help-sidebar:before{content:'GUIDE INDEX';padding:2px 3px 8px;border-bottom:1px solid #70411f;color:#b78047;font:700 9px/1 "Courier New",monospace;letter-spacing:1.5px}
+#tavern .help-sidebar button{display:grid;gap:4px;min-height:64px;padding:10px 11px;border:2px solid #61371f!important;background:#160a07!important;color:#bf8d5a!important;text-align:left!important;box-shadow:2px 2px #080403!important}
+#tavern .help-sidebar button b{font-size:16px;line-height:1.1}
+#tavern .help-sidebar button small{color:#9d6539;font:700 9px/1 "Courier New",monospace;letter-spacing:1px}
+#tavern .help-sidebar button:hover,#tavern .help-sidebar button.active{border-color:#e0a044!important;background:linear-gradient(135deg,#9a5c26,#482412)!important;color:#fff0bd!important}
+#tavern .help-sidebar button.active{box-shadow:inset 4px 0 #ffd36e,2px 2px #080403!important}
+#tavern .help-sidebar button.active small{color:#ffe09a}
+#tavern .help-main{min-width:0;min-height:0}
+#tavern .help-page{display:grid;grid-template-rows:auto minmax(0,1fr) auto auto;width:100%;height:100%;min-height:0;overflow:hidden;padding:15px 17px 13px;border:3px solid #70411f;background:linear-gradient(145deg,#32190f,#160a07);box-shadow:4px 4px #080403}
+#tavern .help-page>header{display:grid!important;grid-template-columns:58px minmax(0,1fr) auto!important;align-items:center!important;gap:11px!important;width:auto!important;height:auto!important;margin:0!important;padding:0 0 11px!important;border:0!important;border-bottom:2px solid #78431f!important;background:transparent!important;box-shadow:none!important}
+#tavern .help-page>header>span{color:#efad45;font:900 42px/1 "Courier New",monospace;text-shadow:3px 3px #35150b}
+#tavern .help-page>header div{display:grid;gap:4px;text-align:left}
+#tavern .help-page>header small{color:#dca65f;font:800 10px/1.2 "Courier New","Microsoft YaHei",monospace;letter-spacing:1px}
+#tavern .help-page>header h2{margin:0;color:#ffe6a6;font-size:24px;line-height:1.15;text-shadow:3px 3px #35150b}
+#tavern .help-page>header>b{align-self:start;padding:6px 8px;border:2px solid #70411f;background:#140806;color:#f1b14c;font:900 12px/1 "Courier New",monospace;white-space:nowrap}
+#tavern .help-page>p{align-self:center;margin:13px 0;color:#dfc39a;font-size:16px;line-height:1.55}
+#tavern .help-page aside{margin-top:auto;padding:9px 11px;border-left:5px solid #e5a644;background:#0f0705;color:#ffd77f;font-size:15px;line-height:1.35}
+#tavern .help-page footer{display:grid;grid-template-columns:140px 1fr 140px;align-items:center;gap:12px;margin-top:10px}
+#tavern .help-page footer button{height:38px;padding:0 12px!important;border:2px solid #79502c!important;background:#2d1910!important;color:#e4c18a!important;font-size:16px!important;box-shadow:3px 3px #080403!important}
+#tavern .help-page footer #helpNext{border-color:#e1a043!important;background:#c27b2e!important;color:#211109!important}
+#tavern .help-page footer button:disabled{opacity:.36;cursor:default}
+#tavern .help-page-dots{display:flex;justify-content:center;gap:8px}
+#tavern .help-page-dots i{width:28px;height:5px;background:#55321e;box-shadow:1px 1px #080403}
+#tavern .help-page-dots i.active{background:#f0b34e;box-shadow:0 0 6px #e79435}
+#tavern .guide-key-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 9px;align-content:center;margin:0 0 12px}
+#tavern .guide-key-list>div{display:grid;grid-template-columns:82px minmax(0,1fr);align-items:center;min-height:29px;padding:4px 6px;border:1px solid #60371f;background:#150906}
+#tavern .guide-key-list dt{color:#bf8d5a;font-size:12px}
+#tavern .guide-key-list dd{display:flex;align-items:center;flex-wrap:wrap;gap:4px;margin:0;color:#f2d4a2;font-size:12px}
+#tavern .guide-key-list kbd{display:inline-grid;place-items:center;min-width:25px;min-height:19px;padding:2px 5px;border:1px solid #b98042;background:linear-gradient(#54301a,#29150d);color:#fff0bd;font:700 10px/1 "Courier New",monospace;box-shadow:1px 1px #080403}
+#tavern .guide-key-list dd small{color:#c48b4d;font-size:10px}
+#tavern .help-page.is-controls>p{font-size:15px;margin:10px 0}
+#tavern .help-page.is-controls aside{font-size:14px}
+
+/* 打开的像素书：皮革封面、书脊、纸页与侧边书签。 */
+#tavern .tavern-help-panel .help-dialog{padding:14px 20px 18px 28px;border-color:#b47632;background:linear-gradient(90deg,#32170e 0 10%,#5a2c17 10% 12%,#2d140c 12% 100%);box-shadow:0 0 0 3px #241109,9px 9px #050302,0 0 32px #e3a14966}
+#tavern .tavern-help-panel .help-dialog:before{inset:8px;border-color:#8d5327;box-shadow:inset 0 0 0 3px #3c1d0f}
+#tavern .tavern-help-panel .help-dialog:after{content:'';position:absolute;z-index:0;top:66px;bottom:22px;left:122px;width:13px;border-right:2px solid #1a0906;border-left:2px solid #a05b28;background:linear-gradient(90deg,#482211,#8f4e21 42%,#32150b);box-shadow:3px 0 #160705}
+#tavern .help-dialog>.guide-title,#tavern .help-layout{z-index:1}
+#tavern .help-dialog>.guide-title{padding-left:12px!important;padding-right:8px!important;border-bottom-color:#9e602d!important}
+#tavern .help-layout{grid-template-columns:105px minmax(0,1fr);gap:0;padding-top:10px}
+#tavern .help-sidebar{position:relative;z-index:2;align-content:start;gap:11px;padding:27px 0 0;border:0;background:transparent;box-shadow:none}
+#tavern .help-sidebar:before{content:'BOOKMARKS';padding:0 0 7px 4px;border:0;color:#c28648;font-size:8px;letter-spacing:.8px}
+#tavern .help-sidebar button{position:relative;width:110px;min-height:53px;padding:7px 9px 12px 12px;border:2px solid #5c2b18!important;border-radius:0!important;background:linear-gradient(90deg,#5d2918,#9b4d25)!important;color:#f6c877!important;clip-path:polygon(0 0,100% 0,100% 85%,50% 100%,0 85%);box-shadow:none!important;text-shadow:1px 1px #260d07}
+#tavern .help-sidebar button b{font-size:13px;white-space:nowrap}
+#tavern .help-sidebar button small{font-size:7px;letter-spacing:.4px;color:#f1b46c}
+#tavern .help-sidebar button:hover,#tavern .help-sidebar button.active{border-color:#ffe29b!important;background:linear-gradient(90deg,#b66b2c,#e0a046)!important;color:#241006!important;text-shadow:none;filter:brightness(1.08)}
+#tavern .help-sidebar button.active{box-shadow:4px 3px #1a0905!important}
+#tavern .help-sidebar button.active small{color:#54230d}
+#tavern .help-main{position:relative;z-index:1;padding:0 0 0 14px}
+#tavern .help-main:before{content:'';position:absolute;inset:4px 0 4px 5px;background:linear-gradient(90deg,#e3bf78,#f6d995 8%,#e4bd75);box-shadow:inset 2px 0 #b77a3d,4px 4px #160705;pointer-events:none}
+#tavern .help-page{position:relative;height:100%;padding:15px 19px 13px;border:2px solid #75421f;background:linear-gradient(100deg,#e2bc74,#f8dfa2 11%,#ecd08f 90%,#d1a35c);box-shadow:inset 0 0 0 2px #f8e5b5,inset 0 0 24px #a66c3533;color:#3a1a0d}
+#tavern .help-page>header{position:relative;border-bottom-color:#9b6232!important}
+#tavern .help-page>header>span{color:#a84c20;text-shadow:2px 2px #f6d88f}
+#tavern .help-page>header small{color:#855025}
+#tavern .help-page>header h2{color:#3d1a0d;text-shadow:2px 2px #f4d695}
+#tavern .help-page>header>b{border-color:#9b6232;background:#432011;color:#ffe09a}
+#tavern .help-page>p{color:#5a2e17}
+#tavern .help-page aside{border-left-color:#c36b29;background:#5a2a16;color:#ffe2a4;box-shadow:inset 0 0 0 1px #9b572a}
+#tavern .help-page footer button{border-color:#805029!important;background:#5b2c17!important;color:#f7d69a!important}
+#tavern .help-page footer #helpNext{border-color:#df9e42!important;background:#c8782d!important;color:#261006!important}
+#tavern .guide-key-list>div{border-color:#a56d38;background:#f3d799;box-shadow:inset 0 0 0 1px #ffe9ba}
+#tavern .guide-key-list dt{color:#7e4824}
+#tavern .guide-key-list dd{color:#482313}
+#tavern .guide-key-list kbd{border-color:#855022;background:linear-gradient(#774020,#43200f);color:#ffe8ae}
+#tavern .guide-key-list dd small{color:#855025}
+
+/* 书签从书封左侧伸出：一半露在外面，书页获得完整阅读宽度。 */
+#tavern .tavern-help-panel .help-dialog{overflow:visible;padding-left:24px}
+#tavern .tavern-help-panel .help-dialog:after{left:18px}
+#tavern .help-layout{display:block;padding-top:12px}
+#tavern .help-sidebar{position:absolute;z-index:4;top:58px;left:-83px;width:154px;padding:25px 0 0;gap:12px}
+#tavern .help-sidebar:before{padding-left:75px;font-size:8px;color:#d09350}
+#tavern .help-sidebar button{width:154px;min-height:60px;padding:9px 12px 13px 80px;clip-path:polygon(0 0,100% 0,100% 84%,50% 100%,0 84%)}
+#tavern .help-sidebar button b{font-size:16px}
+#tavern .help-sidebar button small{font-size:8px}
+#tavern .help-main{height:100%;padding:0}
+#tavern .help-main:before{inset:4px 0 4px 0}
+#tavern .help-page{padding:17px 24px 15px;border-width:3px}
+#tavern .help-page>header{grid-template-columns:70px minmax(0,1fr) auto!important;gap:14px!important;padding-bottom:13px!important}
+#tavern .help-page>header>span{font-size:49px}
+#tavern .help-page>header small{font-size:12px;letter-spacing:1.3px}
+#tavern .help-page>header h2{font-size:29px}
+#tavern .help-page>header>b{padding:8px 11px;font-size:15px}
+#tavern .help-page>p{align-self:start;margin:21px 4px 16px;color:#4e2413;font-size:20px;line-height:1.55}
+#tavern .help-page aside{padding:11px 14px;font-size:17px;line-height:1.4}
+#tavern .help-page footer{grid-template-columns:155px 1fr 155px;margin-top:12px}
+#tavern .help-page footer button{height:42px;font-size:18px!important}
+#tavern .help-page-dots i{width:34px;height:6px}
+#tavern .help-page.is-controls>p{font-size:18px;margin:13px 4px 11px}
+#tavern .help-page.is-controls aside{font-size:16px}
+#tavern .guide-key-list{gap:9px 12px;margin:0 0 14px}
+#tavern .guide-key-list>div{grid-template-columns:104px minmax(0,1fr);min-height:34px;padding:5px 8px}
+#tavern .guide-key-list dt{font-size:14px}
+#tavern .guide-key-list dd{font-size:14px}
+#tavern .guide-key-list kbd{min-width:30px;min-height:23px;font-size:12px}
+#tavern .guide-key-list dd small{font-size:12px}
+
+/* 修正书签与书页层级：书签挂在书脊外侧，文字始终完整可读。 */
+#tavern .tavern-help-panel .help-dialog:after{left:82px;z-index:1}
+#tavern .help-dialog>.guide-title{z-index:3}
+#tavern .help-layout{z-index:2}
+#tavern .help-sidebar{top:13px;left:-82px;width:164px;padding:0;gap:10px}
+#tavern .help-sidebar:before{display:none}
+#tavern .help-sidebar button{width:164px;min-height:56px;padding:7px 6px 12px!important;place-items:center!important;text-align:center!important;clip-path:polygon(0 0,100% 0,100% 83%,50% 100%,0 83%)}
+#tavern .help-sidebar button b{display:block;width:100%;font-size:15px;line-height:1.1;white-space:nowrap}
+#tavern .help-sidebar button small{display:block;width:100%;font-size:7px;letter-spacing:.7px}
+#tavern .help-main{margin-left:80px;width:calc(100% - 80px)}
+#tavern .help-main:before{inset:4px 0 4px 0}
+#tavern .help-page{padding-left:26px;padding-right:26px}
+#tavern .help-page>p{align-self:center;margin:15px 7px;color:#4e2413;font-size:19px;line-height:1.55}
+
+/* 操作说明只展示按键映射，内容在书页中央排布。 */
+#tavern .help-page.is-controls{grid-template-rows:auto minmax(0,1fr) auto}
+#tavern .help-page.is-controls .guide-key-list{align-self:center;margin:0}
+
+/* XBOX 右摇杆像素鼠标：仅在酒馆内被摇杆唤醒。 */
+#gamepadCursor{position:fixed;z-index:2147483647!important;left:0;top:0;display:grid;place-items:center;width:30px;height:38px;pointer-events:none;opacity:0;transform:translate(-50%,-50%) scale(.8) rotate(5deg);transform-origin:center;transition:opacity .12s steps(2,end),filter .1s,transform .1s;filter:drop-shadow(3px 3px 0 #120705)}
+#gamepadCursor.active{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(5deg)}
+#gamepadCursor:before{content:'♠';position:absolute;inset:0;display:grid;place-items:center;padding-top:3px;border:2px solid #e6b955;border-radius:3px;background:linear-gradient(135deg,#3b3a3a 0 8%,#080808 8% 88%,#242424 88%);color:#faf2d0;font:900 28px/.9 Georgia,serif;box-shadow:inset 0 0 0 2px #171717,inset 0 0 0 3px #855a22,0 0 0 1px #050505}
+#gamepadCursor:after{content:'A';position:absolute;top:3px;left:4px;color:#f8e5ad;font:900 9px/1 "Courier New",monospace;text-shadow:1px 1px #100b07}
+#gamepadCursor.hovering{filter:drop-shadow(0 0 5px #ffe59a) drop-shadow(3px 3px 0 #120705);transform:translate(-50%,-50%) scale(1.12) rotate(5deg)}
+.gamepad-hover{outline:3px solid #ffe18b!important;outline-offset:2px!important;filter:brightness(1.15)}
+#gamepadSelectMenu{position:fixed;z-index:2147483646;display:grid;max-height:260px;overflow:auto;padding:4px;border:3px solid #c58737;background:#231108;box-shadow:5px 5px #080403,0 0 0 2px #5d3018;color:#ffe6a7}
+#gamepadSelectMenu button{min-height:34px;padding:6px 9px;border:0!important;border-bottom:1px solid #71411f!important;border-radius:0!important;background:#231108!important;color:#ffe6a7!important;font:700 13px/1.2 "Courier New","Microsoft YaHei",monospace!important;text-align:left!important}
+#gamepadSelectMenu button:last-child{border-bottom:0!important}
+#gamepadSelectMenu button[aria-selected="true"],#gamepadSelectMenu button:hover{background:#a46129!important;color:#1d0c06!important}

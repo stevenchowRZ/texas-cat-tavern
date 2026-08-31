@@ -19,8 +19,8 @@
 #tavern .no-guests{font-size:18px!important}
 
 #tavern .cloud-dialog,#tavern .guest-dialog,#tavern .staff-dialog,#tavern #barAction{width:max-content!important;min-width:260px!important;max-width:380px!important;padding:9px 12px!important;border:2px solid #5b3a29!important;border-radius:0!important;background:#fff1d8!important;color:#3d241b!important;font-family:"Microsoft YaHei","SimSun",sans-serif!important;font-size:16px!important;font-style:normal!important;font-weight:400!important;line-height:1.35!important;letter-spacing:0!important;text-align:left!important;text-shadow:none!important;box-shadow:3px 3px #100807!important}
-#tavern .bartender-wrap .staff-dialog{left:104px!important}
-#tavern .server-cat .staff-dialog{left:78px!important}
+#tavern .bartender-wrap .staff-dialog{left:var(--bartender-dialog-left)!important;top:var(--bartender-dialog-top)!important}
+#tavern .server-cat .staff-dialog{left:var(--server-dialog-left)!important;top:var(--server-dialog-top)!important}
 #tavern .bartender-wrap>#barAction{left:104px!important;top:-10px!important}
 
 #tavern .prep-toolbar button{height:52px!important;font-size:22px!important}
@@ -81,6 +81,8 @@ body:has(#tavern.active) #toast{font-size:20px!important}
 #tavern .pixel-cat.image-character.role-server{width:137px!important;height:220px!important}
 #tavern .server-cat{bottom:calc(42% - 12px)!important}
 #tavern .pixel-cat.image-character.role-server.notebook-idle{background-image:url('/assets/server-animations/server-notebook-idle-loop.gif')!important;background-size:contain!important;animation:none!important}
+#tavern .pixel-cat.image-character.role-server.carrying,#tavern .pixel-cat.image-character.role-server.serving{background-image:url('/assets/server-animations/server-tray-carry-loop.gif')!important;background-size:contain!important;animation:none!important}
+#tavern .server-cat.carrying #carryDrink{left:100px;right:auto;top:84px;transform:translateX(-50%);transform-origin:center bottom}
 #tavern .bar-seat{height:280px!important}
 #tavern .guest-seat{width:120px!important;height:205px!important}
 #tavern .guest-seat .pixel-cat{scale:1!important}

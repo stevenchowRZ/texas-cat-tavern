@@ -2,6 +2,16 @@
 (()=>{
   const $=s=>document.querySelector(s);
   const KEY='moonTailTavernV4';
+  const TUTORIAL_KEY='catTavernFirstNightTutorialV1';
+  const tutorialSteps=[
+    {eyebrow:'STEP 01 · 客人点单',title:'先看客人头顶的鸡尾酒',body:'客人坐下后会先看菜单，再显示点单。每位客人只有 10 秒耐心；不同外观的猫猫有不同口味偏好，菜单中的热门酒也更容易被点到。',tip:'气泡出现后，酒保会按订单顺序开始制作。'},
+    {eyebrow:'STEP 02 · 酒保制作',title:'观察酒保头顶的制作队列',body:'鸡尾酒图片旁的进度条代表制作进程。高价且配料复杂的酒制作更慢；显示“完成”后会按完成先后竖向排列。',tip:'服务员只能先拿最早完成的那一杯。'},
+    {eyebrow:'STEP 03 · 取酒与递酒',title:'移动服务员完成配送',body:'移动到酒保旁取酒，再走到点了同款酒的客人面前递出。键盘使用 ← →、Space；Xbox 使用左摇杆与 A；手机使用屏幕按钮。',tip:'5 秒内送达会获得爱心反馈；等待超过 10 秒会产生罚款。'}
+  ];
+  const helpControlSteps=[
+    {eyebrow:'KEYBOARD',title:'键盘操作',rows:[['移动',['←','→']],['冲刺',['Shift']],['取 / 递酒',['Space']],['丢弃',['Q']]]},
+    {eyebrow:'XBOX CONTROLLER',title:'XBOX 手柄',rows:[['移动',['左摇杆','十字键']],['冲刺',['LT']],['取 / 递酒',['A']],['丢弃',['X']],['像素鼠标',['右摇杆','A']],['校准光标',['R3']]]}
+  ];
 
   const recipes=[
     {id:'gin-tonic',name:'Gin & Tonic',cn:'金汤力',level:1,base:'金酒',need:{gin:1,tonic:1,lime:1},price:62,art:0},
@@ -37,6 +47,8 @@
     lemon:{name:'柠檬',cost:6,art:32,group:'鲜果与香草'},lime:{name:'青柠',cost:6,art:35,group:'鲜果与香草'},mint:{name:'薄荷',cost:5,art:40,group:'鲜果与香草'},orangeslice:{name:'橙片',cost:5,art:38,group:'鲜果与香草'},orangepeel:{name:'橙皮',cost:4,art:39,group:'鲜果与香草'},cherry:{name:'酒渍樱桃',cost:7,art:44,group:'鲜果与香草'},eggwhite:{name:'蛋清',cost:5,art:30,group:'鲜果与香草'},salt:{name:'海盐',cost:3,art:31,group:'鲜果与香草'},pepper:{name:'盐与黑胡椒',cost:4,art:46,group:'鲜果与香草'}
   };
   Object.values(ingredients).forEach(item=>{if(!item.yield){item.cost*=5;item.yield=5}});
+  const HEAT_PER_STAR=15,MAX_POPULARITY_STARS=5,PROFICIENCY_SALES_STEP=5,IDLE_DECAY_GRACE_NIGHTS=3,STAR_DECAY_BUFFER=3;
+  const guestTastePreferences={gray:['清爽','经典'],cream:['热带','蓝调'],orange:['醇厚','经典'],black:['辛香','醇厚'],tabby:['经典','清爽'],pink:['酸甜','热带']};
   const groupOrder=['基酒','利口酒与苦味剂','调和剂','鲜果与香草'];
   const stoolX=[8,20,32,44,56,68,80,92];
   const guestNames=['团子','麻薯','奶盖','芝麻','布丁','栗子','小满','可可','雪饼','米粒','桃酥','乌龙','柚子','豆包','月饼','橘糖'];
@@ -77,16 +89,23 @@
   let panelView=null;
   let pendingRecipeUnlocks=[];
   let settlement=null;
-  let nightLedger={made:0,sales:0,revenue:0,tips:0,cost:0,penalty:0};
+  let nightLedger=emptyNightLedger();
+  let nightPopularityIds=new Set();
   let tickTimer=null,arrivalTimer=null,brewTimer=null,brewProgressTimer=null,walkTimer=null,serviceTimer=null,autoTimer=null,chatTimer=null,chatClearTimer=null,glowTimer=null,timelineReturnTimer=null,bartenderSpeechTimer=null,bartenderSpeechClearTimer=null,serverSpeechTimer=null,serverSpeechClearTimer=null,phaseBannerTimer=null;
+  let serverMoveDirection=0,serverMoveFrame=null,serverMoveLastTime=0,serverMoveSource=null;
+  let serverStaminaFrame=null,serverStaminaLastTime=0,serverSprintStamina=3,serverSprintExhausted=false,keyboardSprintHeld=false,gamepadSprintHeld=false,sprintRumbleAt=0;
+  let gamepadFrame=null,gamepadActionHeld=false,gamepadBackHeld=false,gamepadDiscardHeld=false,gamepadCursorCenterHeld=false,activeGamepad=null,gamepadCursorX=null,gamepadCursorY=null,gamepadCursorLastTime=0,gamepadCursorTarget=null,gamepadCursorHit=null;
+  let readySequence=0;
+  let tutorialStep=0,tutorialDone=null,helpSection='tutorial',helpPage=0;
+  const SERVER_MOVE_SPEED=25,SERVER_SPRINT_MULTIPLIER=1.75,SERVER_SPRINT_MAX=3;
   let servingDrink=false;
   let soundContext=null;
-  const BGM_MUTED_KEY='tavernBgmMutedV1',BGM_VOLUME_KEY='tavernBgmVolumeV1',SFX_ENABLED_KEY='tavernSfxEnabledV1',SFX_VOLUME_KEY='tavernSfxVolumeV1',tavernBgm=new Audio('/assets/audio/tavern-bgm.mp3');
-  const savedBgmVolume=Number(localStorage.getItem(BGM_VOLUME_KEY));
+  const BGM_MUTED_KEY='catGlobalBgmMutedV1',BGM_VOLUME_KEY='catGlobalBgmVolumeV1',LEGACY_BGM_MUTED_KEY='tavernBgmMutedV1',LEGACY_BGM_VOLUME_KEY='tavernBgmVolumeV1',SFX_ENABLED_KEY='tavernSfxEnabledV1',SFX_VOLUME_KEY='tavernSfxVolumeV1',tavernBgm=new Audio('/assets/audio/tavern-bgm.mp3');
+  const savedBgmVolume=Number(localStorage.getItem(BGM_VOLUME_KEY)??localStorage.getItem(LEGACY_BGM_VOLUME_KEY));
   let bgmVolume=Number.isFinite(savedBgmVolume)?Math.max(0,Math.min(1,savedBgmVolume)):.2;
   tavernBgm.loop=true;tavernBgm.preload='auto';tavernBgm.volume=bgmVolume;
   const savedSfxVolume=Number(localStorage.getItem(SFX_VOLUME_KEY));
-  let bgmUnlocked=false,bgmMuted=localStorage.getItem(BGM_MUTED_KEY)==='1',bgmFadeTimer=null,sfxEnabled=localStorage.getItem(SFX_ENABLED_KEY)!=='0',sfxVolume=Number.isFinite(savedSfxVolume)?Math.max(0,Math.min(1,savedSfxVolume)):.4;
+  let bgmUnlocked=false,bgmMuted=(localStorage.getItem(BGM_MUTED_KEY)??localStorage.getItem(LEGACY_BGM_MUTED_KEY))==='1',bgmFadeTimer=null,sfxEnabled=localStorage.getItem(SFX_ENABLED_KEY)!=='0',sfxVolume=Number.isFinite(savedSfxVolume)?Math.max(0,Math.min(1,savedSfxVolume)):.4;
   let chatState=null,chatIndex=0;
   let bartenderSpeech='',serverSpeech='',bartenderSpeechIndex=0,serverSpeechIndex=0,lastPhaseBanner=null;
   let serverNotebookTimer=null,serverNotebookActive=false;
@@ -95,28 +114,116 @@
     night:{bartender:['客人点什么，我就按订单做什么。','摇壶响起来，今晚正式开始了。','这杯完成了，记得趁香气还在时送到。','心事可以慢慢说，酒也要慢慢摇。'],server:['我来取酒，你安心调制。','同款鸡尾酒可以送给任何点了它的客人。','忙的时候也要记得听客人把话说完。','慢一点没关系，今晚还很长。','杯子端稳了，我这就送过去。','黑夜再长，白昼总会到来。','勇气在逆境中成长。','真爱之路从不平坦。']}
   };
 
+  function emptyRecipeProgress(){return Object.fromEntries(recipes.map(recipe=>[recipe.id,{sales:0,heatXp:0,stars:0,idleNights:0}]))}
+  function normalizeRecipeProgress(savedProgress){const normalized=emptyRecipeProgress();recipes.forEach(recipe=>{const source=savedProgress?.[recipe.id]||{},heatXp=Math.max(0,Math.min(HEAT_PER_STAR*MAX_POPULARITY_STARS,Number(source.heatXp)||0)),stars=Math.max(0,Math.min(MAX_POPULARITY_STARS,Number.isFinite(Number(source.stars))?Math.floor(Number(source.stars)):Math.floor(heatXp/HEAT_PER_STAR)));normalized[recipe.id]={sales:Math.max(0,Math.floor(Number(source.sales)||0)),heatXp,stars,idleNights:Math.max(0,Math.floor(Number(source.idleNights)||0))}});return normalized}
+
   function initialState(){return{
     coins:Number(localStorage.getItem('catCoins')||480),
     stock:{gin:2,tonic:2,tequila:2,orange:2,lime:4,rum:0,mint:0,soda:0,campari:0,vermouth:0,bourbon:0,sugar:0,bitters:0,vodka:0,coffee:0,liqueur:0},
-    menu:['gin-tonic'],staff:[],served:0,night:false,time:30,queue:[],ready:[],brewing:null,carrying:null,servedTonight:0,serverX:28,autoServe:false
+    menu:['gin-tonic'],staff:[],served:0,recipeUnlockEveryFive:true,recipeProgress:emptyRecipeProgress(),night:false,time:60,closing:false,queue:[],ready:[],brewing:null,carrying:null,servedTonight:0,serverX:28,autoServe:false
   }}
   function loadGame(){try{const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved)return normalize(saved)}catch{}return initialState()}
-  function levelForServed(served){return Math.min(24,1+Math.floor((Number(served)||0)/3))}
-  function normalize(saved){const base=initialState(),result={...base,...saved,stock:{...base.stock,...(saved.stock||{})},night:false,time:30,queue:[],ready:[],brewing:null,carrying:null,serverX:Number.isFinite(saved.serverX)?saved.serverX:28,autoServe:!!saved.autoServe};const savedLevel=levelForServed(result.served);result.menu=(result.menu||[]).filter(id=>recipes.some(recipe=>recipe.id===id&&recipe.level<=savedLevel));result.staff=[...new Set((result.staff||[]).filter(id=>staffCandidates.some(member=>member.id===id)))];if(!result.menu.length)result.menu=['gin-tonic'];return result}
+  function recipeUnlockLevel(recipe){const order=Math.max(1,Number(recipe?.level)||1);return order===1?1:(order-1)*5}
+  function levelForServed(served){return Math.min(recipeUnlockLevel(recipes[recipes.length-1]),1+Math.floor((Number(served)||0)/3))}
+  function normalize(saved){const base=initialState(),legacyServed=Math.max(0,Number(saved.served)||0),legacyLevel=Math.min(recipes.length,1+Math.floor(legacyServed/3)),migratedServed=saved.recipeUnlockEveryFive===true?legacyServed:(recipeUnlockLevel(recipes[legacyLevel-1])-1)*3+(legacyServed%3),result={...base,...saved,served:migratedServed,recipeUnlockEveryFive:true,recipeProgress:normalizeRecipeProgress(saved.recipeProgress),stock:{...base.stock,...(saved.stock||{})},night:false,time:60,closing:false,queue:[],ready:[],brewing:null,carrying:null,serverX:Number.isFinite(saved.serverX)?saved.serverX:28,autoServe:!!saved.autoServe};const savedLevel=levelForServed(result.served);result.menu=(result.menu||[]).filter(id=>recipes.some(recipe=>recipe.id===id&&recipeUnlockLevel(recipe)<=savedLevel));result.staff=[...new Set((result.staff||[]).filter(id=>staffCandidates.some(member=>member.id===id)))];if(!result.menu.length)result.menu=['gin-tonic'];return result}
   function saveGame(){localStorage.setItem(KEY,JSON.stringify(game));localStorage.setItem('catCoins',String(game.coins))}
   function saveTimeline(){localStorage.setItem(TIMELINE_KEY,JSON.stringify(timeline))}
   function level(){return levelForServed(game.served)}
-  function unlocked(recipe){return recipe.level<=level()}
+  function unlocked(recipe){return recipeUnlockLevel(recipe)<=level()}
   function purchasableIngredient(id){return recipes.some(recipe=>unlocked(recipe)&&id in recipe.need)}
   function recipeById(id){return recipes.find(r=>r.id===id)}
   function canMake(recipe){return recipe&&Object.entries(recipe.need).every(([id,count])=>(game.stock[id]||0)>=count)}
+  function orderableRecipes(){return game.menu.map(recipeById).filter(recipe=>canMake(recipe))}
+  function recipeTaste(recipe){const need=recipe?.need||{};if(need.hotsauce||need.worcestershire||need.tomato)return'辛香';if(need.bluecuracao)return'蓝调';if(need.coconut||need.pineapplejuice||need.orangejuice)return'热带';if(need.coffee||need.bourbon||need.rye||need.vermouth||need.bitters||need.campari)return'醇厚';if(need.cranberry||need.grenadine||need.orange)return'酸甜';if(need.lime||need.lemon||need.mint||need.tonic||need.soda)return'清爽';return'经典'}
+  function recipeProgressFor(recipe){const id=recipe?.id;if(!id)return{sales:0,heatXp:0,stars:0,idleNights:0};game.recipeProgress=game.recipeProgress||emptyRecipeProgress();if(!game.recipeProgress[id])game.recipeProgress[id]={sales:0,heatXp:0,stars:0,idleNights:0};return game.recipeProgress[id]}
+  function recipePopularity(recipe){return recipeProgressFor(recipe).stars}
+  function recipeProficiency(recipe){return Math.floor(recipeProgressFor(recipe).sales/PROFICIENCY_SALES_STEP)}
+  function displayHeat(value){const rounded=Math.round(value*10)/10;return Number.isInteger(rounded)?String(rounded):rounded.toFixed(1)}
+  function recipeHeatProgress(recipe){const progress=recipeProgressFor(recipe);return progress.stars>=MAX_POPULARITY_STARS?'MAX':`${displayHeat(progress.heatXp)}/${(progress.stars+1)*HEAT_PER_STAR}`}
+  function recordRecipePopularitySale(recipe,{preferenceMatch=false,fastDelivery=false}={}){const progress=recipeProgressFor(recipe),beforeStars=progress.stars,beforeProficiency=recipeProficiency(recipe);progress.sales++;progress.idleNights=0;const gained=1+(preferenceMatch ? .5 : 0)+(fastDelivery ? .5 : 0);progress.heatXp=Math.min(HEAT_PER_STAR*MAX_POPULARITY_STARS,progress.heatXp+gained);while(progress.stars<MAX_POPULARITY_STARS&&progress.heatXp>=(progress.stars+1)*HEAT_PER_STAR)progress.stars++;return{gained,stars:progress.stars,starUp:progress.stars>beforeStars,proficiency:recipeProficiency(recipe),proficiencyUp:recipeProficiency(recipe)>beforeProficiency}}
+  function applyNightPopularityDecay(){const changes=[];nightPopularityIds.forEach(id=>{const recipe=recipeById(id),progress=recipe&&recipeProgressFor(recipe);if(!recipe||!progress)return;const sold=nightLedger.byRecipe[id]?.sales||0;if(sold>0){progress.idleNights=0;return}progress.idleNights++;if(progress.idleNights<IDLE_DECAY_GRACE_NIGHTS||progress.heatXp<=0)return;const beforeStars=progress.stars;progress.heatXp=Math.max(0,progress.heatXp-1);while(progress.stars>0&&progress.heatXp<progress.stars*HEAT_PER_STAR-STAR_DECAY_BUFFER)progress.stars--;changes.push({id,starsLost:beforeStars-progress.stars})});return changes}
+  function recipeBaseBrewMs(recipe){return Math.round(650+Object.keys(recipe?.need||{}).length*100+Math.max(0,(recipe?.price||60)-60)*4)}
+  function recipeBrewSeconds(recipe){return (recipeBaseBrewMs(recipe)/1000).toFixed(1)}
+  function recipeHeat(recipe){return'★'.repeat(recipePopularity(recipe))+'☆'.repeat(5-recipePopularity(recipe))}
+  function guestPrefers(tone,recipe){return(guestTastePreferences[tone]||[]).includes(recipeTaste(recipe))}
+  function chooseGuestRecipe(choices,tone){
+    const weighted=choices.map(recipe=>({recipe,weight:(.75+recipePopularity(recipe)*.25)*(guestPrefers(tone,recipe)?2.1:1)})),total=weighted.reduce((sum,item)=>sum+item.weight,0);let roll=Math.random()*total;
+    return(weighted.find(item=>(roll-=item.weight)<=0)||weighted[weighted.length-1]).recipe;
+  }
+  function emptyNightLedger(){return{made:0,sales:0,revenue:0,tips:0,cost:0,penalty:0,orders:0,byRecipe:{},timeoutReasons:{},shortages:{}}}
+  function recipeNightStats(recipe){const id=recipe.id;if(!nightLedger.byRecipe[id])nightLedger.byRecipe[id]={orders:0,made:0,sales:0,revenue:0,tips:0,timeouts:0,preferenceMatches:0};return nightLedger.byRecipe[id]}
+  function recordMenuShortages(){
+    game.menu.map(recipeById).filter(Boolean).forEach(recipe=>Object.entries(recipe.need).forEach(([id,count])=>{if((game.stock[id]||0)<count)nightLedger.shortages[id]=(nightLedger.shortages[id]||0)+1}));
+  }
+  function timeoutReasonFor(order){
+    if(game.carrying?.id===order.recipe.id||readyQueue().some(recipe=>recipe.id===order.recipe.id))return'配送不及时';
+    if(game.brewing?.id===order.recipe.id)return'制作时间较长';
+    if(!canMake(order.recipe))return'配料不足';
+    return'订单排队过久';
+  }
+  function buildSettlementInsights(){
+    const recipeEntries=Object.entries(nightLedger.byRecipe),bestEntry=recipeEntries.sort(([,a],[,b])=>b.sales-a.sales||b.tips-a.tips||b.orders-a.orders)[0],bestRecipe=bestEntry&&bestEntry[1].sales>0?recipeById(bestEntry[0]):null;
+    const timeoutEntry=Object.entries(nightLedger.timeoutReasons).sort(([,a],[,b])=>b-a)[0];
+    const shortageEntry=Object.entries(nightLedger.shortages).sort(([,a],[,b])=>b-a)[0];
+    let shortageText='本晚无明显缺料';
+    if(shortageEntry)shortageText=`${ingredients[shortageEntry[0]]?.name||shortageEntry[0]} · 影响 ${shortageEntry[1]} 次选择`;
+    else{
+      const relevant=[...new Set(game.menu.flatMap(id=>Object.keys(recipeById(id)?.need||{})))].sort((a,b)=>(game.stock[a]||0)-(game.stock[b]||0))[0];
+      if(relevant)shortageText=`${ingredients[relevant]?.name||relevant} · 剩余 ${game.stock[relevant]||0} 次用量`;
+    }
+    let advice='菜单与库存表现稳定，下晚可以维持当前配置。';
+    if(shortageEntry)advice=`优先补充${ingredients[shortageEntry[0]]?.name||'短缺材料'}，避免热门订单被迫改选。`;
+    else if(timeoutEntry?.[0]==='配送不及时')advice='成品完成后尽快按队首取酒，并缩短往返路线。';
+    else if(timeoutEntry?.[0]==='制作时间较长')advice='减少同时上架的慢速酒，或招募提升制酒速度的员工。';
+    else if(timeoutEntry)advice='精简今晚菜单，让酒保更快处理同类订单。';
+    else if(bestRecipe)advice=`${bestRecipe.cn}表现最好，下晚可继续主推并备足相关材料。`;
+    return{bestCocktail:bestRecipe?`${bestRecipe.cn} · 售出 ${bestEntry[1].sales} 杯`:'暂无售出记录',timeoutReason:timeoutEntry?`${timeoutEntry[0]} · ${timeoutEntry[1]} 位客人`:'本晚无客人超时',shortageText,advice};
+  }
   function coin(value){return `${value} 猫猫币`}
   function coinMarkup(value){return `<span class="coin-inline"><i class="cat-coin-icon" aria-hidden="true"></i>${Number(value).toLocaleString()}</span>`}
   function recipeCost(recipe){return Object.entries(recipe.need).reduce((total,[id,count])=>{const item=ingredients[id];return total+((item?.cost||0)/(item?.yield||1))*count},0)}
   function staffBonus(type){return staffCandidates.filter(member=>game.staff.includes(member.id)&&member.bonus===type).reduce((total,member)=>total+member.value,0)}
-  function nightDuration(){return Math.round(30*(1+staffBonus('time')))}
+  function nightDuration(){return Math.round(60*(1+staffBonus('time')))}
   function notify(message){const toast=$('#toast');toast.textContent=message;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1600)}
   function showScreen(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));$(id).classList.add('active')}
+  function tutorialOpen(){const tutorial=$('#tavernTutorial');return tutorial&&!tutorial.hidden}
+  function helpOpen(){const help=$('#tavernHelpPanel');return help&&!help.hidden}
+  function helpPages(){return helpSection==='tutorial'?tutorialSteps:helpControlSteps}
+  function fitHelpDialog(){
+    const panel=$('#tavernHelpPanel .help-dialog');if(!panel)return;
+    const viewport=window.visualViewport,width=viewport?.width||window.innerWidth,height=viewport?.height||window.innerHeight;
+    panel.style.setProperty('--help-scale',String(Math.min(1,Math.max(.34,Math.min((width-20)/920,(height-20)/470)))));
+  }
+  function renderTavernHelp(){
+    const content=$('#tavernHelpContent'),pages=helpPages(),step=pages[helpPage];if(!content||!step)return;
+    const controls=helpSection==='controls',stepNumber=String(helpPage+1).padStart(2,'0'),total=String(pages.length).padStart(2,'0');
+    const rows=controls?`<dl class="guide-key-list">${step.rows.map(([label,keys,note])=>`<div><dt>${label}</dt><dd>${keys.map(key=>`<kbd>${key}</kbd>`).join('')}${note?`<small>${note}</small>`:''}</dd></div>`).join('')}</dl>`:'';
+    content.innerHTML=`<article class="help-page ${controls?'is-controls':'is-tutorial'}"><header><span>${stepNumber}</span><div><small>${step.eyebrow}</small><h2>${step.title}</h2></div><b>${stepNumber} / ${total}</b></header>${controls?rows:`<p>${step.body}</p><aside>${step.tip}</aside>`}<footer><button id="helpPrevious" type="button" ${helpPage===0?'disabled':''}>上一步</button><div class="help-page-dots" aria-hidden="true">${pages.map((_,index)=>`<i class="${index===helpPage?'active':''}"></i>`).join('')}</div><button id="helpNext" type="button">${helpPage===pages.length-1?'完成':'下一步'}</button></footer></article>`;
+    document.querySelectorAll('[data-help-section]').forEach(button=>{const active=button.dataset.helpSection===helpSection;button.classList.toggle('active',active);button.setAttribute('aria-current',active?'page':'false');button.onclick=()=>{helpSection=button.dataset.helpSection;helpPage=0;renderTavernHelp()}});
+    $('#helpPrevious').onclick=()=>{if(helpPage>0){helpPage--;renderTavernHelp()}};
+    $('#helpNext').onclick=()=>{if(helpPage===pages.length-1)closeTavernHelp(true);else{helpPage++;renderTavernHelp()}};
+  }
+  function closeTavernHelp(restoreFocus=false){const panel=$('#tavernHelpPanel'),button=$('#tavernHelp');if(!panel||panel.hidden)return;panel.hidden=true;button.setAttribute('aria-expanded','false');if(restoreFocus)button.focus()}
+  function toggleTavernHelp(){const panel=$('#tavernHelpPanel'),button=$('#tavernHelp'),settingsPanel=$('#tavernSettingsPanel'),settingsButton=$('#tavernSettings');const open=panel.hidden;panel.hidden=!open;button.setAttribute('aria-expanded',String(open));settingsPanel.hidden=true;settingsButton.setAttribute('aria-expanded','false');if(open){renderTavernHelp();requestAnimationFrame(fitHelpDialog)}}
+  function fitTutorialDialog(){
+    const panel=$('#tavernTutorial>section');if(!panel)return;
+    const viewport=window.visualViewport,width=viewport?.width||window.innerWidth,height=viewport?.height||window.innerHeight;
+    panel.style.setProperty('--tutorial-scale',String(Math.min(1,Math.max(.18,Math.min((width-20)/900,(height-20)/438)))));
+  }
+  function renderTutorial(){
+    const tutorial=$('#tavernTutorial'),step=tutorialSteps[tutorialStep];if(!tutorial||!step)return;
+    tutorial.innerHTML=`<section role="dialog" aria-modal="true" aria-labelledby="tutorialTitle"><header><div><b>新手营业指南</b><small>FIRST NIGHT GUIDE</small></div><span>0${tutorialStep+1} / 0${tutorialSteps.length}</span></header><article class="tutorial-page"><div class="tutorial-page-title"><strong>0${tutorialStep+1}</strong><div><small>${step.eyebrow}</small><h2 id="tutorialTitle">${step.title}</h2></div></div><p>${step.body}</p><aside>${step.tip}</aside></article><div class="tutorial-progress" aria-hidden="true">${tutorialSteps.map((_,index)=>`<i class="${index===tutorialStep?'active':''}"></i>`).join('')}</div><footer><button id="tutorialBack" type="button">${tutorialStep===0?'跳过引导':'上一步'}</button><button id="tutorialNext" type="button">${tutorialStep===tutorialSteps.length-1?'开始营业':'下一步'}</button></footer></section>`;
+    fitTutorialDialog();
+    $('#tutorialBack').onclick=()=>{if(tutorialStep===0)finishTutorial();else{tutorialStep--;renderTutorial()}};
+    $('#tutorialNext').onclick=()=>{if(tutorialStep===tutorialSteps.length-1)finishTutorial();else{tutorialStep++;renderTutorial()}};
+  }
+  function finishTutorial(){
+    const tutorial=$('#tavernTutorial');if(tutorial)tutorial.hidden=true;localStorage.setItem(TUTORIAL_KEY,'1');const done=tutorialDone;tutorialDone=null;if(done)done();
+  }
+  function showFirstNightTutorial(onDone){
+    if(localStorage.getItem(TUTORIAL_KEY)==='1')return false;
+    const tutorial=$('#tavernTutorial');if(!tutorial)return false;tutorialStep=0;tutorialDone=onDone;tutorial.hidden=false;renderTutorial();return true;
+  }
 
   function canPoker(){return !game.night&&timeline.phase==='day'}
 
@@ -127,24 +234,27 @@
   }
 
   function enterRandomPoker(){
+    stopServerMove();
     game.serverX=88;paintServer();renderTimeline();
     if(window.startRandomSoloPoker)window.startRandomSoloPoker();else showScreen('#home');
   }
 
   function enterEstate(){
     if(game.night)return notify('鸡尾酒吧营业中，打烊后才能进入庄园');
+    stopServerMove();
     game.serverX=12;paintServer();saveGame();
     if(window.catEstateGame?.enter)window.catEstateGame.enter();else showScreen('#estate');
     syncTavernBgm();
   }
 
   function returnFromEstate(){
+    stopServerMove();
     game.coins=Number(localStorage.getItem('catCoins')||game.coins);
     game.serverX=17;showScreen('#tavern');saveGame();renderAll();syncTavernBgm();
   }
 
   function enterFriendPoker(){
-    if(window.openPokerLobby)window.openPokerLobby();else showScreen('#home');
+    if(window.openPokerLobby)window.openPokerLobby('friend');else showScreen('#home');
   }
 
   function skipDay(){
@@ -189,43 +299,47 @@
 
   function syncTavernBgm(){
     const shouldPlay=bgmUnlocked&&!bgmMuted&&!document.hidden&&$('#tavern')?.classList.contains('active');
-    if(shouldPlay)fadeBgm(bgmVolume);else if(!tavernBgm.paused)fadeBgm(0,true);
+    tavernBgm.muted=!shouldPlay;
+    if(shouldPlay)fadeBgm(bgmVolume);else{clearInterval(bgmFadeTimer);bgmFadeTimer=null;tavernBgm.pause();tavernBgm.currentTime=0}
     updateMusicControl();
   }
 
   function unlockTavernBgm(){if(!bgmUnlocked)bgmUnlocked=true;syncTavernBgm()}
-  function toggleTavernBgm(){bgmMuted=!bgmMuted;if(!bgmMuted)bgmUnlocked=true;localStorage.setItem(BGM_MUTED_KEY,bgmMuted?'1':'0');syncTavernBgm()}
-  function setTavernBgmVolume(value){bgmVolume=Math.max(0,Math.min(1,Number(value)||0));localStorage.setItem(BGM_VOLUME_KEY,String(bgmVolume));if(!bgmMuted){bgmUnlocked=true;syncTavernBgm()}else updateMusicControl()}
-  function toggleTavernSfx(){sfxEnabled=!sfxEnabled;localStorage.setItem(SFX_ENABLED_KEY,sfxEnabled?'1':'0');updateMusicControl();if(sfxEnabled)playButtonSound()}
-  function setTavernSfxVolume(value){sfxVolume=Math.max(0,Math.min(1,Number(value)||0));localStorage.setItem(SFX_VOLUME_KEY,String(sfxVolume));updateMusicControl()}
+  function broadcastBgmSettings(){window.dispatchEvent(new CustomEvent('cat-global-bgm-change',{detail:{muted:bgmMuted,volume:bgmVolume}}))}
+  function setTavernBgmEnabled(enabled){bgmMuted=!enabled;if(enabled)bgmUnlocked=true;localStorage.setItem(BGM_MUTED_KEY,bgmMuted?'1':'0');syncTavernBgm();broadcastBgmSettings()}
+  function setTavernBgmVolume(value){bgmVolume=Math.max(0,Math.min(1,Number(value)||0));localStorage.setItem(BGM_VOLUME_KEY,String(bgmVolume));if(!bgmMuted)bgmUnlocked=true;syncTavernBgm();broadcastBgmSettings()}
+  function broadcastSfxSettings(){window.dispatchEvent(new CustomEvent('cat-global-sfx-change',{detail:{enabled:sfxEnabled,volume:sfxVolume}}))}
+  function setTavernSfxEnabled(enabled){sfxEnabled=enabled;localStorage.setItem(SFX_ENABLED_KEY,sfxEnabled?'1':'0');updateMusicControl();broadcastSfxSettings();if(sfxEnabled)playButtonSound()}
+  function setTavernSfxVolume(value){sfxVolume=Math.max(0,Math.min(1,Number(value)||0));localStorage.setItem(SFX_VOLUME_KEY,String(sfxVolume));updateMusicControl();broadcastSfxSettings()}
 
   function withSound(callback){
+    if(!sfxEnabled||sfxVolume<=0)return;
     const context=unlockSound();
     if(!context)return;
-    if(context.state==='running'){callback(context);return}
-    context.resume().then(()=>callback(context)).catch(()=>{});
+    if(context.state==='running'){callback(context,sfxVolume);return}
+    context.resume().then(()=>callback(context,sfxVolume)).catch(()=>{});
   }
 
   function playButtonSound(){
     if(!sfxEnabled||sfxVolume<=0)return;
-    withSound(context=>{
+    withSound((context,volume)=>{
       const now=context.currentTime;
       [720,340].forEach((frequency,index)=>{
         const oscillator=context.createOscillator(),gain=context.createGain();
         oscillator.type=index?'triangle':'sine';oscillator.frequency.setValueAtTime(frequency,now);oscillator.frequency.exponentialRampToValueAtTime(index?120:210,now+.085);
-        gain.gain.setValueAtTime((index ? .012 : .026)*sfxVolume,now);gain.gain.exponentialRampToValueAtTime(.0001,now+.09);
+        gain.gain.setValueAtTime((index ? .012 : .026)*volume,now);gain.gain.exponentialRampToValueAtTime(.0001,now+.09);
         oscillator.connect(gain);gain.connect(context.destination);oscillator.start(now);oscillator.stop(now+.1);
       });
     });
   }
 
   function playReadySound(){
-    withSound(context=>{
+    withSound((context,volume)=>{
       const now=context.currentTime;
       [784,988,1175,1568].forEach((frequency,index)=>{
         const oscillator=context.createOscillator(),gain=context.createGain(),start=now+index*.07;
         oscillator.type=index%2?'triangle':'sine';oscillator.frequency.setValueAtTime(frequency,start);
-        gain.gain.setValueAtTime(.0001,start);gain.gain.exponentialRampToValueAtTime(.052,start+.018);gain.gain.exponentialRampToValueAtTime(.0001,start+.62);
+        gain.gain.setValueAtTime(.0001,start);gain.gain.exponentialRampToValueAtTime(.052*volume,start+.018);gain.gain.exponentialRampToValueAtTime(.0001,start+.62);
         oscillator.connect(gain);gain.connect(context.destination);oscillator.start(start);oscillator.stop(start+.65);
       });
     });
@@ -233,24 +347,45 @@
 
   function playDeliverySound(){
     if(!sfxEnabled||sfxVolume<=0)return;
-    withSound(context=>{
+    withSound((context,volume)=>{
       const now=context.currentTime;
       [659,880,1175].forEach((frequency,index)=>{
         const oscillator=context.createOscillator(),gain=context.createGain(),start=now+index*.075;
         oscillator.type=index===2?'triangle':'sine';oscillator.frequency.setValueAtTime(frequency,start);
-        gain.gain.setValueAtTime(.0001,start);gain.gain.exponentialRampToValueAtTime(.045*sfxVolume,start+.012);gain.gain.exponentialRampToValueAtTime(.0001,start+.19);
+        gain.gain.setValueAtTime(.0001,start);gain.gain.exponentialRampToValueAtTime(.045*volume,start+.012);gain.gain.exponentialRampToValueAtTime(.0001,start+.19);
         oscillator.connect(gain);gain.connect(context.destination);oscillator.start(start);oscillator.stop(start+.21);
       });
     });
   }
 
+  function playDiscardSound(){
+    withSound((context,volume)=>{
+      const now=context.currentTime;
+      [360,185].forEach((frequency,index)=>{
+        const oscillator=context.createOscillator(),gain=context.createGain(),start=now+index*.035;
+        oscillator.type=index?'square':'triangle';oscillator.frequency.setValueAtTime(frequency,start);oscillator.frequency.exponentialRampToValueAtTime(index?92:145,start+.16);
+        gain.gain.setValueAtTime(.0001,start);gain.gain.exponentialRampToValueAtTime((index?.026:.035)*volume,start+.01);gain.gain.exponentialRampToValueAtTime(.0001,start+.18);
+        oscillator.connect(gain);gain.connect(context.destination);oscillator.start(start);oscillator.stop(start+.2);
+      });
+    });
+  }
+
+  function rumbleGamepad(kind){
+    const pad=activeGamepad;if(!pad)return;
+    const patterns={pickup:{weak:.3,strong:.5,duration:55},delivery:{weak:.65,strong:.9,duration:145},discard:{weak:.45,strong:.75,duration:100},sprint:{weak:.12,strong:.2,duration:135}},pattern=patterns[kind]||patterns.pickup;
+    try{
+      if(pad.vibrationActuator?.playEffect){const result=pad.vibrationActuator.playEffect('dual-rumble',{startDelay:0,duration:pattern.duration,weakMagnitude:pattern.weak,strongMagnitude:pattern.strong});result?.catch?.(()=>{});return}
+      const fallback=pad.hapticActuators?.[0]?.pulse?.(Math.max(pattern.weak,pattern.strong),pattern.duration);fallback?.catch?.(()=>{});
+    }catch{}
+  }
+
   function playRecipeUnlockSound(){
-    withSound(context=>{
+    withSound((context,volume)=>{
       const now=context.currentTime;
       [523,659,784,1047,1319].forEach((frequency,index)=>{
         const oscillator=context.createOscillator(),gain=context.createGain(),start=now+index*.09;
         oscillator.type=index===4?'triangle':'sine';oscillator.frequency.setValueAtTime(frequency,start);
-        gain.gain.setValueAtTime(.0001,start);gain.gain.exponentialRampToValueAtTime(.075,start+.02);gain.gain.exponentialRampToValueAtTime(.0001,start+.48);
+        gain.gain.setValueAtTime(.0001,start);gain.gain.exponentialRampToValueAtTime(.075*volume,start+.02);gain.gain.exponentialRampToValueAtTime(.0001,start+.48);
         oscillator.connect(gain);gain.connect(context.destination);oscillator.start(start);oscillator.stop(start+.52);
       });
     });
@@ -318,6 +453,7 @@
     const visualPhase=timeline.phase==='day'&&!game.night?'day':'night';$('.tavern-scene').classList.toggle('daytime',visualPhase==='day');announcePhase(visualPhase);
     const scene=$('.tavern-scene'),estate=$('#estateNeon');scene?.classList.toggle('night-open',game.night);if(estate){estate.disabled=game.night;estate.setAttribute('aria-disabled',String(game.night))}
     if(!game.night){const phaseText={day:'白天 · 德州时间',night:'夜晚 21:30 · 开业准备'}[timeline.phase];$('#nightStatus').textContent=`第 ${timeline.day} 天 · ${phaseText}`;return}
+    if(game.closing){$('#nightStatus').textContent=`02:00 · 收尾中 · 等待 ${game.queue.length} 位客人离场`;return}
     const duration=nightDuration(),quarter=duration/4,passed=duration-game.time,hour=(22+Math.floor(passed/quarter))%24,minute=Math.floor((passed%quarter)/quarter*60);
     $('#nightStatus').textContent=`${String(hour).padStart(2,'0')}:${String(minute).padStart(2,'0')} · 剩余 ${game.time}s`;
   }
@@ -336,7 +472,7 @@
       const statusClass=order?.recipe?'':order?.fresh?'guest-name':'choosing';
       const matchingDrink=order?.recipe&&game.carrying?.id===order.recipe.id;
       const reaction=order?.leaving==='happy'?'<i class="guest-heart-burst" aria-hidden="true"><b>♥</b><b>♥</b><b>♥</b><b>♥</b><b>♥</b><b>♥</b></i>':order?.leaving==='broken'?'<i class="guest-break-heart" aria-hidden="true">💔</i>':'';
-      return `<div class="bar-seat seat-${seat+1}" style="--stool-x:${x}%"><i class="pixel-stool"></i>${order?`<div class="guest-seat ${order.fresh?'arriving':''} ${order.sitting?'sitting':''} ${order.seated?'seated':''} ${order.leaving||''}" style="--guest-walk:${walkDistance}cqw;--guest-walk-duration:${walkMs}ms;--guest-walk-delay:-${walkElapsed}ms;--guest-sit-delay:-${sitElapsed}ms;--guest-layer:${guestLayer}" data-order="${order.id}">${reaction}${talking?`<i class="cloud-dialog guest-dialog">${chatState.guest}</i>`:''}${order.recipe?sprite('cocktail',order.recipe.art,`order-drink ${matchingDrink?'matching-order':''}`):''}${pixelCat(order.tone,'guest')}${status?`<small class="${statusClass}">${status}</small>`:''}</div>`:''}</div>`
+      return `<div class="bar-seat seat-${seat+1}" style="--stool-x:${x}%"><i class="pixel-stool"></i>${order?`<div class="guest-seat ${order.fresh?'arriving':''} ${order.sitting?'sitting':''} ${order.seated?'seated':''} ${order.leaving||''}" style="--guest-walk:${walkDistance}cqw;--guest-walk-duration:${walkMs}ms;--guest-walk-delay:-${walkElapsed}ms;--guest-walk-frame-delay:-${walkElapsed%720}ms;--guest-sit-delay:-${sitElapsed}ms;--guest-layer:${guestLayer}" data-order="${order.id}">${reaction}${talking?`<i class="cloud-dialog guest-dialog">${chatState.guest}</i>`:''}${order.recipe?sprite('cocktail',order.recipe.art,`order-drink ${matchingDrink?'matching-order':''}`):''}${pixelCat(order.tone,'guest')}${status?`<small class="${statusClass}">${status}</small>`:''}</div>`:''}</div>`
     }).join('');
     $('#barAction').classList.toggle('speech-hidden',!!bartenderSpeech);
     $('#bartenderCat').querySelector('.pixel-cat')?.classList.toggle('mixing',!!game.brewing);
@@ -378,7 +514,7 @@
 
   function readyQueue(){
     if(!Array.isArray(game.ready))game.ready=game.ready?[game.ready]:[];
-    return game.ready;
+    return game.ready.sort((left,right)=>(left.readyOrder||0)-(right.readyOrder||0));
   }
 
   function renderWorkstation(){
@@ -406,20 +542,20 @@
     }
     const menuCards=recipes.filter(unlocked).map(recipe=>{
       const chosen=game.menu.includes(recipe.id),available=canMake(recipe);
-      return `<label class="menu-card ${chosen?'chosen':''} ${available?'':'short'}"><input type="checkbox" data-menu="${recipe.id}" ${chosen?'checked':''} ${available?'':'disabled'}>${sprite('cocktail',recipe.art)}<span><b>${recipe.cn}</b><small>${recipe.name} · ${recipe.base}</small><em>售价 ${coin(recipe.price)}</em></span></label>`
+      return `<label class="menu-card ${chosen?'chosen':''} ${available?'':'short'}"><input type="checkbox" data-menu="${recipe.id}" ${chosen?'checked':''} ${available?'':'disabled'}>${sprite('cocktail',recipe.art)}<span><b>${recipe.cn}</b><small>${recipe.name} · ${recipe.base}</small><small class="strategy-line">${recipeTaste(recipe)} · ${recipeHeat(recipe)} · ${recipeBrewSeconds(recipe)}s</small><em>售价 ${coin(recipe.price)} · 热门小费 +${recipePopularity(recipe)*8}%</em></span></label>`
     }).join('');
     const stockGroups=groupOrder.map(group=>{
       const buttons=Object.entries(ingredients).filter(([id,item])=>item.group===group&&purchasableIngredient(id)).map(([id,item])=>`<article class="stock-item">${sprite('ingredient',item.art)}<span><b>${item.name}</b><small>库存 <i data-stock-count="${id}">${game.stock[id]||0}</i></small><em>单价 ${item.cost}</em></span><button type="button" data-buy="${id}" aria-label="购买1份${item.name}">购买</button></article>`).join('');
       return `<section class="stock-group"><h3>${group}</h3><div>${buttons}</div></section>`
     }).join('');
-    const researchCards=recipes.map(recipe=>{const learned=unlocked(recipe),formula=Object.entries(recipe.need).map(([id,count])=>`${ingredients[id].name}${count>1?` ×${count}`:''}`).join(' + ');return `<article class="research-card ${learned?'learned':'locked'}">${sprite('cocktail',recipe.art)}<div><b>${recipe.cn}</b><small>${recipe.name} · ${recipe.base}</small><p>${formula}</p><em>${learned?'✓ 已学会':`Lv.${recipe.level} 解锁`}</em></div></article>`}).join('');
+    const researchCards=recipes.map(recipe=>{const learned=unlocked(recipe),formula=Object.entries(recipe.need).map(([id,count])=>`${ingredients[id].name}${count>1?` ×${count}`:''}`).join(' + ');return `<article class="research-card ${learned?'learned':'locked'}">${sprite('cocktail',recipe.art)}<div><b>${recipe.cn}</b><small>${recipe.name} · ${recipe.base}</small><p>${formula}</p><p class="recipe-strategy">${recipeTaste(recipe)} · ${recipeHeat(recipe)} · 制作 ${recipeBrewSeconds(recipe)}s</p><em>${learned?'✓ 已学会':`Lv.${recipeUnlockLevel(recipe)} 解锁`}</em></div></article>`}).join('');
     const staffCards=staffCandidates.map(member=>{const hired=game.staff.includes(member.id);return `<article class="staff-card ${hired?'hired':''}"><img src="/assets/cat-avatars/${member.avatar}.png" alt="${member.name}"><div><b>${member.name} · ${member.title}</b><small>${member.look}</small><em>${member.skill}</em></div><button type="button" data-recruit="${member.id}" ${hired?'disabled':''}>${hired?'已招募':`招募 · ${coin(member.cost)}`}</button></article>`}).join('');
     const hiredSkills=staffCandidates.filter(member=>game.staff.includes(member.id)).map(member=>member.skill).join('　·　');
     const staffPanel=`<div class="staff-summary"><b>当前员工 ${game.staff.length} / ${staffCandidates.length}</b><small>${hiredSkills||'尚未招募员工；各项永久加成可以累计。'}</small></div><div class="staff-grid">${staffCards}</div>`;
-    const panelTitles={menu:['今晚菜单','选择有足够材料的鸡尾酒'],stock:['备货间',''],research:['配方研究','共 24 个等级；每次升级学会一款鸡尾酒'],staff:['员工招募','六名员工各有一项永久加成；全部招募后仍保持合理收益节奏']};
+    const panelTitles={menu:['今晚菜单','每 5 杯提升熟练度；每 15 点热度增加 1 星，最高 5 星'],stock:['备货间',''],research:['配方研究','口味匹配与 5 秒内送达会额外增加热度；长期零销量会轻微衰减'],staff:['员工招募','六名员工各有一项永久加成；全部招募后仍保持合理收益节奏']};
     const panelBody=panelView==='menu'?`<div class="menu-grid">${menuCards}</div>`:panelView==='stock'?`<div class="stock-groups">${stockGroups}</div>`:panelView==='research'?`<div class="recipe-research-grid">${researchCards}</div>`:staffPanel;
     const modal=panelView?`<div class="prep-modal ${panelView==='stock'?'stock-modal':''}" role="dialog" aria-modal="true"><section><header><div><b>${panelTitles[panelView][0]}</b><small>${panelTitles[panelView][1]}</small></div><button id="modalClose" aria-label="关闭">×</button></header>${panelBody}</section></div>`:'';
-    const settlementModal=settlement?`<div class="prep-modal settlement-modal" role="dialog" aria-modal="true"><section><header><div><b>第 ${timeline.day} 天 · 夜晚营业结算</b><small>材料成本按本晚实际耗用的采购价计算</small></div><button id="settlementClose" aria-label="关闭结算">×</button></header><div class="settlement-grid"><div><small>售出鸡尾酒</small><b>${settlement.sales} 杯</b></div><div><small>销售收入</small><b>${coinMarkup(settlement.revenue)}</b></div><div><small>客人小费</small><b>${coinMarkup(settlement.tips)}</b></div><div><small>材料成本</small><b class="cost">− ${coinMarkup(settlement.cost)}</b></div><div><small>超时离场扣款</small><b class="cost">− ${coinMarkup(settlement.penalty)}</b></div><div><small>未售出耗损</small><b>${settlement.waste} 杯</b></div></div><footer><span>毛利率 ${settlement.margin}%</span><span class="${settlement.profit>=0?'positive':'negative'}">今晚净盈利 ${settlement.profit>=0?'+':'−'} ${coinMarkup(Math.abs(settlement.profit))}</span></footer><button id="settlementConfirm" class="settlement-confirm">收下账本</button></section></div>`:'';
+    const settlementModal=settlement?`<div class="prep-modal settlement-modal" role="dialog" aria-modal="true"><section><header><div><b>第 ${timeline.day} 天 · 夜晚营业结算</b><small>材料成本按本晚实际耗用的采购价计算</small></div><button id="settlementClose" aria-label="关闭结算">×</button></header><div class="settlement-grid"><div><small>售出鸡尾酒</small><b>${settlement.sales} 杯</b></div><div><small>销售收入</small><b>${coinMarkup(settlement.revenue)}</b></div><div><small>客人小费</small><b>${coinMarkup(settlement.tips)}</b></div><div><small>材料成本</small><b class="cost">− ${coinMarkup(settlement.cost)}</b></div><div><small>超时离场扣款</small><b class="cost">− ${coinMarkup(settlement.penalty)}</b></div><div><small>未售出耗损</small><b>${settlement.waste} 杯</b></div></div><section class="settlement-review" aria-label="本晚经营复盘"><h3>经营复盘</h3><div><article><small>本晚最佳鸡尾酒</small><b>${settlement.bestCocktail}</b></article><article><small>主要超时原因</small><b>${settlement.timeoutReason}</b></article><article><small>最缺材料</small><b>${settlement.shortageText}</b></article></div><p><strong>下晚建议</strong><span>${settlement.advice}</span></p></section><footer><span>毛利率 ${settlement.margin}%</span><span class="${settlement.profit>=0?'positive':'negative'}">今晚净盈利 ${settlement.profit>=0?'+':'−'} ${coinMarkup(Math.abs(settlement.profit))}</span></footer><button id="settlementConfirm" class="settlement-confirm">收下账本</button></section></div>`:'';
     content.innerHTML=`<div class="prep-toolbar"><button id="menuToggle" class="${panelView==='menu'?'active':''}">今晚菜单</button><button id="stockToggle" class="${panelView==='stock'?'active':''}">备货间</button><button id="researchToggle" class="${panelView==='research'?'active':''}">配方研究</button><button id="staffToggle" class="${panelView==='staff'?'active':''}">员工招募</button><button id="openNight" class="open-night" ${game.menu.length?'':'disabled'}>22:00 开始营业</button></div>${modal}${settlementModal}`;
     $('#menuToggle').onclick=()=>{panelView=panelView==='menu'?null:'menu';renderPrep()};
     $('#stockToggle').onclick=()=>{panelView=panelView==='stock'?null:'stock';renderPrep()};
@@ -451,8 +587,9 @@
   }
 
   function addGuest(){
-    if(!game.night||game.queue.length>=8)return;
-    const choices=game.menu.map(recipeById).filter(Boolean);
+    if(!game.night||game.closing||game.time<=5||game.queue.length>=8)return;
+    const choices=orderableRecipes();
+    if(!choices.length)recordMenuShortages();
     if(!choices.length)return;
     const occupied=new Set(game.queue.map(order=>order.seat));
     const freeSeats=stoolX.map((_,index)=>index).filter(index=>!occupied.has(index));
@@ -464,17 +601,17 @@
     const walkMs=Math.max(2600,Math.round(((8-seat)*11)/18*1000)),walkStartedAt=Date.now();
     game.queue.push({id,seat,name,recipe:null,tone:guestTones[Math.floor(Math.random()*guestTones.length)],walkMs,walkStartedAt,chatEligible:Math.random()<1/3,hasSpoken:false,fresh:true,sitting:false,seated:false});
     renderCharacters();
-    setTimeout(()=>{const order=game.queue.find(item=>item.id===id);if(!order)return;order.fresh=false;order.sitting=true;order.sitStartedAt=Date.now();renderCharacters();setTimeout(()=>{const seatedOrder=game.queue.find(item=>item.id===id);if(!seatedOrder)return;seatedOrder.sitting=false;seatedOrder.seated=true;delete seatedOrder.sitStartedAt;renderCharacters();const menuWaitMs=Math.floor(Math.random()*3001);setTimeout(()=>{const orderingGuest=game.queue.find(item=>item.id===id);if(!orderingGuest||!orderingGuest.seated)return;orderingGuest.recipe=choices[Math.floor(Math.random()*choices.length)];orderingGuest.orderedAt=Date.now();renderCharacters();tryBrew();setTimeout(()=>expireGuestOrder(id),10000)},menuWaitMs)},960)},walkMs+50);
+    setTimeout(()=>{const order=game.queue.find(item=>item.id===id);if(!order)return;order.fresh=false;order.sitting=true;order.sitStartedAt=Date.now();renderCharacters();setTimeout(()=>{const seatedOrder=game.queue.find(item=>item.id===id);if(!seatedOrder)return;seatedOrder.sitting=false;seatedOrder.seated=true;delete seatedOrder.sitStartedAt;renderCharacters();const menuWaitMs=Math.floor(Math.random()*3001);setTimeout(()=>{const orderingGuest=game.queue.find(item=>item.id===id);if(!orderingGuest||!orderingGuest.seated)return;recordMenuShortages();const liveChoices=orderableRecipes();if(!liveChoices.length){orderingGuest.leaving='soldout';renderCharacters();removeGuestAfterReaction(id);return}orderingGuest.recipe=chooseGuestRecipe(liveChoices,orderingGuest.tone);orderingGuest.preferenceMatch=guestPrefers(orderingGuest.tone,orderingGuest.recipe);orderingGuest.orderedAt=Date.now();nightLedger.orders++;const stats=recipeNightStats(orderingGuest.recipe);stats.orders++;if(orderingGuest.preferenceMatch)stats.preferenceMatches++;renderCharacters();tryBrew();setTimeout(()=>expireGuestOrder(id),10000)},menuWaitMs)},960)},walkMs+50);
   }
 
   function removeGuestAfterReaction(id){
-    setTimeout(()=>{const order=game.queue.find(item=>item.id===id);if(!order||!order.leaving)return;if(chatState?.guestId===id)chatState=null;game.queue=game.queue.filter(item=>item.id!==id);saveGame();renderCharacters();renderWorkstation();tryBrew()},850);
+    setTimeout(()=>{const order=game.queue.find(item=>item.id===id);if(!order||!order.leaving)return;if(chatState?.guestId===id)chatState=null;game.queue=game.queue.filter(item=>item.id!==id);saveGame();renderCharacters();renderWorkstation();tryBrew();maybeEndNight()},850);
   }
 
   function expireGuestOrder(id){
     const order=game.queue.find(item=>item.id===id);
     if(!game.night||!order||!order.recipe||order.leaving||order.serving)return;
-    const penalty=Math.ceil(order.recipe.price/3);order.leaving='broken';nightLedger.penalty+=penalty;game.coins=Math.max(0,game.coins-penalty);saveGame();renderHud();renderCharacters();notify(`${order.name} 等待太久离开 · 扣除 ${coin(penalty)}`);removeGuestAfterReaction(id);tryBrew();
+    const penalty=Math.ceil(order.recipe.price/3),reason=timeoutReasonFor(order);order.leaving='broken';order.timeoutReason=reason;nightLedger.penalty+=penalty;nightLedger.timeoutReasons[reason]=(nightLedger.timeoutReasons[reason]||0)+1;recipeNightStats(order.recipe).timeouts++;game.coins=Math.max(0,game.coins-penalty);saveGame();renderHud();renderCharacters();notify(`${order.name} 因${reason}离开 · 扣除 ${coin(penalty)}`);removeGuestAfterReaction(id);tryBrew();
   }
 
   function tryBrew(){
@@ -484,12 +621,12 @@
     const order=game.queue.find(item=>item.seated&&item.recipe&&!item.leaving&&demand[item.recipe.id]>(inService[item.recipe.id]||0)&&canMake(item.recipe));
     if(!order)return;
     Object.entries(order.recipe.need).forEach(([id,count])=>game.stock[id]-=count);
-    nightLedger.made++;nightLedger.cost+=recipeCost(order.recipe);
+    nightLedger.made++;nightLedger.cost+=recipeCost(order.recipe);recipeNightStats(order.recipe).made++;
     game.brewing=order.recipe;
-    const brewMs=Math.round(1050*(1-staffBonus('brew')));
+    const brewMs=Math.round(recipeBaseBrewMs(order.recipe)*(1-staffBonus('brew')));
     game.brewStartedAt=Date.now();game.brewEndsAt=game.brewStartedAt+brewMs;saveGame();renderWorkstation();
     clearInterval(brewProgressTimer);brewProgressTimer=setInterval(renderWorkstation,80);
-    clearTimeout(brewTimer);brewTimer=setTimeout(()=>{clearInterval(brewProgressTimer);if(!game.night)return;const finished=game.brewing;game.brewing=null;game.brewStartedAt=null;game.brewEndsAt=null;if(finished)readyQueue().push(finished);saveGame();renderWorkstation();paintServer();celebrateDrinkReady();setTimeout(tryBrew,80)},brewMs);
+    clearTimeout(brewTimer);brewTimer=setTimeout(()=>{clearInterval(brewProgressTimer);if(!game.night)return;const finished=game.brewing;game.brewing=null;game.brewStartedAt=null;game.brewEndsAt=null;if(finished)readyQueue().push({...finished,readyOrder:++readySequence});saveGame();renderWorkstation();paintServer();celebrateDrinkReady();setTimeout(tryBrew,80)},brewMs);
   }
 
   function paintServer(){
@@ -498,11 +635,40 @@
     tray.disabled=!game.night;
     tray.classList.toggle('carrying',!!game.carrying);
     tray.classList.toggle('serving',servingDrink);
+    tray.classList.toggle('sprinting',serverIsSprinting());
     carry.innerHTML=game.carrying?sprite('cocktail',game.carrying.art,'carried-drink'):'';
     cat?.classList.toggle('carrying',!!game.carrying);
     cat?.classList.toggle('serving',servingDrink);
+    renderServerStamina();
     updateServerNotebookVisual();
-    const instruction=tray.querySelector('span');if(instruction)instruction.textContent=game.night?'← → 移动　空格取酒 / 送酒　Q 丢弃':canPoker()?'← 到头进庄园　→ 到头进德州':'← 到头进庄园　→ 移动路易';
+  }
+
+  function sprintRequested(){return keyboardSprintHeld||gamepadSprintHeld}
+  function serverIsSprinting(){return !!(serverMoveDirection&&sprintRequested()&&!serverSprintExhausted&&serverSprintStamina>0&&$('#tavern').classList.contains('active'))}
+
+  function renderServerStamina(){
+    const meter=$('#serverStamina');if(!meter)return;
+    const percentage=Math.round(Math.max(0,Math.min(1,serverSprintStamina/SERVER_SPRINT_MAX))*100),sprinting=serverIsSprinting();
+    meter.style.setProperty('--stamina-level',`${percentage}%`);meter.classList.toggle('sprinting',sprinting);meter.classList.toggle('exhausted',serverSprintExhausted);meter.classList.toggle('full',percentage>=100);meter.setAttribute('aria-label',`体力 ${percentage}%`);
+  }
+
+  function updateServerStamina(now){
+    const seconds=Math.min(.05,Math.max(0,(now-(serverStaminaLastTime||now))/1000));serverStaminaLastTime=now;
+    if(serverIsSprinting()){
+      if(gamepadSprintHeld&&now>=sprintRumbleAt){rumbleGamepad('sprint');sprintRumbleAt=now+185}
+      serverSprintStamina=Math.max(0,serverSprintStamina-seconds);
+      if(serverSprintStamina<=0){serverSprintStamina=0;serverSprintExhausted=true}
+    }else{
+      sprintRumbleAt=0;
+      serverSprintStamina=Math.min(SERVER_SPRINT_MAX,serverSprintStamina+seconds);
+      if(serverSprintStamina>=SERVER_SPRINT_MAX)serverSprintExhausted=false;
+    }
+    renderServerStamina();
+  }
+
+  function startServerStaminaLoop(){
+    const tick=now=>{updateServerStamina(now);serverStaminaFrame=requestAnimationFrame(tick)};
+    if(serverStaminaFrame===null)serverStaminaFrame=requestAnimationFrame(tick);
   }
 
   function serviceAction(){
@@ -512,7 +678,7 @@
     if(!game.carrying){
       if(!readyQueue().length)return notify(game.brewing?'酒保正在摇酒':'还没有做好的鸡尾酒');
       if(Math.abs(game.serverX-18)>10)return notify('移动到酒保旁边再按空格取酒');
-      game.carrying=readyQueue().shift();saveGame();notify(`拿到 ${game.carrying.cn}`);renderWorkstation();renderCharacters();paintServer();setTimeout(tryBrew,80);return;
+      game.carrying=readyQueue().shift();saveGame();rumbleGamepad('pickup');notify(`拿到最先完成的 ${game.carrying.cn}`);renderWorkstation();renderCharacters();paintServer();setTimeout(tryBrew,80);return;
     }
     const seated=game.queue.filter(order=>order.seated&&order.recipe&&!order.leaving),matching=seated.filter(order=>order.recipe.id===game.carrying.id);
     if(!seated.length)return notify('客人还没有坐好点单');
@@ -522,24 +688,46 @@
     servingDrink=true;order.serving=true;paintServer();
     clearTimeout(serviceTimer);serviceTimer=setTimeout(()=>{
       if(!game.night)return;
-      const baseTip=game.time>Math.round(nightDuration()*.4)?10:4,tip=Math.round(baseTip*(1+staffBonus('tip'))),gain=game.carrying.price+tip;
-      nightLedger.sales++;nightLedger.revenue+=game.carrying.price;nightLedger.tips+=tip;
+      const deliveryMs=Date.now()-(order.orderedAt||Date.now()),baseTip=game.time>Math.round(nightDuration()*.4)?10:4,popularityBonus=recipePopularity(order.recipe)*.08,preferenceBonus=order.preferenceMatch ? .25 : 0,tip=Math.round(baseTip*(1+staffBonus('tip'))*(1+popularityBonus+preferenceBonus)),gain=game.carrying.price+tip;
+      nightLedger.sales++;nightLedger.revenue+=game.carrying.price;nightLedger.tips+=tip;const soldStats=recipeNightStats(order.recipe);soldStats.sales++;soldStats.revenue+=game.carrying.price;soldStats.tips+=tip;
       if(chatState?.guestId===order.id)chatState=null;
-      const deliveryMs=Date.now()-(order.orderedAt||Date.now()),previousLevel=level();game.coins+=gain;game.served++;game.servedTonight++;const currentLevel=level(),newRecipe=currentLevel>previousLevel?recipes.find(recipe=>recipe.level===currentLevel):null;if(newRecipe)pendingRecipeUnlocks.push({recipe:newRecipe,level:currentLevel});game.carrying=null;servingDrink=false;playDeliverySound();if(deliveryMs<=5000){order.leaving='happy';order.serving=false;removeGuestAfterReaction(order.id)}else game.queue=game.queue.filter(item=>item.id!==order.id);saveGame();notify(`送给第 ${order.seat+1} 号凳客人 +${coin(gain)}`);renderHud();renderCharacters();renderWorkstation();renderPrep();paintServer();setTimeout(tryBrew,250);
+      const popularityGain=recordRecipePopularitySale(order.recipe,{preferenceMatch:order.preferenceMatch,fastDelivery:deliveryMs<=5000}),previousLevel=level();game.coins+=gain;game.served++;game.servedTonight++;const currentLevel=level(),newRecipe=currentLevel>previousLevel?recipes.find(recipe=>recipeUnlockLevel(recipe)===currentLevel):null;if(newRecipe)pendingRecipeUnlocks.push({recipe:newRecipe,level:currentLevel});game.carrying=null;servingDrink=false;playDeliverySound();rumbleGamepad('delivery');if(deliveryMs<=5000){order.leaving='happy';order.serving=false;removeGuestAfterReaction(order.id)}else game.queue=game.queue.filter(item=>item.id!==order.id);saveGame();const progressionNote=`${popularityGain.proficiencyUp?` · 熟练度 Lv.${popularityGain.proficiency}`:''}${popularityGain.starUp?` · 热门 ${popularityGain.stars}★`:''}`;notify(`送给第 ${order.seat+1} 号凳客人 +${coin(gain)}${order.preferenceMatch?' · 口味偏好加成':''}${progressionNote}`);renderHud();renderCharacters();renderWorkstation();renderPrep();paintServer();setTimeout(tryBrew,250);maybeEndNight();
     },Math.round(720*(1-staffBonus('serve'))));
   }
 
   function discardCarriedDrink(){
     if(!game.night||!game.carrying||servingDrink)return;
-    const discarded=game.carrying;game.carrying=null;saveGame();notify(`已丢弃 ${discarded.cn}`);renderCharacters();renderWorkstation();paintServer();setTimeout(tryBrew,80);
+    const discarded=game.carrying;game.carrying=null;saveGame();playDiscardSound();rumbleGamepad('discard');notify(`已丢弃 ${discarded.cn}`);renderCharacters();renderWorkstation();paintServer();setTimeout(tryBrew,80);
   }
 
   function moveServer(delta){
     resetServerNotebookTimer();
     const adjustedDelta=delta*(1+staffBonus('move'));game.serverX=Math.max(12,Math.min(88,game.serverX+adjustedDelta));paintServer();
-    const cat=$('#serverCat').querySelector('.pixel-cat'),direction=adjustedDelta<0?'left':'right';cat?.classList.remove('moving-left','moving-right');cat?.classList.add(`moving-${direction}`);clearTimeout(walkTimer);walkTimer=setTimeout(()=>cat?.classList.remove('moving-left','moving-right'),600);
+    const cat=$('#serverCat').querySelector('.pixel-cat'),direction=adjustedDelta<0?'left':'right';cat?.classList.remove('moving-left','moving-right');cat?.classList.add(`moving-${direction}`);clearTimeout(walkTimer);if(!serverMoveDirection)walkTimer=setTimeout(()=>cat?.classList.remove('moving-left','moving-right'),180);
     if(!game.night&&adjustedDelta<0&&game.serverX<=12){enterEstate();return}
     if(!game.night&&adjustedDelta>0&&game.serverX>=88&&canPoker())enterRandomPoker();
+  }
+
+  function stopServerMove(source){
+    if(source&&serverMoveSource!==source)return;
+    serverMoveDirection=0;serverMoveSource=null;serverMoveLastTime=0;
+    if(serverMoveFrame!==null){cancelAnimationFrame(serverMoveFrame);serverMoveFrame=null}
+    clearTimeout(walkTimer);$('#serverCat').querySelector('.pixel-cat')?.classList.remove('moving-left','moving-right');
+  }
+
+  function startServerMove(direction,source){
+    if(!$('#tavern').classList.contains('active'))return;
+    const normalizedDirection=Math.sign(direction);if(!normalizedDirection)return;
+    unlockTavernBgm();serverMoveDirection=normalizedDirection;serverMoveSource=source||'keyboard';
+    if(serverMoveFrame!==null)return;
+    serverMoveLastTime=performance.now();
+    const advance=now=>{
+      if(!serverMoveDirection||!$('#tavern').classList.contains('active')){stopServerMove();return}
+      const seconds=Math.min(.05,Math.max(0,now-serverMoveLastTime)/1000);serverMoveLastTime=now;
+      moveServer(serverMoveDirection*SERVER_MOVE_SPEED*seconds*(serverIsSprinting()?SERVER_SPRINT_MULTIPLIER:1));
+      if(serverMoveDirection&&$('#tavern').classList.contains('active'))serverMoveFrame=requestAnimationFrame(advance);else stopServerMove();
+    };
+    serverMoveFrame=requestAnimationFrame(advance);
   }
 
   function autoServeStep(){
@@ -551,7 +739,7 @@
       moveServer(Math.sign(distance)*4);return;
     }
     const order=game.queue.find(item=>item.seated&&!item.leaving&&item.recipe?.id===game.carrying.id);
-    if(!order)return;
+    if(!order){discardCarriedDrink();return}
     const target=stoolX[order.seat],distance=target-game.serverX;
     if(Math.abs(distance)<=4){game.serverX=target;paintServer();serviceAction();return}
     moveServer(Math.sign(distance)*4);
@@ -571,26 +759,43 @@
     if(timeline.phase!=='night')return notify('请先完成白天德州牌桌赛，或选择跳过白天');
     if(!game.menu.length)return notify('至少选择一款今晚菜单');
     unlockSound();
-    settlement=null;pendingRecipeUnlocks=[];nightLedger={made:0,sales:0,revenue:0,tips:0,cost:0,penalty:0};
-    servingDrink=false;game.night=true;game.time=nightDuration();game.queue=[];game.ready=[];game.brewing=null;game.brewStartedAt=null;game.brewEndsAt=null;game.carrying=null;game.servedTonight=0;game.serverX=32;panelView=null;saveGame();renderAll();startStaffSpeech();
-    addGuest();startAutoServe();startChatLoop();arrivalTimer=setInterval(addGuest,Math.round(3500*(1-staffBonus('guest'))));tickTimer=setInterval(()=>{game.time--;renderHud();if(game.time<=0)endNight()},1000);
+    settlement=null;pendingRecipeUnlocks=[];nightLedger=emptyNightLedger();nightPopularityIds=new Set(recipes.filter(unlocked).map(recipe=>recipe.id));
+    stopServerMove();readySequence=0;servingDrink=false;game.night=true;game.time=nightDuration();game.closing=false;game.queue=[];game.ready=[];game.brewing=null;game.brewStartedAt=null;game.brewEndsAt=null;game.carrying=null;game.servedTonight=0;game.serverX=32;panelView=null;saveGame();renderAll();startStaffSpeech();
+    const beginService=()=>{if(!game.night)return;addGuest();startAutoServe();startChatLoop();arrivalTimer=setInterval(addGuest,Math.round(3500*(1-staffBonus('guest'))));tickTimer=setInterval(()=>{game.time=Math.max(0,game.time-1);if(game.time<=5){clearInterval(arrivalTimer);arrivalTimer=null}renderHud();if(game.time<=0)endNight()},1000)};
+    if(!showFirstNightTutorial(beginService))beginService();
   }
 
   function endNight(){
     if(!game.night)return;
-    const gross=nightLedger.revenue+nightLedger.tips,profit=gross-nightLedger.cost-nightLedger.penalty;
-    settlement={...nightLedger,waste:Math.max(0,nightLedger.made-nightLedger.sales),profit,margin:gross?Math.round(profit/gross*100):0};
-    clearInterval(tickTimer);clearInterval(arrivalTimer);clearInterval(autoTimer);clearInterval(chatTimer);clearInterval(brewProgressTimer);clearInterval(bartenderSpeechTimer);clearTimeout(serverSpeechTimer);clearTimeout(chatClearTimer);clearTimeout(brewTimer);clearTimeout(glowTimer);clearTimeout(serviceTimer);servingDrink=false;bartenderSpeech='';serverSpeech='';$('#bartenderCat').classList.remove('drink-ready-glow');chatState=null;panelView=null;game.night=false;game.queue=[];game.ready=[];game.brewing=null;game.brewStartedAt=null;game.brewEndsAt=null;game.carrying=null;saveGame();notify(`02:00 打烊 · 净盈利 ${coin(profit)}`);renderAll();
+    const enteringClosing=!game.closing;game.time=0;game.closing=true;clearInterval(tickTimer);tickTimer=null;clearInterval(arrivalTimer);arrivalTimer=null;
+    if(game.queue.length){if(enteringClosing)notify('02:00 打烊 · 正在等候最后的客人离场');renderHud();return}
+    stopServerMove();
+    applyNightPopularityDecay();
+    const gross=nightLedger.revenue+nightLedger.tips,profit=gross-nightLedger.cost-nightLedger.penalty,insights=buildSettlementInsights();
+    settlement={...nightLedger,...insights,waste:Math.max(0,nightLedger.made-nightLedger.sales),profit,margin:gross?Math.round(profit/gross*100):0};
+    clearInterval(tickTimer);clearInterval(arrivalTimer);clearInterval(autoTimer);clearInterval(chatTimer);clearInterval(brewProgressTimer);clearInterval(bartenderSpeechTimer);clearTimeout(serverSpeechTimer);clearTimeout(chatClearTimer);clearTimeout(brewTimer);clearTimeout(glowTimer);clearTimeout(serviceTimer);servingDrink=false;bartenderSpeech='';serverSpeech='';$('#bartenderCat').classList.remove('drink-ready-glow');chatState=null;panelView=null;game.night=false;game.closing=false;game.queue=[];game.ready=[];game.brewing=null;game.brewStartedAt=null;game.brewEndsAt=null;game.carrying=null;nightPopularityIds=new Set();saveGame();notify(`02:00 打烊 · 净盈利 ${coin(profit)}`);renderAll();
+  }
+
+  function maybeEndNight(){
+    if(game.night&&game.closing&&!game.queue.length)endNight();
   }
 
   function handleKey(event){
-    if(!$('#tavern').classList.contains('active'))return;
+    if(!$('#tavern').classList.contains('active')||tutorialOpen()||helpOpen())return;
     unlockTavernBgm();
-    if(['ArrowLeft','ArrowRight'].includes(event.key)||(game.night&&[' ','q','Q'].includes(event.key)))event.preventDefault();
-    if(event.key==='ArrowLeft')moveServer(-5);
-    if(event.key==='ArrowRight')moveServer(5);
+    if(['ArrowLeft','ArrowRight','Shift'].includes(event.key)||(game.night&&[' ','q','Q'].includes(event.key)))event.preventDefault();
+    if(event.key==='Shift'){keyboardSprintHeld=true;return}
+    if(event.key==='ArrowLeft'){startServerMove(-1,'keyboard-left');return}
+    if(event.key==='ArrowRight'){startServerMove(1,'keyboard-right');return}
+    if(event.repeat)return;
     if(game.night&&event.key===' ')serviceAction();
     if(game.night&&event.key.toLowerCase()==='q')discardCarriedDrink();
+  }
+
+  function handleKeyUp(event){
+    if(event.key==='Shift'){event.preventDefault();keyboardSprintHeld=false;renderServerStamina()}
+    if(event.key==='ArrowLeft'){event.preventDefault();stopServerMove('keyboard-left')}
+    if(event.key==='ArrowRight'){event.preventDefault();stopServerMove('keyboard-right')}
   }
 
   function handleControlSound(event){
@@ -601,20 +806,109 @@
   }
 
   function bindTouchMove(button,delta){
-    let repeatTimer=null;
-    const stop=()=>{clearInterval(repeatTimer);repeatTimer=null};
+    let source=null;
+    const stop=()=>{if(source)stopServerMove(source);source=null};
     button.addEventListener('pointerdown',event=>{
       if(!$('#tavern').classList.contains('active'))return;
       event.preventDefault();
       unlockTavernBgm();
       stop();
-      moveServer(delta);
-      repeatTimer=setInterval(()=>{if(!$('#tavern').classList.contains('active')){stop();return}moveServer(delta)},115);
+      source=`touch-${event.pointerId}`;startServerMove(delta,source);
       try{button.setPointerCapture(event.pointerId)}catch{}
     });
     button.addEventListener('pointerup',stop);
     button.addEventListener('pointercancel',stop);
     button.addEventListener('lostpointercapture',stop);
+  }
+
+  function hideGamepadCursor(){
+    $('#gamepadCursor')?.classList.remove('active','hovering');
+    gamepadCursorTarget?.classList.remove('gamepad-hover');gamepadCursorTarget=null;gamepadCursorHit=null;
+  }
+
+  function rootGamepadCursor(){const cursor=$('#gamepadCursor');if(cursor?.parentElement!==document.body)document.body.append(cursor);return cursor}
+
+  function scrollGamepadContainer(node,amount){
+    let current=node instanceof Element?node:node?.parentElement;
+    while(current&&current!==document.body){
+      if(current.scrollHeight>current.clientHeight+3){const before=current.scrollTop,currentMax=current.scrollHeight-current.clientHeight;current.scrollTop=Math.max(0,Math.min(currentMax,before+amount));if(current.scrollTop!==before)return true}
+      current=current.parentElement;
+    }
+    return false;
+  }
+
+  function updateGamepadCursor(pad){
+    const cursor=rootGamepadCursor(),rawX=Number(pad.axes?.[2]||0),rawY=Number(pad.axes?.[3]||0),deadZone=.18;
+    if(!cursor||Math.hypot(rawX,rawY)<deadZone)return;
+    const now=performance.now(),elapsed=Math.min(.05,Math.max(.001,(now-(gamepadCursorLastTime||now))/1000));gamepadCursorLastTime=now;
+    if(!Number.isFinite(gamepadCursorX)){gamepadCursorX=window.innerWidth*.5;gamepadCursorY=window.innerHeight*.5}
+    const adjusted=value=>Math.sign(value)*Math.max(0,(Math.abs(value)-deadZone)/(1-deadZone));
+    gamepadCursorX=Math.max(4,Math.min(window.innerWidth-26,gamepadCursorX+adjusted(rawX)*540*elapsed));
+    gamepadCursorY=Math.max(4,Math.min(window.innerHeight-30,gamepadCursorY+adjusted(rawY)*540*elapsed));
+    cursor.style.left=`${gamepadCursorX}px`;cursor.style.top=`${gamepadCursorY}px`;cursor.classList.add('active');syncGamepadCursorTarget(cursor);
+    if(Math.abs(adjusted(rawY))>.08)scrollGamepadContainer(gamepadCursorHit,adjusted(rawY)*680*elapsed);
+  }
+
+  function syncGamepadCursorTarget(cursor){
+    const bounds=cursor.getBoundingClientRect(),hitX=bounds.left+bounds.width/2,hitY=bounds.top+bounds.height/2;
+    const hit=document.elementFromPoint(hitX,hitY),target=hit?.closest?.('button:not(:disabled),select:not(:disabled),input:not(:disabled),[role="button"],[tabindex]:not([tabindex="-1"]),label.menu-card:not(.short)')||null;
+    gamepadCursorHit=hit;
+    if(target!==gamepadCursorTarget){gamepadCursorTarget?.classList.remove('gamepad-hover');gamepadCursorTarget=target;gamepadCursorTarget?.classList.add('gamepad-hover')}
+    cursor.classList.toggle('hovering',!!gamepadCursorTarget);
+  }
+
+  function centerGamepadCursor(){
+    const cursor=rootGamepadCursor();if(!cursor)return;
+    gamepadCursorX=window.innerWidth/2;gamepadCursorY=window.innerHeight/2;gamepadCursorLastTime=performance.now();
+    cursor.style.left=`${gamepadCursorX}px`;cursor.style.top=`${gamepadCursorY}px`;cursor.classList.add('active');syncGamepadCursorTarget(cursor);notify('黑桃 A 光标已回到屏幕中心');
+  }
+
+  function closeGamepadSelectMenu(){const menu=$('#gamepadSelectMenu');if(menu)menu.remove()}
+  function closeGamepadDialog(){
+    if($('#gamepadSelectMenu')){closeGamepadSelectMenu();return true}
+    const leave=$('#leaveConfirm');if(leave&&!leave.hidden){$('#leaveConfirmCancel')?.click();return true}
+    const tutorial=$('#tavernTutorial');if(tutorial&&!tutorial.hidden){finishTutorial();return true}
+    const recipe=$('#recipeCelebration');if(recipe&&!recipe.hidden){recipe.querySelector('button')?.click();return true}
+    if(helpOpen()){closeTavernHelp(true);return true}
+    const tavernSettings=$('#tavernSettingsPanel'),tavernSettingsButton=$('#tavernSettings');if(tavernSettings&&!tavernSettings.hidden){tavernSettings.hidden=true;tavernSettingsButton?.setAttribute('aria-expanded','false');tavernSettingsButton?.focus();return true}
+    const pokerSettings=$('#pokerSettingsPanel'),pokerSettingsButton=$('#pokerSettings');if(pokerSettings&&!pokerSettings.hidden){pokerSettings.hidden=true;pokerSettingsButton?.setAttribute('aria-expanded','false');pokerSettingsButton?.focus();return true}
+    const estateModal=$('#estateModal');if(estateModal&&!estateModal.hidden){$('#estateModalClose')?.click();return true}
+    const history=$('#historyModal');if(history?.classList.contains('show')){history.classList.remove('show');return true}
+    return false;
+  }
+  function openGamepadSelectMenu(select){
+    closeGamepadSelectMenu();
+    const options=[...select.options].filter(option=>!option.disabled);if(!options.length)return false;
+    const rect=select.getBoundingClientRect(),menu=document.createElement('div'),menuHeight=Math.min(260,options.length*38+10),placeAbove=rect.bottom+menuHeight>window.innerHeight-8;
+    menu.id='gamepadSelectMenu';menu.setAttribute('role','listbox');menu.setAttribute('aria-label',select.getAttribute('aria-label')||'选择选项');menu.style.width=`${Math.max(160,rect.width)}px`;menu.style.left=`${Math.max(8,Math.min(window.innerWidth-Math.max(160,rect.width)-8,rect.left))}px`;menu.style.top=`${Math.max(8,placeAbove?rect.top-menuHeight-5:rect.bottom+5)}px`;
+    menu.innerHTML=options.map(option=>`<button type="button" role="option" aria-selected="${option.selected}" data-gamepad-select-value="${option.value}">${option.textContent}</button>`).join('');
+    menu.querySelectorAll('button').forEach(button=>button.onclick=()=>{select.value=button.dataset.gamepadSelectValue;select.dispatchEvent(new Event('input',{bubbles:true}));select.dispatchEvent(new Event('change',{bubbles:true}));closeGamepadSelectMenu();syncGamepadCursorTarget($('#gamepadCursor'))});
+    document.body.append(menu);return true;
+  }
+
+  function clickGamepadCursor(){
+    const target=gamepadCursorTarget;
+    if(!target||target.matches('[disabled],[aria-disabled="true"]'))return false;
+    if(target instanceof HTMLSelectElement)return openGamepadSelectMenu(target);
+    target.focus?.({preventScroll:true});target.click();return true;
+  }
+
+  function pollXboxController(){
+    const pad=typeof navigator.getGamepads==='function'?[...navigator.getGamepads()].find(Boolean):null;
+    const tavernActive=$('#tavern').classList.contains('active');
+    if(pad){
+      activeGamepad=pad;updateGamepadCursor(pad);
+      const axis=Number(pad.axes?.[0]||0),verticalAxis=Number(pad.axes?.[1]||0),left=pad.buttons?.[14]?.pressed||axis<-.28,right=pad.buttons?.[15]?.pressed||axis>.28,up=pad.buttons?.[12]?.pressed||verticalAxis<-.28,down=pad.buttons?.[13]?.pressed||verticalAxis>.28,direction=left?-1:right?1:0,overlayOpen=tutorialOpen()||helpOpen()||!$('#tavernSettingsPanel')?.hidden||!!$('#gamepadSelectMenu'),canMoveServer=tavernActive&&!overlayOpen;
+      if(canMoveServer&&direction)startServerMove(direction,'gamepad');else stopServerMove('gamepad');
+      if(!canMoveServer&&(up||down))scrollGamepadContainer(gamepadCursorHit,(down?1:-1)*14);
+      const action=!!pad.buttons?.[0]?.pressed,back=!!pad.buttons?.[1]?.pressed,discard=!!pad.buttons?.[2]?.pressed,centerCursor=!!pad.buttons?.[11]?.pressed;gamepadSprintHeld=!!pad.buttons?.[6]?.pressed;
+      if(centerCursor&&!gamepadCursorCenterHeld)centerGamepadCursor();gamepadCursorCenterHeld=centerCursor;
+      if(back&&!gamepadBackHeld)closeGamepadDialog();
+      if(action&&!gamepadActionHeld){unlockTavernBgm();if(!clickGamepadCursor()&&canMoveServer)serviceAction()}
+      if(discard&&!gamepadDiscardHeld&&canMoveServer){unlockTavernBgm();discardCarriedDrink()}
+      gamepadActionHeld=action;gamepadBackHeld=back;gamepadDiscardHeld=discard;
+    }else{activeGamepad=null;gamepadSprintHeld=false;gamepadCursorCenterHeld=false;hideGamepadCursor();stopServerMove('gamepad');gamepadActionHeld=false;gamepadBackHeld=false;gamepadDiscardHeld=false}
+    gamepadFrame=requestAnimationFrame(pollXboxController);
   }
 
   window.catDayTimeline={canPoker,refresh:()=>{showScreen('#tavern');game.serverX=32;renderAll()}};
@@ -630,16 +924,29 @@
   bindTouchMove($('#touchMoveLeft'),-3);
   bindTouchMove($('#touchMoveRight'),3);
   $('#touchServe').onclick=()=>{unlockTavernBgm();serviceAction()};
-  $('#tavernSettings').onclick=event=>{event.stopPropagation();const panel=$('#tavernSettingsPanel'),button=$('#tavernSettings');const open=panel.hidden;panel.hidden=!open;button.setAttribute('aria-expanded',String(open));if(open)updateMusicControl()};
-  $('#tavernMusicEnabled').onchange=event=>{if(event.target.checked===bgmMuted)toggleTavernBgm()};
+  $('#tavernSettings').onclick=event=>{event.stopPropagation();const panel=$('#tavernSettingsPanel'),button=$('#tavernSettings'),helpPanel=$('#tavernHelpPanel'),helpButton=$('#tavernHelp');const open=panel.hidden;panel.hidden=!open;button.setAttribute('aria-expanded',String(open));helpPanel.hidden=true;helpButton.setAttribute('aria-expanded','false');if(open)updateMusicControl()};
+  $('#tavernHelp').onclick=event=>{event.stopPropagation();toggleTavernHelp()};
+  $('#tavernHelpClose').onclick=()=>closeTavernHelp(true);
+  $('#tavernHelpPanel').onclick=event=>{if(event.target===event.currentTarget)closeTavernHelp(true)};
+  $('#tavernMusicEnabled').onchange=event=>setTavernBgmEnabled(event.target.checked);
   $('#tavernMusicVolume').oninput=event=>setTavernBgmVolume(Number(event.target.value)/100);
-  $('#tavernSfxEnabled').onchange=event=>{if(event.target.checked!==sfxEnabled)toggleTavernSfx()};
+  $('#tavernSfxEnabled').onchange=event=>setTavernSfxEnabled(event.target.checked);
   $('#tavernSfxVolume').oninput=event=>setTavernSfxVolume(Number(event.target.value)/100);
-  document.addEventListener('pointerdown',event=>{const panel=$('#tavernSettingsPanel'),button=$('#tavernSettings');if(!panel.hidden&&!panel.contains(event.target)&&!button.contains(event.target)){panel.hidden=true;button.setAttribute('aria-expanded','false')}});
-  document.addEventListener('keydown',event=>{if(event.key==='Escape'){const panel=$('#tavernSettingsPanel'),button=$('#tavernSettings');if(!panel.hidden){panel.hidden=true;button.setAttribute('aria-expanded','false');button.focus()}}});
+  window.addEventListener('cat-global-bgm-change',event=>{const settings=event.detail||{};if(typeof settings.muted==='boolean')bgmMuted=settings.muted;if(Number.isFinite(settings.volume))bgmVolume=Math.max(0,Math.min(1,settings.volume));syncTavernBgm();updateMusicControl()});
+  window.addEventListener('cat-global-sfx-change',event=>{const settings=event.detail||{};if(typeof settings.enabled==='boolean')sfxEnabled=settings.enabled;if(Number.isFinite(settings.volume))sfxVolume=Math.max(0,Math.min(1,settings.volume));updateMusicControl()});
+  document.addEventListener('pointerdown',event=>{const settingsPanel=$('#tavernSettingsPanel'),settingsButton=$('#tavernSettings'),helpPanel=$('#tavernHelpPanel'),helpButton=$('#tavernHelp');if(!settingsPanel.hidden&&!settingsPanel.contains(event.target)&&!settingsButton.contains(event.target)){settingsPanel.hidden=true;settingsButton.setAttribute('aria-expanded','false')}if(!helpPanel.hidden&&!helpPanel.contains(event.target)&&!helpButton.contains(event.target)){helpPanel.hidden=true;helpButton.setAttribute('aria-expanded','false')}});
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'){const settingsPanel=$('#tavernSettingsPanel'),settingsButton=$('#tavernSettings');if(!settingsPanel.hidden){settingsPanel.hidden=true;settingsButton.setAttribute('aria-expanded','false');settingsButton.focus()}closeTavernHelp(true)}});
   document.addEventListener('pointerdown',handleControlSound);
   document.addEventListener('keydown',handleKey);
+  document.addEventListener('keyup',handleKeyUp);
+  window.addEventListener('blur',()=>{keyboardSprintHeld=false;gamepadSprintHeld=false;stopServerMove();renderServerStamina()});
+  window.addEventListener('resize',()=>{fitTutorialDialog();fitHelpDialog()});
+  window.visualViewport?.addEventListener('resize',fitTutorialDialog);
+  document.addEventListener('visibilitychange',()=>{if(document.hidden){keyboardSprintHeld=false;gamepadSprintHeld=false;stopServerMove();renderServerStamina()}});
   document.addEventListener('visibilitychange',syncTavernBgm);
   new MutationObserver(syncTavernBgm).observe($('#tavern'),{attributes:true,attributeFilter:['class']});
+  rootGamepadCursor();
+  startServerStaminaLoop();
+  if(typeof navigator.getGamepads==='function')gamepadFrame=requestAnimationFrame(pollXboxController);
   showScreen('#tavern');renderAll();resetServerNotebookTimer();startStaffSpeech();updateMusicControl();
 })();
